@@ -2,6 +2,7 @@ from Framework.Screen import *
 from Framework.SpriteText import *
 from Framework.UI.Button import Button
 import Screens.GachaScreen 
+import random
 
 class GachaplayScreen (Screen):
     def __init__ (self, game):
@@ -19,8 +20,15 @@ class GachaplayScreen (Screen):
         self.BackButton.set_Rect (pygame.Rect (10, 300, 200, 50))
         self.Add (self.BackButton)
 
+        pygame.mixer.music.load ("res/bgm_gachaplay.mp3")
+        pygame.mixer.music.play()
+
     def roll (self):
-        print ("rolled 0 star")
+        e = random.randrange (0, 10)
+        if (e == 1):
+            print ("rolled a 5 star")
+        else:
+            print ("rolled 0 star")
 
     def back (self):
         self.game.ChangeScreen(Screens.GachaScreen.GachaScreen (self.game))

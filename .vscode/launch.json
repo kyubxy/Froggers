@@ -10,7 +10,7 @@
             "type": "python",
             "request": "launch",
             "program": "Froggers.py",
-            "console": "integratedTerminal"
+            "console":"integratedTerminal"
         },
         {
             "name": "current file",
@@ -21,9 +21,9 @@
         },
         {
             "name": "Specific testcase",
-            "type": "python",
+            "type":"python",
             "request": "launch",
-            "program":"Framework/tests/ButtonTest.py",
+            "program":"Framework/tests/SpriteTextTest.py",
             "console": "integratedTerminal"
         }
     ]
