@@ -8,10 +8,13 @@ from GameObjects.turfs.RoadTurf import *
 
 from Framework.KeyboardListener import *
 
+# the physical composition of the level itself.
 class Level (GeometricGroup): 
     def __init__(self, difficulty):
         super().__init__()
         
+        # arbitrary value defining relatively difficulty of current level
+        # influences variables like level length, entity speeds, general complexity etc
         self.difficulty = difficulty
 
         # list of all available turfs
@@ -19,8 +22,9 @@ class Level (GeometricGroup):
 
         self.generate()
 
+    # randomly generates the level
     def generate (self, seed = None):
-        random.seed (seed)
+        random.seed (seed)      
 
         # number of turfs to be generated
         self.turfno = random.randint (math.ceil (self.difficulty / 2), math.ceil(self.difficulty * 1.5))
@@ -55,5 +59,6 @@ class Level (GeometricGroup):
         for t in self.levelturfs:
             if (t.background.rect.bottom >= 0 and t.background.rect.y < pygame.display.get_surface().get_size()[1]):
                 t.Active()
+                t.Update()
             else:
                 t.NonActive()
