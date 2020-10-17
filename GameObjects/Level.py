@@ -15,7 +15,7 @@ class Level (pygame.sprite.LayeredUpdates):
         self.difficulty = difficulty
 
         # y position (scrolling only happpens on this axis)
-        self.Position = 0
+        self._position = 0
 
         # list of all available turfs
         self.turfs = [RailTurf, RoadTurf]
@@ -51,11 +51,16 @@ class Level (pygame.sprite.LayeredUpdates):
     # this update method is NOT included in the group call
     # and is instead called MANUALLY
     def Update (self):
+        self.performculling()
+
+    def change_pos (self, v):
         for s in self.sprites():
-            s.rect.y -= self.Position
+            s.rect = s.rect.move (0, v)
+            self._position -= v
+
+    def get_pos (self):
+        return self._position
     
-    #def performculling (self):
-
-
-        
-
+    def performculling (self):
+        pass
+        #self.viewport = pygame.Rect (0, self._position, pygame.display.get_surface().get_size()[0], pygame.display.get_surface().get_size()[1])
