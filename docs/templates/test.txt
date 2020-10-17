@@ -1,0 +1,15 @@
+import unittest
+import sys
+sys.path.insert (0, "Framework")
+from Game import *
+
+class <testname> (Game, unittest.TestCase):
+
+    def __init__(self):
+        super().__init__(title = "<test>")
+
+    def Run(self):
+        super().Run()
+
+t = <testname>()
+t.Run()

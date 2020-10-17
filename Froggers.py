@@ -3,14 +3,16 @@ import pygame
 
 # add framework to sys path 
 # (dont want a repeat of *last time*)
-sys.path.insert (0, "framework")
+sys.path.insert (0, "Framework")
 
-from framework.Game import *
+from Game import *
+from Screens.MainMenuScreen import *
 
 # Froggers game instance
 class FroggersGame (Game):
     def __init__(self):
         super().__init__(title = "Froggers")
+        self.ChangeScreen (MainMenuScreen(self))
 
     def Update (self):
         super().Update()

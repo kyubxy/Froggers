@@ -1,0 +1,14 @@
+from Screen import *
+
+class <Screen name> (Screen):
+    def __init__ (self):
+        pass
+
+    def Update (self):
+        super().Update()
+
+    def Add (self, sprite):
+        super().Add(sprite)
+
+    def Draw (self, win):
+        super().Draw(win)
