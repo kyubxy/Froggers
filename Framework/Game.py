@@ -71,4 +71,4 @@ class Game ():
             self.Draw ()
             pygame.display.flip()   # swap buffers
 
-            self.Clock.tick (60)        # capping game speed at 60 cycles per second
+            self.Clock.tick (120)        # capping game speed at 60 cycles per second

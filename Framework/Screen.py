@@ -2,7 +2,7 @@ import pygame
 from SpriteText import *
 
 # Drawables are sorted into screens that can be drawn at different times
-class Screen (pygame.sprite.Group):
+class Screen (pygame.sprite.LayeredUpdates):
     def __init__(self, game):
         super(Screen, self).__init__(self)
         self.game = game
@@ -26,6 +26,7 @@ class Screen (pygame.sprite.Group):
 
     def Add (self, sprite):
         super(Screen, self).add (sprite)
+        self.move_to_front (self.frameratecounter)
 
     def Draw (self, win):
         super (Screen, self).draw (win)

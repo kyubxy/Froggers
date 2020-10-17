@@ -27,8 +27,10 @@ class GachaplayScreen (Screen):
         e = random.randrange (0, 10)
         if (e == 1):
             print ("rolled a 5 star")
+        elif (e == 2 or e == 3 or e == 4):
+            print ("rolled a 4 star")
         else:
-            print ("rolled 0 star")
+            print ("rolled 3 star")
 
     def back (self):
         self.game.ChangeScreen(Screens.GachaScreen.GachaScreen (self.game))

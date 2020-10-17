@@ -1,0 +1,15 @@
+TEXTURES
+
+roadstrip.png
+https://opengameart.org/node/8889
+
+frog player
+https://opengameart.org/content/frog-soldier
+
+img_grass
+https://opengameart.org/content/seamless-grass-texture-ii
+
+AUDIO
+
+bgm_gachaplay
+kirara fantasia
