@@ -10,8 +10,8 @@ from Screens.MainMenuScreen import *
 
 # Froggers game instance
 class FroggersGame (Game):
-    def __init__(self):
-        super().__init__(title = "Froggers")
+    def __init__(self, w=1366,h=768):
+        super().__init__(title = "Froggers", width=w, height=h)
         self.ChangeScreen (MainMenuScreen(self))
 
     def Update (self):

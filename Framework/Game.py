@@ -28,6 +28,10 @@ class Game ():
     def ChangeScreen (self, screen):
         self.CurrentScreen = screen
 
+    # use this to close the program
+    def Exit (self):
+        self._running = False
+
     # handles pygame events
     def OnEvent (self, event):
         if event.type == pygame.QUIT:

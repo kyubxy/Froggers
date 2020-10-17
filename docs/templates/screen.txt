@@ -2,7 +2,7 @@ from Screen import *
 
 class <Screen name> (Screen):
     def __init__ (self):
-        pass
+        super().__init__(game)
 
     def Update (self):
         super().Update()
