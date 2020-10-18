@@ -6,12 +6,11 @@ class Sprite (pygame.sprite.Sprite):
 
         # load the image from file if there isn't already an image parsed through the constructor
         if img is None:
-            self.image = pygame.image.load (path).convert()
+            self.image = pygame.image.load (path).convert_alpha()
         else:
             self.image = img
 
         self.rect = self.image.get_rect()
-        self.image.set_colorkey ((255,0,255))
 
     def Scale (self, width, height):
         # update rect

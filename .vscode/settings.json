@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\Justin Tieu\\Miniconda3\\python.exe",
+    "python.pythonPath": "C:\\Users\\Justin Tieu\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe",
     "files.exclude": 
     {
         "**/.git": true,

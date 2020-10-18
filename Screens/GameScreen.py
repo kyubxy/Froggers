@@ -1,6 +1,7 @@
 from Framework.Screen import *
 from Framework.SpriteText import *
 from Framework.UI.Button import Button
+from Framework.KeyboardListener import *
 from GameObjects.Level import *
 from GameObjects.Entities.Player import *
 
@@ -9,11 +10,11 @@ class GameScreen (Screen):
         super().__init__(game)
         
         # level
-        self.level = Level (1)
+        self.level = Level (30)
         self.Add (self.level)
 
         # player
-        self.player = Player
+        self.player = Player(self.level)
         self.Add (self.player)
 
     def Update (self):

@@ -44,7 +44,7 @@ class Game ():
         
         # keyboard events
         if event.type == pygame.KEYDOWN:
-            for child in self.CurrentScreen:
+            for child in self.CurrentScreen.sprites():
                 # check if it has the KeyDown attribute
                 if hasattr (child, "KeyDown"):
                     child.KeyDown (event)

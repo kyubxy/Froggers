@@ -4,10 +4,13 @@ roadstrip.png
 https://opengameart.org/node/8889
 
 frog player
-https://opengameart.org/content/frog-soldier
+http://pixelartmaker.com/art/7efb637cfe0d5f5
 
 img_grass
 https://opengameart.org/content/seamless-grass-texture-ii
+
+cars
+https://opengameart.org/content/free-top-down-car-sprites-by-unlucky-studio
 
 AUDIO
 

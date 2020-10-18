@@ -5,6 +5,7 @@ from Framework.GeometricGroup import *
 from Framework.TileSurface import *
 from GameObjects.turfs.RailTurf import *
 from GameObjects.turfs.RoadTurf import *
+from GameObjects.turfs.GrassTurf import *
 
 from Framework.KeyboardListener import *
 
@@ -32,11 +33,15 @@ class Level (GeometricGroup):
         # list of all turfs in the level
         self.levelturfs = list()
 
+        # first strip
+        self.levelturfs.append (GrassTurf())
+
         # generate turfs
         for _ in range(self.turfno):
             # add turf to level turfs
             self.turfid = random.randint (0, len (self.turfs)-1)
-            self.workingturf = self.turfs[self.turfid]()
+            self.directions = [-1, 1]
+            self.workingturf = self.turfs[self.turfid](self.difficulty, self.directions[random.randint (0,1)])
 
             # place the turf (should be directly adjacent to all other turfs)
             for t in self.levelturfs:
@@ -44,9 +49,15 @@ class Level (GeometricGroup):
 
             self.levelturfs.append (self.workingturf)
 
+        # last strip
+        self._l = GrassEndTurf()
+        # place the turf (should be directly adjacent to all other turfs)
+        for t in self.levelturfs:
+            self._l.change_pos_y (t.background.rect.height)
+        self.levelturfs.append (self._l)
+
         for t in self.levelturfs:
             self.Add (t)
-
 
     # this update method is NOT included in the group call
     # and is instead called MANUALLY
@@ -62,3 +73,6 @@ class Level (GeometricGroup):
                 t.Update()
             else:
                 t.NonActive()
+
+    def change_pos_y (self, pos):
+        super().change_pos_y (pos)
