@@ -1,7 +1,4 @@
 from Framework.Screen import *
-from Framework.SpriteText import *
-from Framework.UI.Button import Button
-from Framework.KeyboardListener import *
 from GameObjects.Level import *
 from GameObjects.Entities.Player import *
 
