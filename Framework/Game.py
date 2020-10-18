@@ -8,13 +8,15 @@ import pygame
 class Game ():
     def __init__(self, title = "Game", width = 1366, height = 768):
         # initialise relevant pygame modules
+        pygame.init()
         pygame.font.init()
         pygame.mixer.init()
 
         self._title = title                                 # title of window
         self._windowSize = [width, height]                  # size of window
         self._running = True                                # program state
-        self.Window = None                                  # pygame window
+        self.Window = pygame.display.set_mode (self._windowSize)       # instantiate pygame window
+        pygame.display.set_caption (self._title)                       # set title
         self.Clock = pygame.time.Clock ()                   # pygame clock
         
         self.CurrentScreen = Screen (self)                        # add an empty screen
@@ -55,8 +57,6 @@ class Game ():
                     child.MouseDown (event)
 
     def Run (self):
-        self.Window = pygame.display.set_mode (self._windowSize)       # instantiate pygame window
-        pygame.display.set_caption (self._title)                       # set title
 
         while self._running:
             # handle pygame events

@@ -6,7 +6,7 @@ class Sprite (pygame.sprite.Sprite):
 
         # load the image from file if there isn't already an image parsed through the constructor
         if img is None:
-            self.image = pygame.image.load (path)
+            self.image = pygame.image.load (path).convert()
         else:
             self.image = img
 

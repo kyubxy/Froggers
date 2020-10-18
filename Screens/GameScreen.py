@@ -20,12 +20,10 @@ class GameScreen (Screen):
 
         keys = pygame.key.get_pressed ()
         if keys[pygame.K_UP]:
-            self.level.change_pos (10)
+            self.level.change_pos_y (10)
         elif keys[pygame.K_DOWN]:
-            self.level.change_pos (-10)
-
-        print (self.level.get_pos())
-
+            self.level.change_pos_y (-10)
+            
         self.level.Update()
         
 

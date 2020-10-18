@@ -1,21 +1,18 @@
 import pygame
 import random
 import math
-from Framework.TileArea import *
+from Framework.GeometricGroup import *
+from Framework.TileSurface import *
 from GameObjects.turfs.RailTurf import *
 from GameObjects.turfs.RoadTurf import *
 
-class Level (pygame.sprite.LayeredUpdates): 
+from Framework.KeyboardListener import *
+
+class Level (GeometricGroup): 
     def __init__(self, difficulty):
-        super().__init__(self)
-        # background
-        self.background = TileArea("res/textures/img_grass.png", (pygame.display.get_surface().get_size()), (128,128))
-        self.add (self.background)
-
+        super().__init__()
+        
         self.difficulty = difficulty
-
-        # y position (scrolling only happpens on this axis)
-        self._position = 0
 
         # list of all available turfs
         self.turfs = [RailTurf, RoadTurf]
@@ -39,28 +36,24 @@ class Level (pygame.sprite.LayeredUpdates):
 
             # place the turf (should be directly adjacent to all other turfs)
             for t in self.levelturfs:
-                self.workingturf.rect.y += t.tilesize[0]
+                self.workingturf.change_pos_y (t.background.rect.height)
 
             self.levelturfs.append (self.workingturf)
 
-            print (self.workingturf, self.workingturf.rect.y)
-
         for t in self.levelturfs:
-            self.add (t)
+            self.Add (t)
+
 
     # this update method is NOT included in the group call
     # and is instead called MANUALLY
     def Update (self):
         self.performculling()
-
-    def change_pos (self, v):
-        for s in self.sprites():
-            s.rect = s.rect.move (0, v)
-            self._position -= v
-
-    def get_pos (self):
-        return self._position
     
+    # prevents turfs that aren't currently on screen from drawing
+    # marginally increases performance
     def performculling (self):
-        pass
-        #self.viewport = pygame.Rect (0, self._position, pygame.display.get_surface().get_size()[0], pygame.display.get_surface().get_size()[1])
+        for t in self.levelturfs:
+            if (t.background.rect.bottom >= 0 and t.background.rect.y < pygame.display.get_surface().get_size()[1]):
+                t.Active()
+            else:
+                t.NonActive()
