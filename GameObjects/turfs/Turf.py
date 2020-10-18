@@ -3,7 +3,7 @@ import math
 from Framework.TileArea import TileArea
 
 # any tiled surface repeated over the width of the screen
-class Turf (TileArea, ):
+class Turf (TileArea):
     def __init__(self, path, tilesize):
         # width of window
         self.screenwidth = pygame.display.get_surface().get_size()[0]
