@@ -7,7 +7,7 @@ class GameScreen (Screen):
         super().__init__(game)
         
         # level
-        self.level = Level (30)
+        self.level = Level (5)
         self.Add (self.level)
 
         # player
