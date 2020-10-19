@@ -1,7 +1,10 @@
 TEXTURES
 
-roadstrip.png
+img_roadstrip
 https://opengameart.org/node/8889
+
+img_railstrip
+TODO
 
 frog player
 http://pixelartmaker.com/art/7efb637cfe0d5f5
@@ -11,6 +14,15 @@ https://opengameart.org/content/seamless-grass-texture-ii
 
 cars
 https://opengameart.org/content/free-top-down-car-sprites-by-unlucky-studio
+
+train
+TODO
+
+img_lives
+https://opengameart.org/content/heart-pixel-art
+
+img_cave
+me
 
 AUDIO
 

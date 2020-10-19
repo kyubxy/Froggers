@@ -6,15 +6,14 @@ import pygame
 sys.path.insert (0, "Framework")
 
 from Game import *
-import Screens.MainMenuScreen
-from Screens.GameScreen import GameScreen
+from Screens.MainMenuScreen import *
 import constants
 
 # Froggers game instance
 class FroggersGame (Game):
     def __init__(self, w=1366,h=768):
         super().__init__(title = "Froggers", width=w, height=h)
-        self.ChangeScreen (GameScreen(self))
+        self.ChangeScreen (MainMenuScreen(self))
 
     def Update (self):
         super().Update()

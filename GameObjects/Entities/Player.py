@@ -8,13 +8,19 @@ from GameObjects.Entities.Obstacle import *
 
 class Player (Sprite, KeyboardListener):
     def __init__(self, level):
+        # graphics
         self.deadimg = pygame.image.load ("res/textures/img_cave.png")        # TODO add dead player
         self.aliveimg = pygame.image.load("res/textures/img_player.png")
         super().__init__(img = self.aliveimg)
         self.Scale (64,64)
+
+        # environment
         self.level = level
         self.absolute_y = 0
+
+        # properties
         self.Alive = True   # determines if player is alive or is just a sludge of mangled frog parts
+        self.Lives = 5      # 0 lives means a game over
 
     def KeyDown (self, e):
         if (self.Alive):
@@ -60,12 +66,13 @@ class Player (Sprite, KeyboardListener):
                 # cave collision
                 # TODO
                 
-
     def restart (self):
         if (self.absolute_y > pygame.display.get_surface().get_size()[1] / 2):  # only move the background if it has been moved
             # offset by rounding to the nearest 64
             self.level.change_pos_y (self.absolute_y - math.ceil(pygame.display.get_surface().get_size()[1] / 128) * 64)        
         self.rect.y = 0
+        self.Lives -= 1
+        pygame.event.post (pygame.event.Event (pygame.USEREVENT + 2))
         self.absolute_y = 0
         self.Alive = True
         self.image = self.aliveimg

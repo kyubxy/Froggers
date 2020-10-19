@@ -28,6 +28,9 @@ class Screen (pygame.sprite.LayeredUpdates):
         super(Screen, self).add (sprite)
         self.move_to_front (self.frameratecounter)
 
+    def Remove (self, sprite):
+        super().remove (sprite)
+
     def Draw (self, win):
         super (Screen, self).draw (win)
 
