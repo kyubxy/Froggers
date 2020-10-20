@@ -10,10 +10,18 @@ class GameOverScreen (Screen, KeyboardListener):
         self.deathtext.SetColour ([255,0,0])
         self.Add (self.deathtext)
 
+        self.oldstate = pygame.key.get_pressed()
+        self.newstate = pygame.key.get_pressed()
+
     def Update (self):
         super().Update()
-        if pygame.key.get_pressed()[pygame.K_SPACE]:
+
+        self.newstate = pygame.key.get_pressed()
+
+        if self.newstate [pygame.K_SPACE] and not self.oldstate [pygame.K_SPACE]:
             self.game.ChangeScreen (Screens.MainMenuScreen.MainMenuScreen (self.game))
+
+        self.oldstate = self.newstate 
 
     def Add (self, sprite):
         super().Add(sprite)
