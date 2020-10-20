@@ -21,10 +21,13 @@ class Level (GeometricGroup):
         # list of all available turfs
         self.turfs = [RailTurf, RoadTurf]
 
+        # generate level
         self.generate()
 
     # randomly generates the level
     def generate (self, seed = None):
+        print ("Starting level", self.difficulty)
+
         random.seed (seed)      
 
         # number of turfs to be generated
