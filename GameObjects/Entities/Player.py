@@ -9,8 +9,9 @@ from GameObjects.turfs.GrassTurf import Cave
 class Player (Sprite):
     def __init__(self, level):
         # graphics
-        self.deadimg = pygame.image.load ("res/textures/img_cave.png")        # TODO add dead player
+        self.deadimg = pygame.image.load ("res/textures/img_playerdead.png")        # TODO add dead player
         self.aliveimg = pygame.image.load("res/textures/img_player.png")
+        self.hideimg = pygame.Surface ((1,1))
         super().__init__(img = self.aliveimg)   # load image
         self.Scale (64,64)
 
@@ -21,12 +22,16 @@ class Player (Sprite):
         # properties
         self.Alive = True   # determines if player is alive or is just a sludge of mangled frog parts
         self.Winning = False
-        self.Lives = 5      # 0 lives means a game over
+        self.Lives = 3      # 0 lives means a game over
         self.Frogs = 5      # total number of players
 
         # key strokes require two keyboard states
-        self.oldstate = pygame.key.get_pressed()
-        self.newstate = pygame.key.get_pressed() 
+        self.oldkeystate = pygame.key.get_pressed()
+        self.newkeystate = pygame.key.get_pressed() 
+
+        # mouse strokes also require two keyboard states
+        self.oldmousestate = pygame.mouse.get_pressed()
+        self.newmousestate = pygame.mouse.get_pressed()
     
     def update (self):
         super().update()
@@ -50,41 +55,51 @@ class Player (Sprite):
 
     # input
     def handleInput (self):
-        self.newstate = pygame.key.get_pressed()
+        self.newkeystate = pygame.key.get_pressed()
 
         if self.Alive and not self.Winning:
-            if self.newstate[pygame.K_LEFT] and not self.oldstate[pygame.K_LEFT]:
-                self.rect.x -= 64
-            elif self.newstate[pygame.K_RIGHT] and not self.oldstate[pygame.K_RIGHT]:
-                self.rect.x += 64
+            # left
+            if get_keydown (self.oldkeystate, self.newkeystate, [pygame.K_LEFT, pygame.K_a]): 
+                if self.rect.x > 0:
+                    self.rect.x -= 64
+            # right
+            elif get_keydown (self.oldkeystate, self.newkeystate,[pygame.K_RIGHT, pygame.K_d]):
+                if self.rect.x + 128 < pygame.display.get_surface().get_size()[0]:
+                    self.rect.x += 64
 
-            if self.newstate[pygame.K_DOWN] and not self.oldstate[pygame.K_DOWN]:
-                 # XXX subtracted 64 to fix regression in camera moving, consider removing if there's another regression
-                if (self.absolute_y >=pygame.display.get_surface().get_size()[1] / 2 - 64):    
+            # down
+            # TODO make downwards limit 
+            if get_keydown (self.oldkeystate, self.newkeystate, [pygame.K_DOWN, pygame.K_s]):
+                if (self.absolute_y >= pygame.display.get_surface().get_size()[1] / 2 - 64):    
                     self.level.change_pos_y(-64)
                 else:
                     self.rect.y += 64
+
                 self.absolute_y += 64
-            elif self.newstate[pygame.K_UP] and not self.oldstate[pygame.K_UP]:
+            # up
+            elif get_keydown (self.oldkeystate, self.newkeystate, [pygame.K_UP, pygame.K_w]):
                 if (self.absolute_y > 0):          # prevent the player from moving off screen
-                    if (self.absolute_y < pygame.display.get_surface().get_size()[1] / 2 - 64):     # prevent camera from panning off screen
+                    if (self.absolute_y < pygame.display.get_surface().get_size()[1] / 2):     # prevent camera from panning off screen
                         self.rect.y -= 64
                     else:
                         self.level.change_pos_y(64)
                     self.absolute_y -= 64
 
+            self.oldmousestate = self.newmousestate
+
             if self.Winning:
-                if self.newstate [pygame.K_SPACE]:
+                if self.newkeystate [pygame.K_SPACE]:
                     self.restart()        
         else:
-            if self.newstate [pygame.K_SPACE]:
+            if self.newkeystate [pygame.K_SPACE]:
                 self.restart()       
 
         # update old state
-        self.oldstate = self.newstate
+        self.oldkeystate = self.newkeystate
 
     def win (self):
         self.Winning = True
+        self.image = self.hideimg
         pygame.event.post (pygame.event.Event (WIN))
 
     # called after death
@@ -121,3 +136,6 @@ class Player (Sprite):
 
     def Scale (self, width, height):
         super().Scale(width, height)
+
+def get_keydown (oldkeystate, newkeystate, keys):
+    return any ([newkeystate[k] and not oldkeystate[k] for k in keys])

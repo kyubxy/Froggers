@@ -6,7 +6,7 @@ class FrogDisplay (pygame.sprite.Group):
         super().__init__()
         self.player = player
         self.frogtex = pygame.image.load ("res/textures/img_player.png")
-        self.colouredfrog = pygame.image.load ("res/textures/img_cave.png")
+        self.colouredfrog = pygame.image.load ("res/textures/img_playercurrent.png")
         self.UpdateFrogs()
 
     def UpdateFrogs (self):

@@ -4,3 +4,8 @@ class PlayerStats ():
         self.Frogs = []         # Frog types attained through gacha
         self.HighestLevel = 0   # highest level reached by the player
         self.Rank = 1           # level gained through experience points
+        self.Experience = 0
+
+class GameStats ():
+    def __init__(self):
+        self.Points = 0

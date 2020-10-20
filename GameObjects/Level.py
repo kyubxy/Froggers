@@ -28,7 +28,10 @@ class Level (GeometricGroup):
     def generate (self, seed = None):
         print ("Starting level", self.difficulty)
 
+        if seed is None:
+            seed = random.randint (0,999999)
         random.seed (seed)      
+        print (seed)
 
         # number of turfs to be generated
         self.turfno = random.randint (math.ceil (self.difficulty / 2), math.ceil(self.difficulty * 1.5))

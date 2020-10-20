@@ -6,6 +6,7 @@ from UI.LivesDisplay import *
 from UI.FrogDisplay import *
 from Screens.GameOverScreen import *
 from constants import *
+from Stats import GameStats
 
 class GameScreen (Screen):
     def __init__ (self, game):
@@ -21,7 +22,7 @@ class GameScreen (Screen):
         self.player = Player(self.level)
         self.Add (self.player)
 
-        # death text
+        # message text
         self.msgtext = SpriteText("", 40)
         self.msgtext.Background = [0,0,0]
         self.Add (self.msgtext)
@@ -34,8 +35,17 @@ class GameScreen (Screen):
         self.frogsdisplay = FrogDisplay (self.player)
         self.Add (self.frogsdisplay)
 
+        # Game stats
+        self.stats = GameStats ()
+
+        # points counter
+        self.pointscounter = SpriteText ("0")
+        self.Add (self.pointscounter)
+
     def Update (self):
         super().Update()
+
+        self.pointscounter.SetText (str(self.stats.Points))
 
         self.level.Update()
 
@@ -56,8 +66,12 @@ class GameScreen (Screen):
                     self.player.level = self.level
 
                     self.Add (self.level)
+                    
                     self.move_to_front  (self.player)
                     self.move_to_front (self.msgtext)
+                    self.move_to_front (self.pointscounter)
+
+                    self.stats.Points += self.difficulty * 100
 
                 self.msgtext.SetText ("")
 
@@ -76,6 +90,7 @@ class GameScreen (Screen):
             if event.type == WIN:
                 self.msgtext.SetText ("Nice work! press the space key to continue")
                 self.msgtext.rect.y = pygame.display.get_surface().get_size()[1] / 2 - self.msgtext.rect.height / 2
+                self.stats.Points += 100
 
     def Add (self, sprite):
         super().Add(sprite)

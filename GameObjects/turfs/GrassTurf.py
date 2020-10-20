@@ -38,7 +38,7 @@ class GrassEndTurf (Turf):
 # used to signify end of level
 class Cave (Sprite):
     def __init__(self):
-        self.occupiedtex = pygame.image.load("res/textures/img_player.png")       # TODO add occupied sprite
+        self.occupiedtex = pygame.image.load("res/textures/img_caveoccupied.png")       
         super().__init__("res/textures/img_cave.png")
         self.Scale (64,64)
         self.Occupied = False   # whether the player can enter
