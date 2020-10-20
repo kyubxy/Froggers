@@ -48,7 +48,7 @@ class Player (Sprite):
         self.logging = False
 
         # handle offscreen deaths
-        if self.rect.x > pygame.display.get_surface().get_size()[0] or self.rect.x - self.rect.width < 0:
+        if self.rect.x > pygame.display.get_surface().get_size()[0] or self.rect.x + self.rect.width < 0:
             self.die()
 
     # collision detection

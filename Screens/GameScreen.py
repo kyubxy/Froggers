@@ -12,7 +12,7 @@ class GameScreen (Screen):
     def __init__ (self, game):
         super().__init__(game)
         
-        self.difficulty = 10
+        self.difficulty = 1
 
         # level
         self.level = Level (self.difficulty)
