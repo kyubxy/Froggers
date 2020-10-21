@@ -1,5 +1,6 @@
 from Framework.Sprite import *
 
+# anything that moves along a turf, not necessarily harmful
 class Obstacle (Sprite):
     def __init__(self, path, direc, pos, speed):
         self.dir = direc
@@ -16,10 +17,15 @@ class Obstacle (Sprite):
         self.rect.x += self.dir * self.speed
         if self.dir == 1:
             if (self.rect.left > pygame.display.get_surface().get_size()[0]):
-                self.rect.x = -400
+                self.rect.x = -100 - self.rect.width
         else:
             if (self.rect.right < -0):
                 self.rect.x = pygame.display.get_surface().get_size()[0]+400
 
     def kill(self):
         super().kill()
+
+# anything that kills the player, very harmful
+class Harmable ():
+    def __init__(self):
+        pass

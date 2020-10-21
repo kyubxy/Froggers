@@ -4,6 +4,7 @@ from constants import *
 from Sprite import *
 from Framework.MouseListener import *
 from GameObjects.Entities.Obstacle import *
+from GameObjects.Entities.Log import *
 from GameObjects.turfs.GrassTurf import Cave
 
 class Player (Sprite):
@@ -14,6 +15,7 @@ class Player (Sprite):
         self.hideimg = pygame.Surface ((1,1))
         super().__init__(img = self.aliveimg)   # load image
         self.Scale (64,64)
+        self.rect.x = 64 * 6
 
         # environment
         self.level = level
@@ -22,7 +24,7 @@ class Player (Sprite):
         # properties
         self.Alive = True   # determines if player is alive or is just a sludge of mangled frog parts
         self.Winning = False
-        self.Lives = 3      # 0 lives means a game over
+        self.Lives = 5      # 0 lives means a game over
         self.Frogs = 5      # total number of players
 
         # key strokes require two keyboard states
@@ -32,6 +34,8 @@ class Player (Sprite):
         # mouse strokes also require two keyboard states
         self.oldmousestate = pygame.mouse.get_pressed()
         self.newmousestate = pygame.mouse.get_pressed()
+
+        self.logoffset = 0
     
     def update (self):
         super().update()
@@ -44,7 +48,7 @@ class Player (Sprite):
         for other in self.level.sprites():
             if self.rect.colliderect(other.rect):
                 # obstacle collision
-                if issubclass (type(other), Obstacle):
+                if issubclass (type(other), Harmable):  # harmable is generic, check subclass
                     self.die()
 
                 # cave collision
@@ -52,6 +56,11 @@ class Player (Sprite):
                     if not other.Occupied:  # check if occupied
                         other.Occupy()      # occupy if possible
                         self.win()
+
+                # log collision
+                if type (other) == Log:
+                    self.logoffset = self.rect.x - other.rect.x
+                    self.rect.x = other.rect.x + self.logoffset
 
     # input
     def handleInput (self):
@@ -83,6 +92,7 @@ class Player (Sprite):
                         self.rect.y -= 64
                     else:
                         self.level.change_pos_y(64)
+
                     self.absolute_y -= 64
 
             self.oldmousestate = self.newmousestate

@@ -6,6 +6,7 @@ from Framework.TileSurface import *
 from GameObjects.turfs.RailTurf import *
 from GameObjects.turfs.RoadTurf import *
 from GameObjects.turfs.GrassTurf import *
+from GameObjects.turfs.LakeTurf import *
 
 from Framework.KeyboardListener import *
 
@@ -19,7 +20,7 @@ class Level (GeometricGroup):
         self.difficulty = difficulty
 
         # list of all available turfs
-        self.turfs = [RailTurf, RoadTurf]
+        self.turfs = [RailTurf, RoadTurf, LakeTurf]
 
         # generate level
         self.generate()

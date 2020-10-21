@@ -3,7 +3,7 @@ from Framework.Sprite import *
 
 class GrassTurf (Turf):
     def __init__(self):
-        Turf.__init__ (self, 1, "res/textures/img_grass.png")
+        Turf.__init__ (self, 3, "res/textures/img_grass.png")
     
     def Update(self):
         pass
@@ -17,7 +17,7 @@ class GrassTurf (Turf):
 # same as grass turf but with caves to signify the end of the level
 class GrassEndTurf (Turf):
     def __init__(self):
-        Turf.__init__ (self, 5, "res/textures/img_grass.png")
+        Turf.__init__ (self, 9, "res/textures/img_grass.png")
 
         # place 5 caves
         for i in range (5):
