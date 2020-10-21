@@ -33,3 +33,5 @@ class Turf (GeometricGroup):
         super().change_pos_y(pos)
     def Add (self, sprite):
         super().Add (sprite)
+    def move_to_back (self, sprite):
+        super().move_to_back (sprite)

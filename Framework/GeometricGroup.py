@@ -2,7 +2,7 @@ import pygame
 
 # groups whereby the children inherit translations from their parents
 
-class GeometricGroup (pygame.sprite.OrderedUpdates):
+class GeometricGroup (pygame.sprite.LayeredUpdates):
     def __init__(self):
         super().__init__()
 
@@ -44,3 +44,6 @@ class GeometricGroup (pygame.sprite.OrderedUpdates):
 
     def Remove (self, sprite):
         self.remove (sprite)
+
+    def move_to_back (self, sprite):
+        super().move_to_back (sprite)

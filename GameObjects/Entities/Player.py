@@ -6,6 +6,7 @@ from Framework.MouseListener import *
 from GameObjects.Entities.Obstacle import *
 from GameObjects.Entities.Log import *
 from GameObjects.turfs.GrassTurf import Cave
+from GameObjects.turfs.LakeTurf import *
 
 class Player (Sprite):
     def __init__(self, level):
@@ -35,13 +36,20 @@ class Player (Sprite):
         self.oldmousestate = pygame.mouse.get_pressed()
         self.newmousestate = pygame.mouse.get_pressed()
 
-        self.logoffset = 0
-    
+        self.logging = False
+
     def update (self):
         super().update()
 
         self.handleInput()
-        self.collision()
+        if self.Alive:
+            self.collision()
+
+        self.logging = False
+
+        # handle offscreen deaths
+        if self.rect.x > pygame.display.get_surface().get_size()[0] or self.rect.x - self.rect.width < 0:
+            self.die()
 
     # collision detection
     def collision (self):
@@ -59,8 +67,12 @@ class Player (Sprite):
 
                 # log collision
                 if type (other) == Log:
-                    self.logoffset = self.rect.x - other.rect.x
-                    self.rect.x = other.rect.x + self.logoffset
+                    # work using a rate of change rather than position
+                    self.rect.x += other.speed * other.direc 
+                    self.logging = True
+
+                if type (other) == Water and not self.logging:
+                    self.die()
 
     # input
     def handleInput (self):
@@ -114,7 +126,7 @@ class Player (Sprite):
 
     # called after death
     def restart (self):
-        pygame.event.post (pygame.event.Event (RESTART))
+        self.rect.x = 64 * 8
         if (self.absolute_y > pygame.display.get_surface().get_size()[1] / 2):  # only move the background if it has been moved
             # offset by rounding to the nearest 64
             self.level.change_pos_y (self.absolute_y - math.ceil(pygame.display.get_surface().get_size()[1] / 128) * 64 + 64) 
@@ -132,6 +144,7 @@ class Player (Sprite):
         self.Winning = False
         self.image = self.aliveimg
         self.Scale (64,64)
+        pygame.event.post (pygame.event.Event (RESTART))
                 
     # this method handles actual loss of the game
     def die (self):
