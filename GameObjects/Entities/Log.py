@@ -8,3 +8,6 @@ class Log (Obstacle):
         self.path = "res/textures/img_log.png"
         super().__init__(self.path, dir, pos, speed)
         self.Scale (width * 64, 64)
+
+    def update (self):
+        super().update() 

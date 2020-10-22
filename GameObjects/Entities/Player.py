@@ -3,6 +3,7 @@ import math
 from constants import *
 from Sprite import *
 from Framework.MouseListener import *
+from Framework.KeyboardListener import get_keydown
 from GameObjects.Entities.Obstacle import *
 from GameObjects.Entities.Log import *
 from GameObjects.turfs.GrassTurf import Cave
@@ -41,15 +42,16 @@ class Player (Sprite):
     def update (self):
         super().update()
 
-        self.handleInput()
-        if self.Alive:
-            self.collision()
+        if (not self.paused):     
+            self.handleInput()
+            if self.Alive:
+                self.collision()
 
-        self.logging = False
+            self.logging = False
 
-        # handle offscreen deaths
-        if self.rect.x > pygame.display.get_surface().get_size()[0] or self.rect.x + self.rect.width < 0:
-            self.die()
+            # handle offscreen deaths
+            if self.rect.x > pygame.display.get_surface().get_size()[0] or self.rect.x + self.rect.width < 0:
+                self.die()
 
     # collision detection
     def collision (self):
@@ -77,6 +79,9 @@ class Player (Sprite):
     # input
     def handleInput (self):
         self.newkeystate = pygame.key.get_pressed()
+
+        if get_keydown (self.oldkeystate, self.newkeystate, [pygame.K_ESCAPE]):
+            pygame.event.post (pygame.event.Event (PAUSE))
 
         if self.Alive and not self.Winning:
             # left
@@ -159,6 +164,3 @@ class Player (Sprite):
 
     def Scale (self, width, height):
         super().Scale(width, height)
-
-def get_keydown (oldkeystate, newkeystate, keys):
-    return any ([newkeystate[k] and not oldkeystate[k] for k in keys])

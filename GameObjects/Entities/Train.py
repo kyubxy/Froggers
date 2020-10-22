@@ -6,3 +6,6 @@ class Train (Obstacle, Harmable):
         self.dirname = "right" if dir == 1 else "left"
         self.path = "res/textures/img_train_" + self.dirname + ".png"
         super().__init__(self.path, dir, pos, speed)
+
+    def update (self):
+        super().update()

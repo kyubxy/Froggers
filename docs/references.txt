@@ -24,7 +24,12 @@ https://opengameart.org/content/heart-pixel-art
 img_cave
 me
 
+img_log
+https://www.gran-turismo.com/gb/gtsport/user/profile/3646314/gallery/all/decal/3646314/5764617425638163968
+
 AUDIO
 
 bgm_gachaplay
 kirara fantasia
+
+bgm

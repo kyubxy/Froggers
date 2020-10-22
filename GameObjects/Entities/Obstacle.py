@@ -14,13 +14,17 @@ class Obstacle (Sprite):
 
     def update (self):
         super().update()
-        self.rect.x += self.dir * self.speed
-        if self.dir == 1:
-            if (self.rect.left > pygame.display.get_surface().get_size()[0]):
-                self.rect.x = -100 - self.rect.width
-        else:
-            if (self.rect.right < -0):
-                self.rect.x = pygame.display.get_surface().get_size()[0]+400
+
+        if (self.paused):  
+            print ("wow")
+        else:     
+            self.rect.x += self.dir * self.speed
+            if self.dir == 1:
+                if (self.rect.left > pygame.display.get_surface().get_size()[0]):
+                    self.rect.x = -100 - self.rect.width
+            else:
+                if (self.rect.right < -0):
+                    self.rect.x = pygame.display.get_surface().get_size()[0]+400
 
     def kill(self):
         super().kill()

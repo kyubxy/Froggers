@@ -1,4 +1,5 @@
 import pygame
+from constants import *
 
 class Sprite (pygame.sprite.Sprite):
     def __init__(self, path = "", img = None):
@@ -11,6 +12,7 @@ class Sprite (pygame.sprite.Sprite):
             self.image = img
 
         self.rect = self.image.get_rect()
+        self.paused = False
 
     def Scale (self, width, height):
         # update rect

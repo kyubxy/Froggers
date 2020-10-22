@@ -42,11 +42,13 @@ class GameScreen (Screen):
         self.pointscounter = SpriteText ("0")
         self.Add (self.pointscounter)
 
+        #pygame.mixer.music.load ("res/bgm_gameplay.wav")
+        #pygame.mixer.music.play()
+
     def Update (self):
         super().Update()
-
+        
         self.pointscounter.SetText (str(self.stats.Points))
-
         self.level.Update()
 
         for event in pygame.event.get():
