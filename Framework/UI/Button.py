@@ -47,7 +47,7 @@ class ClickablePane (Sprite, MouseListener):
 
 # 
 class Button (pygame.sprite.OrderedUpdates):
-    def __init__(self, parent, label = "button", w = 200, h=50, theme = ButtonTheme(), labelsize = 32, clickEventName = "OnClick"):
+    def __init__(self, resources, parent, label = "button", w = 200, h=50, theme = ButtonTheme(), labelsize = 32, clickEventName = "OnClick"):
         super().__init__()
 
         # safely access the parent's click method
@@ -63,13 +63,13 @@ class Button (pygame.sprite.OrderedUpdates):
         self.add (self._pane)
 
         # label
-        self._label = SpriteText (label, self.labelsize, self.Theme.font)
+        self._label = SpriteText (label, self.labelsize, font = resources[self.Theme.font])
         self._label.SetColour (self.Theme.labelColour)
         self.add (self._label)
 
         # sound
         if theme.pressedsound != None:
-            self.sound = pygame.mixer.Sound (theme.pressedsound)
+            self.sound = resources[theme.pressedsound]
         else:
             self.sound = None
 

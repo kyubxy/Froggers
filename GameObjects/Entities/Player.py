@@ -11,10 +11,12 @@ from GameObjects.turfs.GrassTurf import Cave
 from GameObjects.turfs.LakeTurf import *
 
 class Player (Sprite):
-    def __init__(self, level):
+    def __init__(self, level, game):
+        self.game = game
+
         # graphics
-        self.deadimg = pygame.image.load ("res/textures/img_playerdead.png")        # TODO add dead player
-        self.aliveimg = pygame.image.load("res/textures/img_player.png")
+        self.deadimg = game.ResourceCache.Resources["img_playerdead"]
+        self.aliveimg = game.ResourceCache.Resources["img_player"]
         self.hideimg = pygame.Surface ((1,1))
         super().__init__(img = self.aliveimg)   # load image
         self.Scale (64,64)
@@ -40,11 +42,6 @@ class Player (Sprite):
 
         # whether or not player is touching log
         self.logging = False
-
-        # jump sound effects
-        self.jumpSE = []
-        for i in range (4):
-            self.jumpSE.append (pygame.mixer.Sound ("res/se/se_jump_" + str(i + 1) + ".wav"))
 
     def update (self):
         super().update()
@@ -137,7 +134,7 @@ class Player (Sprite):
         self.oldkeystate = self.newkeystate
 
     def playJumpSound (self):
-        self.jumpSE[random.randint (0,len(self.jumpSE) - 1)].play()
+        self.game.ResourceCache.Resources["se_jump_{0}".format(random.randint (1,4))].play()
 
     def win (self):
         self.Winning = True

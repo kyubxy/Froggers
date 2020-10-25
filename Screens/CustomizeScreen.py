@@ -11,7 +11,7 @@ class CustomizeScreen (Screen):
         self.Add (SpriteText("customize"))
 
         # back button
-        self.BackButton = FroggerButton (self, "back", clickEventName="back")
+        self.BackButton = FroggerButton (self.game, self, "back", clickEventName="back")
         self.BackButton.set_Rect (pygame.Rect (10, 300, 200, 50))
         self.Add (self.BackButton)
     def back (self):

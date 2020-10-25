@@ -2,8 +2,8 @@ from GameObjects.turfs.Turf import Turf
 from Framework.Sprite import *
 
 class GrassTurf (Turf):
-    def __init__(self):
-        Turf.__init__ (self, 3, "res/textures/img_grass.png")
+    def __init__(self, game):
+        Turf.__init__ (self, 3, "img_grass", game)
     
     def Update(self):
         pass
@@ -16,13 +16,13 @@ class GrassTurf (Turf):
 
 # same as grass turf but with caves to signify the end of the level
 class GrassEndTurf (Turf):
-    def __init__(self):
-        Turf.__init__ (self, 9, "res/textures/img_grass.png")
+    def __init__(self, game):
+        Turf.__init__ (self, 9, "img_grass", game)
 
         # place 5 caves
         for i in range (5):
-            self.c = Cave ()
-            self.c.rect.x = 80 + i * pygame.display.get_surface().get_size()[0] / 5 # TODO: come up with a better way to place the caves along the x axis
+            self.c = Cave (game)
+            self.c.rect.x = 80 + i * pygame.display.get_surface().get_size()[0] / 5 
             self.c.rect.y = 64
             self.Add (self.c)
     
@@ -37,13 +37,13 @@ class GrassEndTurf (Turf):
 
 # used to signify end of level
 class Cave (Sprite):
-    def __init__(self):
-        self.occupiedtex = pygame.image.load("res/textures/img_caveoccupied.png")       
-        super().__init__("res/textures/img_cave.png")
+    def __init__(self, game):
+        super().__init__(img = game.ResourceCache.Resources["img_cave"])
         self.Scale (64,64)
         self.Occupied = False   # whether the player can enter
+        self.game = game
 
     def Occupy (self):
-        self.image = self.occupiedtex
+        self.image = self.game.ResourceCache.Resources["img_caveoccupied"]
         self.Scale (64,64)
         self.Occupied = True

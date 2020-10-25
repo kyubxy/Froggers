@@ -1,12 +1,12 @@
 from Screen import *
-from collections import deque
+from ResourceManagement.ResourceCache import *
 from SpriteText import *
 import pygame
 
 # generic game definition 
 
 class Game ():
-    def __init__(self, title = "Game", width = 1366, height = 768):
+    def __init__(self, title = "Game", width = 1366, height = 768, resourceDir = "res"):
         # initialise relevant pygame modules
         pygame.mixer.pre_init(44100, -16, 1, 512)
         pygame.init()
@@ -21,6 +21,8 @@ class Game ():
         self.Clock = pygame.time.Clock ()                   # pygame clock
         
         self.CurrentScreen = Screen (self)                        # add an empty screen
+
+        self.ResourceCache = ResourceCache (resourceDir)               # resource cache
 
     def Update (self):
         self.CurrentScreen.Update()

@@ -5,10 +5,10 @@ from Framework.TileSurface import *
 
 # any tiled surface repeated over the width of the screen
 class Turf (GeometricGroup):
-    def __init__(self, tilesize, path):
+    def __init__(self, tilesize, path, game):
         super().__init__()
 
-        self.turftex = pygame.image.load (path).convert()
+        self.turftex = game.ResourceCache.Resources[path]
         self.notex = pygame.Surface ((1,1))
 
         # width of window

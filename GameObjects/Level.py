@@ -12,9 +12,11 @@ from Framework.KeyboardListener import *
 
 # the physical composition of the level itself.
 class Level (GeometricGroup): 
-    def __init__(self, difficulty):
+    def __init__(self, difficulty, game):
         super().__init__()
         
+        self.game = game
+
         # arbitrary value defining relatively difficulty of current level
         # influences variables like level length, entity speeds, general complexity etc
         self.difficulty = difficulty
@@ -41,14 +43,14 @@ class Level (GeometricGroup):
         self.levelturfs = list()
 
         # first strip
-        self.levelturfs.append (GrassTurf())
+        self.levelturfs.append (GrassTurf(self.game))
 
         # generate turfs
         for _ in range(self.turfno):
             # add turf to level turfs
             self.turfid = random.randint (0, len (self.turfs)-1)
             self.directions = [-1, 1]
-            self.workingturf = self.turfs[self.turfid](self.difficulty, self.directions[random.randint (0,1)])
+            self.workingturf = self.turfs[self.turfid](self.difficulty, self.directions[random.randint (0,1)], self.game)
 
             # place the turf (should be directly adjacent to all other turfs)
             for t in self.levelturfs:
@@ -57,7 +59,7 @@ class Level (GeometricGroup):
             self.levelturfs.append (self.workingturf)
 
         # last strip
-        self._l = GrassEndTurf()
+        self._l = GrassEndTurf(self.game)
         # place the turf (should be directly adjacent to all other turfs)
         for t in self.levelturfs:
             self._l.change_pos_y (t.background.rect.height)

@@ -2,10 +2,10 @@ import pygame
 from Framework.Sprite import *
 
 class LivesDisplay (pygame.sprite.Group):
-    def __init__(self, player):
+    def __init__(self, player, game):
         super().__init__()
         self.player = player
-        self.lifetex = pygame.image.load ("res/textures/img_lives.png")
+        self.lifetex = game.ResourceCache.Resources ["img_lives"]
         self.UpdateLives()
 
     def UpdateLives (self):

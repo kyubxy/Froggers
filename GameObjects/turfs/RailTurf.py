@@ -3,10 +3,10 @@ from GameObjects.Entities.Train import *
 import math
 
 class RailTurf (Turf):
-    def __init__(self, difficulty, direc):
-        Turf.__init__ (self, 2, "res/textures/img_railstrip.png")
+    def __init__(self, difficulty, direc, game):
+        Turf.__init__ (self, 2, "img_railstrip", game)
         
-        self.Add (Train(direc, (0,0), random.randint (10,15 + math.floor(difficulty/4))))
+        self.Add (Train(direc, (0,0), random.randint (10,15 + math.floor(difficulty/4)), game))
     
     def Update(self):
         pass

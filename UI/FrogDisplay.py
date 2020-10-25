@@ -2,11 +2,11 @@ import pygame
 from Framework.Sprite import *
 
 class FrogDisplay (pygame.sprite.Group):
-    def __init__(self, player):
+    def __init__(self, player, game):
         super().__init__()
         self.player = player
-        self.frogtex = pygame.image.load ("res/textures/img_player.png")
-        self.colouredfrog = pygame.image.load ("res/textures/img_playercurrent.png")
+        self.frogtex = game.ResourceCache.Resources["img_player"]
+        self.colouredfrog = game.ResourceCache.Resources ["img_playercurrent"]
         self.UpdateFrogs()
 
     def UpdateFrogs (self):

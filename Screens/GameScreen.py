@@ -4,7 +4,6 @@ from GameObjects.Level import *
 from GameObjects.Entities.Player import *
 from UI.LivesDisplay import *
 from UI.FrogDisplay import *
-from UI.FroggerText import *
 from Screens.GameOverScreen import *
 from constants import *
 from Stats import GameStats
@@ -12,51 +11,54 @@ from Stats import GameStats
 class GameScreen (Screen):
     def __init__ (self, game):
         super().__init__(game)
+
+        # check if the textures have been loaded
+        if not "textures" in self.game.ResourceCache.LoadedDirectories:
+            self.game.ResourceCache.LoadDirectory ("textures") 
         
+        self.res = self.game.ResourceCache.Resources
+
         self.difficulty = 1
 
         # level
-        self.level = Level (self.difficulty)
+        self.level = Level (self.difficulty, self.game)
         self.Add (self.level)
 
         # player
-        self.player = Player(self.level)
+        self.player = Player(self.level, self.game)
         self.Add (self.player)
 
         # message text
-        self.msgtext = SpriteText("", 40, "res/fnt_VanillaExtract.ttf")
+        self.msgtext = SpriteText("", font = self.res["fnt_VanillaExtract_40"])
         self.msgtext.Background = [0,0,0]
         self.Add (self.msgtext)
 
         # lives display
-        self.livesdisplay = LivesDisplay (self.player)
+        self.livesdisplay = LivesDisplay (self.player, self.game)
         self.Add (self.livesdisplay)
 
         # frogs display
-        self.frogsdisplay = FrogDisplay (self.player)
+        self.frogsdisplay = FrogDisplay (self.player, self.game)
         self.Add (self.frogsdisplay)
 
         # Game stats
         self.stats = GameStats ()
 
         # points counter
-        self.pointscounter = FroggerText ("0")
+        self.pointscounter = SpriteText ("0", font = self.res["fnt_Berlin_24"])
         self.Add (self.pointscounter)
 
         # time display
-        self.timeText = FroggerText ("0")
+        self.timeText = SpriteText ("0", font = self.res["fnt_Berlin_24"])
         self.timeText.rect.y = 40
         self.startTime = pygame.time.get_ticks()
         self.totalTime = 0
         self.Add (self.timeText)
 
         # level display
-        self.levelText = FroggerText ("Level 1")
+        self.levelText = SpriteText ("Level 1", font = self.res["fnt_Berlin_24"])
         self.Add (self.levelText)
-
-        #pygame.mixer.music.load ("res/bgm_gameplay.wav")
-        #pygame.mixer.music.play()
-
+        
     def Update (self):
         super().Update()
 
@@ -86,7 +88,7 @@ class GameScreen (Screen):
 
                     self.Remove (self.level)
 
-                    self.level = Level (self.difficulty)
+                    self.level = Level (self.difficulty, self.game)
                     self.player.level = self.level
 
                     self.Add (self.level)
@@ -94,6 +96,8 @@ class GameScreen (Screen):
                     self.move_to_front  (self.player)
                     self.move_to_front (self.msgtext)
                     self.move_to_front (self.pointscounter)
+                    self.move_to_front (self.levelText)
+                    self.move_to_front (self.timeText)
 
                     self.stats.Points += self.difficulty * 100
 
@@ -115,9 +119,6 @@ class GameScreen (Screen):
                 self.msgtext.SetText ("Nice work! press the space key to continue")
                 self.msgtext.rect.y = pygame.display.get_surface().get_size()[1] / 2 - self.msgtext.rect.height / 2
                 self.stats.Points += 100
-
-                if self.level.difficulty % 2 == 0:
-                    self.player.Lives += 1
 
     def Add (self, sprite):
         super().Add(sprite)

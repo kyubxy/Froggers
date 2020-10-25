@@ -3,17 +3,20 @@ from Sprite import *
 
 # all text is drawn as a sprite
 class SpriteText (Sprite):
-    def __init__(self, text, size = 48, font = None):
+    def __init__(self, text, size = 48, fontPath = None, font = None):
 
         self._colour = [255,255,255]
         self.Background = None
         self._text = text
 
-        # if there isn't a font, use the system default
-        if font is None:
-            self.Font = pygame.font.SysFont (None, size)
+        # if there isn't any font specified, use the system default
+        if fontPath is None:
+            if font is None:
+                self.Font = pygame.font.SysFont (None, size)
+            else:
+                self.Font = font
         else:
-            self.Font = pygame.font.Font (font, size)
+            self.Font = pygame.font.Font (fontPath, size)
 
         # draw the font through the constructor
         super().__init__(img = self.Font.render (self._text, True, self._colour, self.Background))
