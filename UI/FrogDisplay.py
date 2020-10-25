@@ -18,7 +18,7 @@ class FrogDisplay (pygame.sprite.Group):
                 self.frogsprite = Sprite (img = self.frogtex)
             self.frogsprite.Scale (32,32)
             self.frogsprite.rect.x += frog * self.frogsprite.rect.width
-            self.frogsprite.rect.y =pygame.display.get_surface().get_size()[1] - 69
+            self.frogsprite.rect.y =32
             self.add (self.frogsprite)
 
     def empty (self):

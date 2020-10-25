@@ -1,5 +1,6 @@
 import pygame
 import math
+import random
 from constants import *
 from Sprite import *
 from Framework.MouseListener import *
@@ -37,7 +38,13 @@ class Player (Sprite):
         self.oldmousestate = pygame.mouse.get_pressed()
         self.newmousestate = pygame.mouse.get_pressed()
 
+        # whether or not player is touching log
         self.logging = False
+
+        # jump sound effects
+        self.jumpSE = []
+        for i in range (4):
+            self.jumpSE.append (pygame.mixer.Sound ("res/se/se_jump_" + str(i + 1) + ".wav"))
 
     def update (self):
         super().update()
@@ -88,10 +95,13 @@ class Player (Sprite):
             if get_keydown (self.oldkeystate, self.newkeystate, [pygame.K_LEFT, pygame.K_a]): 
                 if self.rect.x > 0:
                     self.rect.x -= 64
+                    self.playJumpSound()
+
             # right
             elif get_keydown (self.oldkeystate, self.newkeystate,[pygame.K_RIGHT, pygame.K_d]):
                 if self.rect.x + 128 < pygame.display.get_surface().get_size()[0]:
                     self.rect.x += 64
+                    self.playJumpSound()
 
             # down
             # TODO make downwards limit 
@@ -102,6 +112,7 @@ class Player (Sprite):
                     self.rect.y += 64
 
                 self.absolute_y += 64
+                self.playJumpSound()
             # up
             elif get_keydown (self.oldkeystate, self.newkeystate, [pygame.K_UP, pygame.K_w]):
                 if (self.absolute_y > 0):          # prevent the player from moving off screen
@@ -111,6 +122,7 @@ class Player (Sprite):
                         self.level.change_pos_y(64)
 
                     self.absolute_y -= 64
+                    self.playJumpSound()
 
             self.oldmousestate = self.newmousestate
 
@@ -123,6 +135,9 @@ class Player (Sprite):
 
         # update old state
         self.oldkeystate = self.newkeystate
+
+    def playJumpSound (self):
+        self.jumpSE[random.randint (0,len(self.jumpSE) - 1)].play()
 
     def win (self):
         self.Winning = True

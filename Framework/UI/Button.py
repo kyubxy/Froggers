@@ -12,7 +12,7 @@ class ButtonTheme:
         self.clickColour = [79, 79, 79]
         self.labelColour = [0,0,0]
         self.font = None    # nonetype for default font
-        self.Rounded = False
+        self.pressedsound = None    # path to pressed sound
 
 # contains the background and clickable logic 
 class ClickablePane (Sprite, MouseListener):
@@ -56,7 +56,6 @@ class Button (pygame.sprite.OrderedUpdates):
 
         # get theme
         self.Theme = theme
-
         self.labelsize = labelsize
         
         # back pane
@@ -68,8 +67,17 @@ class Button (pygame.sprite.OrderedUpdates):
         self._label.SetColour (self.Theme.labelColour)
         self.add (self._label)
 
+        # sound
+        if theme.pressedsound != None:
+            self.sound = pygame.mixer.Sound (theme.pressedsound)
+        else:
+            self.sound = None
+
     # method for the pane observer
     def OnClick (self):
+        if self.sound != None:
+            self.sound.play()
+
         # call the parent's click method
         self._click()
 

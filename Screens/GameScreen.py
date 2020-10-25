@@ -4,6 +4,7 @@ from GameObjects.Level import *
 from GameObjects.Entities.Player import *
 from UI.LivesDisplay import *
 from UI.FrogDisplay import *
+from UI.FroggerText import *
 from Screens.GameOverScreen import *
 from constants import *
 from Stats import GameStats
@@ -23,7 +24,7 @@ class GameScreen (Screen):
         self.Add (self.player)
 
         # message text
-        self.msgtext = SpriteText("", 40)
+        self.msgtext = SpriteText("", 40, "res/fnt_VanillaExtract.ttf")
         self.msgtext.Background = [0,0,0]
         self.Add (self.msgtext)
 
@@ -39,23 +40,44 @@ class GameScreen (Screen):
         self.stats = GameStats ()
 
         # points counter
-        self.pointscounter = SpriteText ("0")
+        self.pointscounter = FroggerText ("0")
         self.Add (self.pointscounter)
+
+        # time display
+        self.timeText = FroggerText ("0")
+        self.timeText.rect.y = 40
+        self.startTime = pygame.time.get_ticks()
+        self.totalTime = 0
+        self.Add (self.timeText)
+
+        # level display
+        self.levelText = FroggerText ("Level 1")
+        self.Add (self.levelText)
 
         #pygame.mixer.music.load ("res/bgm_gameplay.wav")
         #pygame.mixer.music.play()
 
     def Update (self):
         super().Update()
+
+        self.totalTime = pygame.time.get_ticks() - self.startTime
+        self.timeText.SetText (str(round (self.totalTime / 1000)) + "/sec")
+        self.timeText.rect.x = pygame.display.get_surface().get_size()[0] - self.timeText.image.get_size()[0]
+        self.stats.Time = self.totalTime
+
+        self.levelText.SetText ("Level " + str(self.difficulty))
+        self.levelText.rect.y = pygame.display.get_surface().get_size()[1] - self.levelText.image.get_size()[1]
         
         self.pointscounter.SetText (str(self.stats.Points))
+        self.pointscounter.rect.x = pygame.display.get_surface().get_size()[0] - self.pointscounter.image.get_size()[0]
+        
         self.level.Update()
 
         for event in pygame.event.get():
             if (event.type == RESTART):
                 # game over
                 if self.player.Lives == -1:
-                    self.game.ChangeScreen (GameOverScreen (self.game))
+                    self.game.ChangeScreen (GameOverScreen (self.game, self.stats))
 
                 # next stage
                 if self.player.Frogs == 0:
@@ -93,6 +115,9 @@ class GameScreen (Screen):
                 self.msgtext.SetText ("Nice work! press the space key to continue")
                 self.msgtext.rect.y = pygame.display.get_surface().get_size()[1] / 2 - self.msgtext.rect.height / 2
                 self.stats.Points += 100
+
+                if self.level.difficulty % 2 == 0:
+                    self.player.Lives += 1
 
     def Add (self, sprite):
         super().Add(sprite)

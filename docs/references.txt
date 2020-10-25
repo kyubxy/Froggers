@@ -27,9 +27,22 @@ me
 img_log
 https://www.gran-turismo.com/gb/gtsport/user/profile/3646314/gallery/all/decal/3646314/5764617425638163968
 
-AUDIO
+SOUND EFFECTS
+
+se_button
+https://www.kshootmania.com/download.html (KSHOOT MANIA: time_sel.wav)
+
+jump
+https://opengameart.org/content/platformer-jumping-sounds
+
+https://opengameart.org/content/oldschool-win-and-die-jump-and-run-sounds
+
+
+MUSIC
 
 bgm_gachaplay
 kirara fantasia
+
+
 
 bgm

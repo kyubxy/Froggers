@@ -9,3 +9,4 @@ class PlayerStats ():
 class GameStats ():
     def __init__(self):
         self.Points = 0
+        self.Time = 0

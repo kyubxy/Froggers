@@ -1,6 +1,6 @@
 from Framework.Screen import *
 from Framework.SpriteText import *
-from Framework.UI.Button import Button
+from UI.FroggerButton import FroggerButton
 import Screens.MainMenuScreen
 from Screens.GachaplayScreen import *
 
@@ -11,12 +11,12 @@ class GachaScreen (Screen):
         self.Add (SpriteText("gacha"))
 
         # gachaplay button
-        self.GachaPlay = Button (self, "Gachaplay", clickEventName="Gachaplay")
+        self.GachaPlay = FroggerButton (self, "Gachaplay", clickEventName="Gachaplay")
         self.GachaPlay.set_Rect (pygame.Rect (10, 200, 200, 50))
         self.Add (self.GachaPlay)
 
         # back button
-        self.BackButton = Button (self, "back", clickEventName="back")
+        self.BackButton = FroggerButton (self, "back", clickEventName="back")
         self.BackButton.set_Rect (pygame.Rect (10, 300, 200, 50))
         self.Add (self.BackButton)
 

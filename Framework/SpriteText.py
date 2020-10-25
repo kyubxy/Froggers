@@ -12,6 +12,8 @@ class SpriteText (Sprite):
         # if there isn't a font, use the system default
         if font is None:
             self.Font = pygame.font.SysFont (None, size)
+        else:
+            self.Font = pygame.font.Font (font, size)
 
         # draw the font through the constructor
         super().__init__(img = self.Font.render (self._text, True, self._colour, self.Background))

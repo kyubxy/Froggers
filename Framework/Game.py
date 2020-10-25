@@ -8,6 +8,7 @@ import pygame
 class Game ():
     def __init__(self, title = "Game", width = 1366, height = 768):
         # initialise relevant pygame modules
+        pygame.mixer.pre_init(44100, -16, 1, 512)
         pygame.init()
         pygame.font.init()
         pygame.mixer.init()

@@ -1,7 +1,7 @@
 from Framework.Screen import *
 from Framework.SpriteText import *
-from Framework.UI.Button import Button
 import Screens.GachaScreen 
+from UI.FroggerButton import Button
 import random
 
 class GachaplayScreen (Screen):
@@ -11,12 +11,12 @@ class GachaplayScreen (Screen):
         self.Add (SpriteText("gachaplay"))
 
         # roll button
-        self.RollButton = Button (self, "roll", clickEventName="roll")
+        self.RollButton = FroggerButton (self, "roll", clickEventName="roll")
         self.RollButton.set_Rect (pygame.Rect (10, 200, 200, 50))
         self.Add (self.RollButton)
 
         # back button
-        self.BackButton = Button (self, "back", clickEventName="back")
+        self.BackButton = FroggerButton (self, "back", clickEventName="back")
         self.BackButton.set_Rect (pygame.Rect (10, 300, 200, 50))
         self.Add (self.BackButton)
 
