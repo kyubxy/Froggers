@@ -1,8 +1,8 @@
-To run the game, open and run Froggers.py, located at the root of this folder. All other files are for internal use.
+To run the game, open and run Froggers.py, located at the root of this folder. All other files are intended for internal use.
 
 # Description of important files
 
-## Stats.py
+## Stats
 contains important gameplay related statistics reported from each round
 
 # UI
