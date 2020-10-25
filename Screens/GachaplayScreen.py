@@ -1,7 +1,7 @@
 from Framework.Screen import *
 from Framework.SpriteText import *
 import Screens.GachaScreen 
-from UI.FroggerButton import Button
+from UI.FroggerButton import FroggerButton
 import random
 
 class GachaplayScreen (Screen):

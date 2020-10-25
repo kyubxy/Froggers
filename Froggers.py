@@ -1,5 +1,6 @@
 import sys
 import pygame
+import tkinter as tk
 
 # add framework to sys path 
 # (dont want a repeat of *last time*)
@@ -14,6 +15,9 @@ class FroggersGame (Game):
     def __init__(self, w=1366,h=768):
         super().__init__(title = "Froggers", width=w, height=h)
         self.ChangeScreen (MainMenuScreen(self))
+
+        root = tk.Tk()
+        root.withdraw()
 
     def Update (self):
         super().Update()

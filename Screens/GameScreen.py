@@ -9,7 +9,7 @@ from constants import *
 from Stats import GameStats
 
 class GameScreen (Screen):
-    def __init__ (self, game):
+    def __init__ (self, game, seeds = None):
         super().__init__(game)
 
         # check if the textures have been loaded
@@ -20,8 +20,31 @@ class GameScreen (Screen):
 
         self.difficulty = 1
 
+        # Game stats
+        self.stats = GameStats ()
+
+        # seeds (if available)
+        if seeds is None:
+            self.seeded = False
+            print ("this level is not seeded")
+        else:
+            if (len(seeds) > 0):
+                self.seeds = seeds
+                self.seeded = True
+            
+                print ("this level is seeded, it's seeds consist of", self.seeds)
+            else:
+                self.seeded = False
+                print ("this level is not seeded")
+
         # level
-        self.level = Level (self.difficulty, self.game)
+        self.level = Level (self.difficulty, self.game, self.stats)
+
+        if self.seeded:
+            self.level.generate (self.seeds[0])
+        else:
+            self.level.generate ()
+
         self.Add (self.level)
 
         # player
@@ -40,9 +63,6 @@ class GameScreen (Screen):
         # frogs display
         self.frogsdisplay = FrogDisplay (self.player, self.game)
         self.Add (self.frogsdisplay)
-
-        # Game stats
-        self.stats = GameStats ()
 
         # points counter
         self.pointscounter = SpriteText ("0", font = self.res["fnt_Berlin_24"])
@@ -86,10 +106,23 @@ class GameScreen (Screen):
                     self.difficulty += 1
                     self.player.Frogs = 5
 
+                    if self.difficulty % 2 == 0 and self.player.Lives < 7:
+                        self.player.Lives += 1
+
                     self.Remove (self.level)
 
-                    self.level = Level (self.difficulty, self.game)
+                    self.level = Level (self.difficulty, self.game, self.stats)
                     self.player.level = self.level
+                    if self.seeded:
+                        if self.difficulty <= (len (self.seeds)):
+                            self.level.generate (self.seeds[self.difficulty - 1])
+                            print ("this level is still seeded")
+                        else:
+                            self.seeded = False
+                            self.level.generate ()
+                            print ("this level is no longer seeded")
+                    else:
+                        self.level.generate()
 
                     self.Add (self.level)
                     

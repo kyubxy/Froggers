@@ -4,6 +4,9 @@ from Screens.GameScreen import *
 from Screens.GachaScreen import *
 from Screens.CustomizeScreen import *
 from UI.FroggerButton import FroggerButton
+from tkinter import filedialog
+from tkinter import *
+import os
 
 class MainMenuScreen (Screen):
     def __init__ (self, game):
@@ -26,24 +29,44 @@ class MainMenuScreen (Screen):
         self.PlayButton.set_Rect (pygame.Rect (10, 200, 200, 50))
         self.Add (self.PlayButton)
 
+        # load button
+        self.PlayButton = FroggerButton (game, self, "load", clickEventName="LoadGame")
+        self.PlayButton.set_Rect (pygame.Rect (10, 300, 200, 50))
+        self.Add (self.PlayButton)
+
         # gacha button
         self.GachaButton = FroggerButton (game, self, "gacha", clickEventName="StartGacha")
-        self.GachaButton.set_Rect (pygame.Rect (10, 300, 200, 50))
+        self.GachaButton.set_Rect (pygame.Rect (10, 400, 200, 50))
         self.Add (self.GachaButton)
 
         # customize button
         self.CustomizeButton = FroggerButton (game, self, "customize", clickEventName="customize")
-        self.CustomizeButton.set_Rect (pygame.Rect (10, 400, 200, 50))
+        self.CustomizeButton.set_Rect (pygame.Rect (10, 500, 200, 50))
         self.Add (self.CustomizeButton)
 
         # exit button
         self.ExitButton = FroggerButton (game, self, "Exit", clickEventName="Exit")
-        self.ExitButton.set_Rect (pygame.Rect (10, 500, 200, 50))
+        self.ExitButton.set_Rect (pygame.Rect (10, 600, 200, 50))
         self.Add (self.ExitButton)
 
     def StartGame (self):
         self.game.ResourceCache.LoadDirectory ("textures") 
         self.game.ChangeScreen (GameScreen (self.game))
+
+    def LoadGame (self):
+        seedpack = filedialog.askopenfilename(initialdir = os.path.join (os.getcwd(), "SEEDPACKS"), title = "Select seedpack",filetypes = (("text files","*.txt"),("all files","*.*")))
+        
+        seeds = []
+
+        if not seedpack:
+            return
+
+        sp = open(seedpack, "r")
+        for seed in sp:
+            seeds.append (int(seed))
+
+        self.game.ResourceCache.LoadDirectory ("textures") 
+        self.game.ChangeScreen (GameScreen (self.game, seeds))
 
     def StartGacha (self):
         self.game.ChangeScreen (GachaScreen (self.game))

@@ -11,6 +11,7 @@ class ButtonTheme:
         self.hoverColour = [163,163,163]
         self.clickColour = [79, 79, 79]
         self.labelColour = [0,0,0]
+        self.disabledColour = [54,54,54]
         self.font = None    # nonetype for default font
         self.pressedsound = None    # path to pressed sound
 
@@ -27,15 +28,20 @@ class ClickablePane (Sprite, MouseListener):
         self._s = pygame.Surface ([w,h])
         self._s.fill(self.theme.unclickedColour)
 
+        self.Enabled = True
+
         super().__init__ (img = self._s)
 
     def update (self):
-        if self.rect.collidepoint (pygame.mouse.get_pos()):
-            self.image.fill(self.theme.hoverColour)
-            if (pygame.mouse.get_pressed()[0]):
-                self.image.fill (self.theme.clickColour)
+        if self.Enabled:
+            if self.rect.collidepoint (pygame.mouse.get_pos()):
+                self.image.fill(self.theme.hoverColour)
+                if (pygame.mouse.get_pressed()[0]):
+                    self.image.fill (self.theme.clickColour)
+            else:
+                self.image.fill(self.theme.unclickedColour)  
         else:
-            self.image.fill(self.theme.unclickedColour)  
+            self.image.fill (self.theme.disabledColour)
 
     def MouseDown (self, event):
         if (event.button == 1):     # check for left clicks
@@ -67,6 +73,8 @@ class Button (pygame.sprite.OrderedUpdates):
         self._label.SetColour (self.Theme.labelColour)
         self.add (self._label)
 
+        self._enabled = True
+
         # sound
         if theme.pressedsound != None:
             self.sound = resources[theme.pressedsound]
@@ -75,11 +83,20 @@ class Button (pygame.sprite.OrderedUpdates):
 
     # method for the pane observer
     def OnClick (self):
-        if self.sound != None:
+        if self.sound != None and self._enabled:
             self.sound.play()
 
         # call the parent's click method
-        self._click()
+        if self._enabled:
+            self._click()
+
+    def Enable (self):
+        self._enabled = True
+        self._pane.Enabled = True
+
+    def Disable (self):
+        self._enabled = False
+        self._pane.Enabled = False
 
     # This button's rectangle is the pane's rectangle
     def get_Rect (self):

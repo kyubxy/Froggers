@@ -12,10 +12,11 @@ from Framework.KeyboardListener import *
 
 # the physical composition of the level itself.
 class Level (GeometricGroup): 
-    def __init__(self, difficulty, game):
+    def __init__(self, difficulty, game, stats):
         super().__init__()
         
         self.game = game
+        self.stats = stats
 
         # arbitrary value defining relatively difficulty of current level
         # influences variables like level length, entity speeds, general complexity etc
@@ -24,17 +25,17 @@ class Level (GeometricGroup):
         # list of all available turfs
         self.turfs = [RailTurf, RoadTurf, LakeTurf]
 
-        # generate level
-        self.generate()
-
     # randomly generates the level
     def generate (self, seed = None):
         print ("Starting level", self.difficulty)
 
         if seed is None:
-            seed = random.randint (0,999999)
+            seed = random.randint (0,2147483647)    # maximum int size for maximum number of seeds :)
+
         random.seed (seed)      
         print (seed)
+
+        self.stats.Seeds.append (str(seed))
 
         # number of turfs to be generated
         self.turfno = random.randint (math.ceil (self.difficulty / 2), math.ceil(self.difficulty * 1.5))
