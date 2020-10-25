@@ -16,6 +16,7 @@ class FroggersGame (Game):
         super().__init__(title = "Froggers", width=w, height=h)
         self.ChangeScreen (MainMenuScreen(self))
 
+        # initialise tkinter
         root = tk.Tk()
         root.withdraw()
 
@@ -29,5 +30,5 @@ class FroggersGame (Game):
         super().Run()
 
 # entry point
-game = FroggersGame()
+game = FroggersGame(1366, 768)
 game.Run()  

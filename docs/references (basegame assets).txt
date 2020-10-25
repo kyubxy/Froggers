@@ -4,7 +4,7 @@ img_roadstrip
 https://opengameart.org/node/8889
 
 img_railstrip
-TODO
+https://opengameart.org/content/railroad-tracks
 
 frog player
 http://pixelartmaker.com/art/7efb637cfe0d5f5
@@ -16,33 +16,45 @@ cars
 https://opengameart.org/content/free-top-down-car-sprites-by-unlucky-studio
 
 train
-TODO
+https://www.irasutoya.com/2016/03/blog-post_781.html
 
 img_lives
 https://opengameart.org/content/heart-pixel-art
 
-img_cave
+img_cave, img_caveoccupied, img_playercurrent img_playerdead
 me
 
 img_log
 https://www.gran-turismo.com/gb/gtsport/user/profile/3646314/gallery/all/decal/3646314/5764617425638163968
+
+img_water
+https://opengameart.org/content/texture-water
 
 SOUND EFFECTS
 
 se_button
 https://www.kshootmania.com/download.html (KSHOOT MANIA: time_sel.wav)
 
-jump
+jump 1-4
 https://opengameart.org/content/platformer-jumping-sounds
 
 https://opengameart.org/content/oldschool-win-and-die-jump-and-run-sounds
 
+se_roundend se_death
+https://opengameart.org/content/oldschool-win-and-die-jump-and-run-sounds
 
 MUSIC
 
 bgm_gachaplay
 kirara fantasia
 
+bgm_gameplay
+me
 
+FONT
 
-bgm
+fnt_Berlin
+https://www.1001fonts.com/berlin-font.html
+
+fnt_VanillaExtract
+https://www.1001fonts.com/vanilla-extract-font.html

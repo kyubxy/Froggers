@@ -11,16 +11,16 @@ class GachaplayScreen (Screen):
         self.Add (SpriteText("gachaplay"))
 
         # roll button
-        self.RollButton = FroggerButton (self.game, self, "roll", clickEventName="roll")
+        self.RollButton = FroggerButton (game, self, "roll", clickEventName="roll")
         self.RollButton.set_Rect (pygame.Rect (10, 200, 200, 50))
         self.Add (self.RollButton)
 
         # back button
-        self.BackButton = FroggerButton (self,game, self, "back", clickEventName="back")
+        self.BackButton = FroggerButton (game, self, "back", clickEventName="back")
         self.BackButton.set_Rect (pygame.Rect (10, 300, 200, 50))
         self.Add (self.BackButton)
 
-        pygame.mixer.music.load ("res/bgm_gachaplay.mp3")
+        pygame.mixer.music.load ("res/bgm/bgm_gachaplay.mp3")
         pygame.mixer.music.play()
 
     def roll (self):

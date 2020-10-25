@@ -29,9 +29,10 @@ class Level (GeometricGroup):
     def generate (self, seed = None):
         print ("Starting level", self.difficulty)
 
+
         if seed is None:
             seed = random.randint (0,2147483647)    # maximum int size for maximum number of seeds :)
-
+            
         random.seed (seed)      
         print (seed)
 

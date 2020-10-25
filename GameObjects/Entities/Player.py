@@ -29,8 +29,8 @@ class Player (Sprite):
         # properties
         self.Alive = True   # determines if player is alive or is just a sludge of mangled frog parts
         self.Winning = False
-        self.Lives = 5      # 0 lives means a game over
-        self.Frogs = 5      # total number of players
+        self.Lives = LIVES      # 0 lives means a game over
+        self.Frogs = FROGS      # total number of players
 
         # key strokes require two keyboard states
         self.oldkeystate = pygame.key.get_pressed()
@@ -84,9 +84,6 @@ class Player (Sprite):
     def handleInput (self):
         self.newkeystate = pygame.key.get_pressed()
 
-        if get_keydown (self.oldkeystate, self.newkeystate, [pygame.K_ESCAPE]):
-            pygame.event.post (pygame.event.Event (PAUSE))
-
         if self.Alive and not self.Winning:
             # left
             if get_keydown (self.oldkeystate, self.newkeystate, [pygame.K_LEFT, pygame.K_a]): 
@@ -137,6 +134,7 @@ class Player (Sprite):
         self.game.ResourceCache.Resources["se_jump_{0}".format(random.randint (1,4))].play()
 
     def win (self):
+        self.game.ResourceCache.Resources["se_roundend"].play()
         self.Winning = True
         self.image = self.hideimg
         pygame.event.post (pygame.event.Event (WIN))
@@ -165,6 +163,7 @@ class Player (Sprite):
                 
     # this method handles actual loss of the game
     def die (self):
+        self.game.ResourceCache.Resources["se_death"].play()
         self.Alive = False
         self.image = self.deadimg
         self.Scale (64,64)

@@ -18,6 +18,9 @@ class GameScreen (Screen):
         
         self.res = self.game.ResourceCache.Resources
 
+        pygame.mixer.music.load ("res/bgm/bgm_gameplay.mp3")
+        pygame.mixer.music.play()
+
         self.difficulty = 1
 
         # Game stats
@@ -65,7 +68,7 @@ class GameScreen (Screen):
         self.Add (self.frogsdisplay)
 
         # points counter
-        self.pointscounter = SpriteText ("0", font = self.res["fnt_Berlin_24"])
+        self.pointscounter = SpriteText ("0", font = self.res["fnt_Berlin_48"])
         self.Add (self.pointscounter)
 
         # time display
@@ -77,10 +80,25 @@ class GameScreen (Screen):
 
         # level display
         self.levelText = SpriteText ("Level 1", font = self.res["fnt_Berlin_24"])
+        self.levelText.Background = [0,0,0]
         self.Add (self.levelText)
+
+        # empty surface
+        self.emptysurf = pygame.Surface ((1,1))
         
+        # time taken to get one frog from start to finish
+        self.runTime = 0
+        self.runStart = self.startTime
+
+        # time taken to clear the level
+        self.levelTime = 0
+        self.levelStart = self.startTime
+
     def Update (self):
         super().Update()
+
+        self.runTime = pygame.time.get_ticks() - self.runStart
+        self.levelTime = pygame.time.get_ticks() - self.levelStart
 
         self.totalTime = pygame.time.get_ticks() - self.startTime
         self.timeText.SetText (str(round (self.totalTime / 1000)) + "/sec")
@@ -104,7 +122,13 @@ class GameScreen (Screen):
                 # next stage
                 if self.player.Frogs == 0:
                     self.difficulty += 1
-                    self.player.Frogs = 5
+                    self.player.Frogs = FROGS
+
+                    self.stats.Points += round (1000000000 / self.levelTime + self.difficulty * 40000)
+                    self.stats.leveltimes.append (self.levelTime)
+
+                    self.levelTime = 0
+                    self.levelStart = pygame.time.get_ticks()
 
                     if self.difficulty % 2 == 0 and self.player.Lives < 7:
                         self.player.Lives += 1
@@ -132,9 +156,7 @@ class GameScreen (Screen):
                     self.move_to_front (self.levelText)
                     self.move_to_front (self.timeText)
 
-                    self.stats.Points += self.difficulty * 100
-
-                self.msgtext.SetText ("")
+                self.msgtext.image = self.emptysurf
 
                 # account for the updated draw stack
                 self.Remove (self.livesdisplay)
@@ -144,14 +166,21 @@ class GameScreen (Screen):
                 self.Add (self.livesdisplay)
                 self.Add (self.frogsdisplay)
 
+
             if event.type == DEATH:
                 self.msgtext.SetText ("You died, press the space key to continue")
-                self.msgtext.rect.y = pygame.display.get_surface().get_size()[1] / 2 - self.msgtext.rect.height / 2
+                self.msgtext.rect.x = pygame.display.get_surface().get_size()[0] / 2 - self.msgtext.image.get_size()[0] / 2
+                self.msgtext.rect.y = pygame.display.get_surface().get_size()[1] / 2 - self.msgtext.image.get_size()[1] / 2
 
             if event.type == WIN:
                 self.msgtext.SetText ("Nice work! press the space key to continue")
-                self.msgtext.rect.y = pygame.display.get_surface().get_size()[1] / 2 - self.msgtext.rect.height / 2
-                self.stats.Points += 100
+                self.msgtext.rect.x = pygame.display.get_surface().get_size()[0] / 2 - self.msgtext.image.get_size()[0] / 2
+                self.msgtext.rect.y = pygame.display.get_surface().get_size()[1] / 2 - self.msgtext.image.get_size()[1] / 2
+                self.stats.Points += round (10000000 / self.runTime + self.difficulty * 100)
+                self.stats.runtimes.append (self.runTime)
+
+                self.runTime = 0
+                self.runStart = pygame.time.get_ticks()
 
     def Add (self, sprite):
         super().Add(sprite)

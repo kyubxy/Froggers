@@ -12,6 +12,9 @@ class MainMenuScreen (Screen):
     def __init__ (self, game):
         super().__init__(game)
 
+        pygame.mixer.music.load ("res/bgm/bgm_menuloop.mp3")
+        pygame.mixer.music.play()
+
         game.ResourceCache.LoadDirectory ("font")
         game.ResourceCache.LoadDirectory ("se")
 
@@ -20,7 +23,7 @@ class MainMenuScreen (Screen):
         self.Add (self.title)
         
         # author
-        self.author = SpriteText ("Justin Tieu", 24, font = game.ResourceCache.Resources["fnt_VanillaExtract_24"])
+        self.author = SpriteText ("Justin Tieu 2020", font = game.ResourceCache.Resources["fnt_VanillaExtract_20"])
         self.author.rect.y = pygame.display.get_surface().get_size()[1] - self.author.rect.height
         self.Add (self.author)
 
