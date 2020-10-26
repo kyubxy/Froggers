@@ -1,5 +1,6 @@
 import pygame
 
+# loads image formats and returns surfaces
 class ImageLoader:
     def __init__(self):
         pass

@@ -38,10 +38,12 @@ class GeometricGroup (pygame.sprite.LayeredUpdates):
         for sprite in self.sprites():
             self.UpdateSpriteTransform (sprite)
 
+    # add sprites
     def Add (self, sprite):
         self.UpdateSpriteTransform (sprite) # update the sprite's position before adding
         self.add (sprite)
 
+    # remove sprites
     def Remove (self, sprite):
         self.remove (sprite)
 

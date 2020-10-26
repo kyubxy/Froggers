@@ -7,12 +7,19 @@ import math
 # asthetic details about buttons
 class ButtonTheme:
     def __init__(self):
+        # default colour
         self.unclickedColour = [255,255,255]
+        # colour when the button is touching mouse
         self.hoverColour = [163,163,163]
+        # colour when the left click is being pressed
         self.clickColour = [79, 79, 79]
+        # colour of label
         self.labelColour = [0,0,0]
+        # colour of button when it is in the disabled state
         self.disabledColour = [54,54,54]
-        self.font = None    # nonetype for default font
+        # font of label. Leave as none for default font
+        self.font = None    
+        # sound made by the button when pressed. Leave as None for no sound
         self.pressedsound = None    # path to pressed sound
 
 # contains the background and clickable logic 
@@ -34,6 +41,7 @@ class ClickablePane (Sprite, MouseListener):
 
     def update (self):
         if self.Enabled:
+            # handle colour logic
             if self.rect.collidepoint (pygame.mouse.get_pos()):
                 self.image.fill(self.theme.hoverColour)
                 if (pygame.mouse.get_pressed()[0]):
@@ -44,6 +52,7 @@ class ClickablePane (Sprite, MouseListener):
             self.image.fill (self.theme.disabledColour)
 
     def MouseDown (self, event):
+        # handle clicking logic
         if (event.button == 1):     # check for left clicks
             if (self.rect.collidepoint (event.pos)):
                 # safely call the observer's OnClick method
@@ -90,10 +99,12 @@ class Button (pygame.sprite.OrderedUpdates):
         if self._enabled:
             self._click()
 
+    # enable button operations
     def Enable (self):
         self._enabled = True
         self._pane.Enabled = True
 
+    # disable button operations
     def Disable (self):
         self._enabled = False
         self._pane.Enabled = False

@@ -20,6 +20,7 @@ class GachaplayScreen (Screen):
         self.BackButton.set_Rect (pygame.Rect (10, 300, 200, 50))
         self.Add (self.BackButton)
 
+        # play bgm
         pygame.mixer.music.load ("res/bgm/bgm_gachaplay.mp3")
         pygame.mixer.music.play()
 

@@ -8,6 +8,7 @@ sys.path.insert (0, "Framework")
 
 from Game import *
 from Screens.MainMenuScreen import *
+from Screens.GameOverScreen import *
 import constants
 
 # Froggers game instance

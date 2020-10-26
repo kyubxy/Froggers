@@ -3,10 +3,10 @@ from Sprite import *
 
 # all text is drawn as a sprite
 class SpriteText (Sprite):
-    def __init__(self, text, size = 48, fontPath = None, font = None):
+    def __init__(self, text, size = 48, fontPath = None, font = None, colour = [255,255,255]):
 
-        self._colour = [255,255,255]
-        self.Background = None
+        self.Background = None          # text background
+        self._colour = colour           # colour of text
         self._text = text
 
         # if there isn't any font specified, use the system default
@@ -18,22 +18,26 @@ class SpriteText (Sprite):
         else:
             self.Font = pygame.font.Font (fontPath, size)
 
-        # draw the font through the constructor
+        # draw the text through the constructor
         super().__init__(img = self.Font.render (self._text, True, self._colour, self.Background))
 
     def update (self):
         super().update()
 
+    # change the text
     def SetText (self, text):
         self._text = text
         self.UpdateText() 
 
+    # change the colour
     def SetColour (self, col):
         self._colour = col
         self.UpdateText()
 
+    # call this to rerender the text
     def UpdateText (self):
         self.image = self.Font.render (self._text, True, self._colour, self.Background)
 
+    # removes all instances from all groups
     def kill (self):
         super().kill()

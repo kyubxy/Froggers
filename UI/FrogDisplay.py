@@ -9,6 +9,7 @@ class FrogDisplay (pygame.sprite.Group):
         self.colouredfrog = game.ResourceCache.Resources ["img_playercurrent"]
         self.UpdateFrogs()
 
+    # update the frog display according to how many frogs are contained within the player
     def UpdateFrogs (self):
         self.empty()
         for frog in range(self.player.Frogs):

@@ -1,6 +1,7 @@
 from GameObjects.Entities.Obstacle import *
 import random
 
+# log obstacle
 class Log (Obstacle):
     def __init__(self, dir, pos, speed, width, game):
         self.direc = dir

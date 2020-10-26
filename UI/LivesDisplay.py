@@ -1,6 +1,7 @@
 import pygame
 from Framework.Sprite import *
 
+# shows number of lives
 class LivesDisplay (pygame.sprite.Group):
     def __init__(self, player, game):
         super().__init__()

@@ -24,6 +24,16 @@ class Screen (pygame.sprite.LayeredUpdates):
         self.frameratecounter.rect.x = pygame.display.get_surface().get_size()[0] - self.frameratecounter.image.get_size()[0]
         self.frameratecounter.rect.y = pygame.display.get_surface().get_size()[1] - self.frameratecounter.image.get_size()[1]
 
+    # turn fps counter on
+    def EnableFPS (self):   
+        self.Add (self.frameratecounter)
+
+    # turn fps counter off
+    def DisableFPS (self):  
+        self.frameratecounter.kill()
+
+    # override parent methods
+
     def Add (self, sprite):
         super(Screen, self).add (sprite)
         self.move_to_front (self.frameratecounter)
@@ -33,9 +43,3 @@ class Screen (pygame.sprite.LayeredUpdates):
 
     def Draw (self, win):
         super (Screen, self).draw (win)
-
-    def EnableFPS (self):   # turn fps counter on
-        self.Add (self.frameratecounter)
-
-    def DisableFPS (self):  # turn fps counter off
-        self.frameratecounter.kill()

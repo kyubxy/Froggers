@@ -3,11 +3,15 @@ from Framework.Sprite import *
 # anything that moves along a turf, not necessarily harmful
 class Obstacle (Sprite):
     def __init__(self, path, direc, pos, speed, game):
-        self.dir = direc
-        super().__init__(img = game.ResourceCache.Resources[path])
-        self.rect.x = pos[0] if direc == 1 else pygame.display.get_surface().get_size()[0] - pos[0]
+        self.dir = direc        # direction of the obstacle {-1,1}
+        super().__init__(img = game.ResourceCache.Resources[path])  # load the texture
+        # set initial position
+
+        # ensure the initial position is always on screen
+        self.rect.x = pos[0] if direc == 1 else pygame.display.get_surface().get_size()[0] - pos[0] 
         self.rect.y = pos[1]
-        self.speed = speed
+
+        self.speed = speed # speed of the obstacle
 
     def Scale (self, width, height):
         super().Scale(width, height)
@@ -15,7 +19,10 @@ class Obstacle (Sprite):
     def update (self):
         super().update()
                 
+        # move the obstacle
         self.rect.x += self.dir * self.speed
+
+        # wrap the obstacle around the screen
         if self.dir == 1:
             if (self.rect.left > pygame.display.get_surface().get_size()[0]):
                 self.rect.x = -100 - self.rect.width

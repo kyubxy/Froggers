@@ -1,6 +1,8 @@
 import pygame
 from constants import *
 
+# TODO, support cache loading directly
+# anything that draws to the screen must be or inherit from this type
 class Sprite (pygame.sprite.Sprite):
     def __init__(self, path = "", img = None):
         super().__init__()
@@ -14,17 +16,20 @@ class Sprite (pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.paused = False
 
+    # update the sprite's bounding box, call this whenever self.image changes
+    #def UpdateRect (self):
+
+    # changes width and height
     def Scale (self, width, height):
-        # update rect
         self.rect.width = width
         self.rect.height = height
-
         # perform scale
-        self.image = pygame.transform.scale(self.image, (int(width), int(height)))     
+        self.image = pygame.transform.scale(self.image, (int(width), int(height)))  
 
-    # used by pygame group
+    # used by pygame group, called once per frame
     def update (self):
         pass
 
+    # removes all instances of this object from all pygame groups
     def kill (self):
         super().kill()

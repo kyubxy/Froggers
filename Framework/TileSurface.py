@@ -10,7 +10,7 @@ def TileSurface (coverarea, path = "", tile = None, tilesize = None):
     else:
         tile = tile
             
-    tilesize = (tile.get_rect().width,tile.get_rect().height) if tilesize is None else tilesize    # size of each of the tiles
+    tilesize = (tile.get_rect().width, tile.get_rect().height) if tilesize is None else tilesize    # size of each of the tiles
     tile = pygame.transform.scale (tile, tilesize)                 # scale tile with tilesize
 
     # generate empty surface

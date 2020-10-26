@@ -29,14 +29,14 @@ class Level (GeometricGroup):
     def generate (self, seed = None):
         print ("Starting level", self.difficulty)
 
-
+        # if no seed is available, generate a random one
         if seed is None:
             seed = random.randint (0,2147483647)    # maximum int size for maximum number of seeds :)
             
-        random.seed (seed)      
+        random.seed (seed)      # set the seed   
         print (seed)
 
-        self.stats.Seeds.append (str(seed))
+        self.stats.Seeds.append (str(seed)) # add seed to the seeds list
 
         # number of turfs to be generated
         self.turfno = random.randint (math.ceil (self.difficulty / 2), math.ceil(self.difficulty * 1.5))
@@ -79,6 +79,7 @@ class Level (GeometricGroup):
     # marginally increases performance
     def performculling (self):
         for t in self.levelturfs:
+            # check if the turf is on screen
             if (t.background.rect.bottom >= 0 and t.background.rect.y < pygame.display.get_surface().get_size()[1]):
                 t.Active()
                 t.Update()

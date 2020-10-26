@@ -1,6 +1,7 @@
 from GameObjects.turfs.Turf import Turf
 from Framework.Sprite import *
 
+# initial grass turf
 class GrassTurf (Turf):
     def __init__(self, game):
         Turf.__init__ (self, 3, "img_grass", game)
@@ -43,6 +44,7 @@ class Cave (Sprite):
         self.Occupied = False   # whether the player can enter
         self.game = game
 
+    # change cave state to occupied
     def Occupy (self):
         self.image = self.game.ResourceCache.Resources["img_caveoccupied"]
         self.Scale (64,64)

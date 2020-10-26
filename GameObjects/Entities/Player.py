@@ -10,6 +10,7 @@ from GameObjects.Entities.Log import *
 from GameObjects.turfs.GrassTurf import Cave
 from GameObjects.turfs.LakeTurf import *
 
+# main frog
 class Player (Sprite):
     def __init__(self, level, game):
         self.game = game
@@ -45,17 +46,20 @@ class Player (Sprite):
 
     def update (self):
         super().update()
+   
+        # move player according to controls
+        self.handleInput()
 
-        if (not self.paused):     
-            self.handleInput()
-            if self.Alive:
-                self.collision()
+        if self.Alive:
+            # handle all player collisions
+            self.collision()
 
-            self.logging = False
+        # true if the player is touching a log
+        self.logging = False
 
-            # handle offscreen deaths
-            if self.rect.x > pygame.display.get_surface().get_size()[0] or self.rect.x + self.rect.width < 0:
-                self.die()
+        # handle offscreen deaths
+        if self.rect.x > pygame.display.get_surface().get_size()[0] or self.rect.x + self.rect.width < 0:
+            self.die()
 
     # collision detection
     def collision (self):
@@ -82,6 +86,7 @@ class Player (Sprite):
 
     # input
     def handleInput (self):
+        # continually update the new state
         self.newkeystate = pygame.key.get_pressed()
 
         if self.Alive and not self.Winning:
@@ -120,53 +125,69 @@ class Player (Sprite):
 
             self.oldmousestate = self.newmousestate
 
+            # exit the win screen
             if self.Winning:
                 if self.newkeystate [pygame.K_SPACE]:
                     self.restart()        
         else:
+            # exit the death screen
             if self.newkeystate [pygame.K_SPACE]:
                 self.restart()       
 
-        # update old state
+        # update old state after making all the key checks
         self.oldkeystate = self.newkeystate
 
+    # plays a random jump sound
     def playJumpSound (self):
         self.game.ResourceCache.Resources["se_jump_{0}".format(random.randint (1,4))].play()
 
+    # called when the player touches a cave
     def win (self):
         self.game.ResourceCache.Resources["se_roundend"].play()
         self.Winning = True
         self.image = self.hideimg
         pygame.event.post (pygame.event.Event (WIN))
 
-    # called after death
+    # called when the level restarts
     def restart (self):
         self.rect.x = 64 * 8
-        if (self.absolute_y > pygame.display.get_surface().get_size()[1] / 2):  # only move the background if it has been moved
+        # only move the background if it has been moved
+        if (self.absolute_y > pygame.display.get_surface().get_size()[1] / 2):  
             # offset by rounding to the nearest 64
             self.level.change_pos_y (self.absolute_y - math.ceil(pygame.display.get_surface().get_size()[1] / 128) * 64 + 64) 
 
+        # reset positions
         self.rect.y = 0
         self.absolute_y = 0
 
         if (self.Winning):
+            # remove a frog after moving one into the cave
             self.Frogs -= 1
 
         if (not self.Alive):
+            # remove a life after dying
             self.Lives -= 1
             
+        # reset player attributes
         self.Alive = True
         self.Winning = False
         self.image = self.aliveimg
         self.Scale (64,64)
+
+        # broadcast event to the rest of the game
         pygame.event.post (pygame.event.Event (RESTART))
                 
     # this method handles actual loss of the game
     def die (self):
+        # play death sound
         self.game.ResourceCache.Resources["se_death"].play()
+
+        # handle variables
         self.Alive = False
         self.image = self.deadimg
         self.Scale (64,64)
+
+        # broadcast event to the rest of the game
         pygame.event.post (pygame.event.Event (DEATH))
 
     # this method handles pygame.kill() it removes this instance from all groups
