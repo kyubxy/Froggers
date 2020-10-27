@@ -3,11 +3,15 @@ from Framework.SpriteText import *
 import Screens.GachaScreen 
 from UI.FroggerButton import FroggerButton
 import random
+from Framework.Sprite import *
 
 class GachaplayScreen (Screen):
-    def __init__ (self, game):
+    def __init__ (self, game, rolls):
         super().__init__(game)
 
+        game.ResourceCache.LoadDirectory ("textures")
+
+        self.rolls = rolls
         self.Add (SpriteText("gachaplay"))
 
         # roll button
@@ -24,14 +28,19 @@ class GachaplayScreen (Screen):
         pygame.mixer.music.load ("res/bgm/bgm_gachaplay.mp3")
         pygame.mixer.music.play()
 
+        self.d = Sprite (img = game.ResourceCache.Resources["img_cave"])
+        self.Add (self.d)
+        self.d.Rotate (45)
+
+    def generate_frogs(self, no):
+        frogs = []
+        for i in range (no):
+            frogs.append ()
+
+        return frogs
+
     def roll (self):
-        e = random.randrange (0, 10)
-        if (e == 1):
-            print ("rolled a 5 star")
-        elif (e == 2 or e == 3 or e == 4):
-            print ("rolled a 4 star")
-        else:
-            print ("rolled 3 star")
+        pass
 
     def back (self):
         self.game.ChangeScreen(Screens.GachaScreen.GachaScreen (self.game))

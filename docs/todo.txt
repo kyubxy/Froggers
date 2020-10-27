@@ -1,0 +1,5 @@
+- death effect
+- differentiate frogs from lives
+- make caves more obvious
+- turtles
+- hold to jump
