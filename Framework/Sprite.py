@@ -1,5 +1,6 @@
 import pygame
-from constants import *
+import math
+
 
 # anything that draws to the screen must be or inherit from this type
 # path can either be a direct path to image or resource name (if a resource cache is supplied)
@@ -21,7 +22,12 @@ class Sprite (pygame.sprite.Sprite):
 
     # TODO
     def Rotate(self, angle):
-        self.image = pygame.transform.rotozoom (self.image, angle, 300)
+        sidelength = self.rect.width * (math.sin (angle) + math.cos (angle))
+        newsurf = pygame.Surface ((sidelength, sidelength))
+
+        print (pixels)
+
+        #self.image = pygame.transform.rotozoom (self.image, angle, 300)
 
     # changes width and height
     def Scale (self, width, height):

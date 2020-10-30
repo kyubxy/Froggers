@@ -6,20 +6,19 @@ import tkinter as tk
 # (dont want a repeat of *last time*)
 sys.path.insert (0, "Framework")
 
-from Game import *
+from Framework.Game import *
 from Screens.MainMenuScreen import *
 from Screens.GameOverScreen import *
-import constants
-from ResourceManagement.ResourceCache import *
+from Framework.ResourceManagement.ResourceCache import *
+from gachaTools.CardCollection import *
 
 # Froggers game instance
 class FroggersGame (Game):
     def __init__(self, w=1366,h=768):
         super().__init__(title = "Froggers", width=w, height=h)
-        self.ChangeScreen (MainMenuScreen(self))
+        self.ChangeScreen (MainMenuScreen(self))                
 
-        self.CharacterCache = ResourceCache ()                  # contains playable characters
-        self.GachaCache = ResourceCache ("res/textures/gacha")  # contains gacha sprites, clear frequently
+        cardCollection = CardCollection (self) 
 
         # initialise tkinter
         root = tk.Tk()

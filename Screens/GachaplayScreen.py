@@ -1,9 +1,8 @@
 from Framework.Screen import *
 from Framework.SpriteText import *
-import Screens.GachaScreen 
-from UI.FroggerButton import FroggerButton
-import random
 from Framework.Sprite import *
+from UI.FroggerButton import FroggerButton
+import Screens.GachaScreen 
 
 class GachaplayScreen (Screen):
     def __init__ (self, game, rolls):
@@ -27,10 +26,6 @@ class GachaplayScreen (Screen):
         # play bgm
         pygame.mixer.music.load ("res/bgm/bgm_gachaplay.mp3")
         pygame.mixer.music.play()
-
-        self.d = Sprite (img = game.ResourceCache.Resources["img_cave"])
-        self.Add (self.d)
-        self.d.Rotate (45)
 
     def generate_frogs(self, no):
         frogs = []

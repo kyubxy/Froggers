@@ -23,7 +23,7 @@
             "name": "Specific testcase",
             "type":"python",
             "request": "launch",
-            "program":"Framework/tests/TileTest.py",
+            "program":"Framework/tests/RotateTest.py",
             "console": "integratedTerminal"
         }
     ]

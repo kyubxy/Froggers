@@ -1,6 +1,9 @@
 import pygame
 import os
 import os.path
+import ntpath
+
+from pygame import Surface
 from ResourceManagement.ImageLoader import *
 from ResourceManagement.SoundLoader import *
 from ResourceManagement.FontLoader import *
@@ -34,31 +37,41 @@ class ResourceCache:
             print ("directory {0} has already been loaded".format (directory))
             return
 
-        for asset in os.listdir (os.path.join (self.resDirectory, directory)):
-            print ("loading {0}...".format (asset))
-            assetType = asset.partition("_")[0] # get the asset type (se_,img_ etc)
-
-            # check if the resource is supported by loaders
-            if assetType in self.Loaders:
-                # add the resource to the cache
-
-                # find the appropriate loader
-                _loader = self.Loaders[assetType]
-                # get the full path of the asset
-                assetpath = os.path.join (self.resDirectory, directory, asset)
-
-                # load the asset and add it to the dictionary
-                if hasattr (_loader, "get_asset"):      # get only one asset
-                    self.Resources[os.path.splitext (asset)[0]] = _loader.get_asset (assetpath)
-                elif hasattr (_loader, "get_assets"):   # add an existing dictionary of assets to this dictionary
-                    self.Resources.update (_loader.get_assets (assetpath))
-                
-            else:
-                # note that text files may still contain valuable information
-                if os.path.splitext(asset)[1] == ".txt":
-                    print ("{0} is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache".format (asset))
-                else:
-                    print ("{0} of type {1} is not a supported asset and was not loaded by the cache".format (asset, assetType))
+        for dirpath,_,assetnames in os.walk (os.path.join (self.resDirectory, directory)):
+            for assetname in assetnames:
+                self.LoadAsset (os.path.join(dirpath, assetname), addResDir=False)
 
         # add the directory that was just loaded into the loaded directories
         self.LoadedDirectories.append (directory)
+
+    # load a single asset through a relative path
+    # the resource folder does not need to be added to the path if addResDir is true
+    def LoadAsset (self, path, resname = None, addResDir = True):
+        asset = os.path.join (self.resDirectory, path) if addResDir else path
+
+        print ("loading {0}...".format (asset))
+        assetname = os.path.splitext(ntpath.split (asset)[1])[0]
+        assetType = assetname.partition("_")[0] # get the asset type (se_,img_ etc)
+
+        # check if the resource is supported by loaders
+        if assetType in self.Loaders:
+            # add the resource to the cache
+
+            # find the appropriate loader
+            _loader = self.Loaders[assetType]
+            # get the full path of the asset
+            #assetpath = os.path.join (self.resDirectory, directory, asset)
+
+            # load the asset and add it to the dictionary
+            if hasattr (_loader, "get_asset"):      # get only one asset
+                resname = assetname if resname is None else resname     # give the asset a custom name only if there is one
+                self.Resources[resname] = _loader.get_asset (asset)
+            elif hasattr (_loader, "get_assets"):   # add an existing dictionary of assets to this dictionary
+                self.Resources.update (_loader.get_assets (asset))
+            
+        else:
+            # note that text files may still contain valuable information
+            if os.path.splitext(asset)[1] == ".txt":
+                print ("{0} is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache".format (asset))
+            else:
+                print ("{0} of type {1} is not a supported asset and was not loaded by the cache".format (asset, assetType))
