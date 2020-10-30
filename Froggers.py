@@ -16,13 +16,15 @@ from gachaTools.CardCollection import *
 class FroggersGame (Game):
     def __init__(self, w=1366,h=768):
         super().__init__(title = "Froggers", width=w, height=h)
-        self.ChangeScreen (MainMenuScreen(self))                
 
         cardCollection = CardCollection (self) 
 
         # initialise tkinter
         root = tk.Tk()
         root.withdraw()
+
+        #self.ChangeScreen (MainMenuScreen(self))
+        self.ChangeScreen (GachaplayScreen(self, 8))    
 
     def Update (self):
         super().Update()

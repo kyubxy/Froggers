@@ -19,13 +19,10 @@ class CardCollection:
 		# earned frogs and their data
 		# key: frog id - value: frog meta 
 		self.FrogCollection = dict()
-		self.get_frogs()
-
-		self.summon ("tippy1", 5)
-		self.write_frogs()
-
 		self.read_frogs()
-		print ()
+
+		self.add_frog ("tippy1", 5)
+		self.write_frogs()
 
 	# update frog list, add the METADATA
 	def read_frogs (self) -> list():
@@ -56,42 +53,15 @@ class CardCollection:
 		# add to the dictionary
 		self.FrogCollection[id] = meta
 
-	def get_jacket (self, id):
-		# load the image. This step also doubles up as means of checking the card's existence
-		RelativeDirectory = "{0}_{1}".format (rarity, id)	# directory path of card
-		self.CharaCache.LoadAsset (os.path.join (RelativeDirectory, "img_player.png"), resname=id)
-		
-		# create a card from the file
-		card = Card (self.CharaCache.Resources[id], meta)
-
-		# add name to list
-		self.FrogCollection.append (meta["name"])
-		self.write_frogs()
-
-		return card
-'''
-	# summon a specic card given its ID
-	def summon (self, id, rarity) -> Card:
+	def get_jacket (self, id, rarity):
 		# load the image. This step also doubles up as means of checking the card's existence
 		RelativeDirectory = "{0}_{1}".format (rarity, id)	# directory path of card
 		self.CharaCache.LoadAsset (os.path.join (RelativeDirectory, "img_player.png"), resname=id)
 
-		# load the metadata
-		# intialise ini reading
-		self.config = configparser.ConfigParser ()
-
-		# load the ini
-		self.config.read (os.path.join (os.path.join ("res", "gacha", RelativeDirectory), "info.ini"))
-		meta = dict (self.config.items ("meta"))
+		# get metadata
+		meta = self.FrogCollection[id]
 		
 		# create a card from the file
 		card = Card (self.CharaCache.Resources[id], meta)
 
-		# add name to list
-		self.FrogCollection.append (meta["name"])
-		self.write_frogs()
-
 		return card
-
-	
-	'''

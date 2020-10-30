@@ -11,28 +11,21 @@ class GachaplayScreen (Screen):
         game.ResourceCache.LoadDirectory ("textures")
 
         self.rolls = rolls
-        self.Add (SpriteText("gachaplay"))
+        #self.Add (SpriteText("gachaplay"))
 
         # roll button
         self.RollButton = FroggerButton (game, self, "roll", clickEventName="roll")
         self.RollButton.set_Rect (pygame.Rect (10, 200, 200, 50))
-        self.Add (self.RollButton)
+        #self.Add (self.RollButton)
 
         # back button
         self.BackButton = FroggerButton (game, self, "back", clickEventName="back")
         self.BackButton.set_Rect (pygame.Rect (10, 300, 200, 50))
-        self.Add (self.BackButton)
+        #self.Add (self.BackButton)
 
         # play bgm
         pygame.mixer.music.load ("res/bgm/bgm_gachaplay.mp3")
         pygame.mixer.music.play()
-
-    def generate_frogs(self, no):
-        frogs = []
-        for i in range (no):
-            frogs.append ()
-
-        return frogs
 
     def roll (self):
         pass

@@ -1,7 +1,6 @@
 import pygame
 import math
 
-
 # anything that draws to the screen must be or inherit from this type
 # path can either be a direct path to image or resource name (if a resource cache is supplied)
 class Sprite (pygame.sprite.Sprite):
@@ -20,14 +19,20 @@ class Sprite (pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect()
 
-    # TODO
+        self._originalimage = self.image
+
+
     def Rotate(self, angle):
-        sidelength = self.rect.width * (math.sin (angle) + math.cos (angle))
-        newsurf = pygame.Surface ((sidelength, sidelength))
+        # prevent the angle from being too large
+        modangle = angle % 360
+        # rotate the image
+        self.image = pygame.transform.rotate (self._originalimage, modangle)
 
-        print (pixels)
-
-        #self.image = pygame.transform.rotozoom (self.image, angle, 300)
+        # update the center of the rectangle. 
+        # the size of the surface changes and so too does the center so the current rectangle needs its center updated accordingly
+        old_x, old_y = self.rect.center
+        self.rect = self.image.get_rect()
+        self.rect.center = (old_x, old_y)
 
     # changes width and height
     def Scale (self, width, height):
