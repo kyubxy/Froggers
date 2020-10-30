@@ -37,6 +37,8 @@ class GeometricGroup (pygame.sprite.LayeredUpdates):
     def UpdateTransforms (self):
         for sprite in self.sprites():
             self.UpdateSpriteTransform (sprite)
+        
+        self._position = (0,0)
 
     # add sprites
     def Add (self, sprite):

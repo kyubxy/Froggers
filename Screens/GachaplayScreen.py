@@ -2,6 +2,7 @@ from Framework.Screen import *
 from Framework.SpriteText import *
 from Framework.Sprite import *
 from UI.FroggerButton import FroggerButton
+from GameObjects.gacha.gachaAnimation import *
 import Screens.GachaScreen 
 
 class GachaplayScreen (Screen):
@@ -27,6 +28,10 @@ class GachaplayScreen (Screen):
         pygame.mixer.music.load ("res/bgm/bgm_gachaplay.mp3")
         pygame.mixer.music.play()
 
+        # gacha animation
+        self.animation_container = FishingAnimation (self.game)
+        self.Add (self.animation_container)
+
     def roll (self):
         pass
 
@@ -35,6 +40,7 @@ class GachaplayScreen (Screen):
 
     def Update (self):
         super().Update()
+        self.animation_container.update()
 
     def Add (self, sprite):
         super().Add(sprite)

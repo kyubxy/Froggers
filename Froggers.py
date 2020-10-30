@@ -23,8 +23,8 @@ class FroggersGame (Game):
         root = tk.Tk()
         root.withdraw()
 
-        #self.ChangeScreen (MainMenuScreen(self))
-        self.ChangeScreen (GachaplayScreen(self, 8))    
+        self.ChangeScreen (MainMenuScreen(self))
+        #self.ChangeScreen (GachaplayScreen(self, 8))    
 
     def Update (self):
         super().Update()
