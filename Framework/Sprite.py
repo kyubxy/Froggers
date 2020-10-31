@@ -18,10 +18,11 @@ class Sprite (pygame.sprite.Sprite):
             self.image = img
 
         self.rect = self.image.get_rect()
+        self.angle = 0
 
         self._originalimage = self.image
 
-
+    # rotate object about the vertical axis
     def Rotate(self, angle):
         # prevent the angle from being too large
         modangle = angle % 360
@@ -33,6 +34,14 @@ class Sprite (pygame.sprite.Sprite):
         old_x, old_y = self.rect.center
         self.rect = self.image.get_rect()
         self.rect.center = (old_x, old_y)
+
+        self.angle = modangle
+
+    # you can also modify self.image directly however problems arise when the sprite is rotated and is generally not recommended
+    def ChangeImage (self, surface):
+        self.image = surface
+        self.rect = surface.get_rect()
+        self._originalimage = surface
 
     # changes width and height
     def Scale (self, width, height):

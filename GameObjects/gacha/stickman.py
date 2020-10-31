@@ -1,7 +1,6 @@
 from Framework.Sprite import Sprite
-from Framework.Shapes.Circle import Circle
-import pygame
 from Framework.GeometricGroup import *
+import pygame
 import math
 
 class Stickman (GeometricGroup):
@@ -55,6 +54,11 @@ class Stickman (GeometricGroup):
         self.arm2.rect.x = 1
         self.Add (self.arm2)
 
+        # rod
+        self.rod = Rod (self.game, self)
+        self.rod.change_pos((-40,-80))
+        self.Add (self.rod)
+
         # OTHER VARIABLES
 
         # whether or not to play the walking animation
@@ -64,6 +68,9 @@ class Stickman (GeometricGroup):
 
     def update (self):
         self.timer = pygame.time.get_ticks() / 20
+
+        # update rod
+        self.rod.update()
 
         # walking animation
         if self.walking:
@@ -84,6 +91,8 @@ class Stickman (GeometricGroup):
         self.leg2.Rotate (self.leg2_angle)
         self.arm1.Rotate (self.arm1_angle)
         self.arm2.Rotate (self.arm2_angle)
+        # update the rod as well
+        self.rod.rod.Rotate (self.arm1_angle - 90)
 
     def change_pos_x (self, speed):
         self.walking = True
@@ -92,16 +101,29 @@ class Stickman (GeometricGroup):
     def change_pos_y (self, speed):
         super().change_pos_y (speed)
 
-class rod (GeometricGroup):
-    def __init__(self, game):
+class Rod (GeometricGroup):
+    def __init__(self, game, stickman):
         super().__init__ ()
 
         self.game = game
+        self.res = self.game.ResourceCache.Resources
+        self.stickman = stickman
 
         # rod
-        rod = Sprite ("img_linefull", resources=self.res) 
-        self.add ()
+        self.rod = Sprite ("img_rod", resources=self.res)
+        self.add (self.rod)
 
         # line
+        self.line = Sprite (img = pygame.Surface ((0,32)))
+        self.add (self.line)
 
-        # bobber
+        self.casting = False
+
+        self.t = 0
+
+    def update (self):
+        self.line.rect.x = self.rod.rect.x + 220
+        self.line.rect.y = self.rod.rect.y + 70
+        if self.casting:
+            self.t += 1
+            self.line.Scale (2, 32 + 5 * self.t)

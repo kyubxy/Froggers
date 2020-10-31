@@ -1,5 +1,4 @@
 import sys
-import pygame
 import tkinter as tk
 
 # add framework to sys path 
@@ -23,8 +22,8 @@ class FroggersGame (Game):
         root = tk.Tk()
         root.withdraw()
 
-        self.ChangeScreen (MainMenuScreen(self))
-        #self.ChangeScreen (GachaplayScreen(self, 8))    
+        self.ChangeScreen (GachaplayScreen(self, 8))  
+        #self.ChangeScreen (MainMenuScreen(self))    
 
     def Update (self):
         super().Update()
@@ -38,3 +37,7 @@ class FroggersGame (Game):
 # entry point
 game = FroggersGame(1366, 768)
 game.Run()  
+
+# frogger time kirara
+# frogara fantasia
+# frogger time meets fantasy RPG 

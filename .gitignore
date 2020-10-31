@@ -130,5 +130,5 @@ res/
 # seed packs
 SEEDPACKS/
 
-# vs code
-.vscode/
+# pickle files
+.pickle

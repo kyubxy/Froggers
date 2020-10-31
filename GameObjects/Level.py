@@ -7,7 +7,6 @@ from GameObjects.turfs.RailTurf import *
 from GameObjects.turfs.RoadTurf import *
 from GameObjects.turfs.GrassTurf import *
 from GameObjects.turfs.LakeTurf import *
-
 from Framework.KeyboardListener import *
 
 # the physical composition of the level itself.

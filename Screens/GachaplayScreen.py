@@ -26,11 +26,16 @@ class GachaplayScreen (Screen):
 
         # play bgm
         pygame.mixer.music.load ("res/bgm/bgm_gachaplay.mp3")
-        pygame.mixer.music.play()
+        #pygame.mixer.music.play()
 
-        # gacha animation
-        self.animation_container = FishingAnimation (self.game)
-        self.Add (self.animation_container)
+        # gacha animations
+        # introduction
+        self.intro_animation = IntroductionAnimation (self.game)
+        self.Add (self.intro_animation)
+
+        # fishing
+        self.fish_animation = FishingAnimation (self.game)
+        self.fish_animation.reset()
 
     def roll (self):
         pass
@@ -40,7 +45,15 @@ class GachaplayScreen (Screen):
 
     def Update (self):
         super().Update()
-        self.animation_container.update()
+
+        # play intro animation
+        intro_finished = self.intro_animation.play ()
+
+        if (intro_finished):
+            self.Add (self.fish_animation)
+            self.fish_animation.play()      
+
+            
 
     def Add (self, sprite):
         super().Add(sprite)
