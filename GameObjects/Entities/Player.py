@@ -119,8 +119,6 @@ class Player (Sprite):
                     self.absolute_y -= 64
                     self.playJumpSound()
 
-            self.oldmousestate = self.newmousestate
-
             # exit the win screen
             if self.Winning:
                 if self.newkeystate [pygame.K_SPACE]:

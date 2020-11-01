@@ -1,3 +1,4 @@
+from pickle import FALSE
 from Framework.Screen import *
 from Framework.SpriteText import *
 from UI.FroggerButton import FroggerButton
@@ -26,10 +27,10 @@ class GachaScreen (Screen):
         self.Add (self.BackButton)
 
     def Gacha1 (self):
-        self.game.ChangeScreen(GachaplayScreen (self.game, 1))
+        self.game.ChangeScreen(GachaplayScreen (self.game, 1, False))
 
     def Gacha10 (self):
-        self.game.ChangeScreen(GachaplayScreen (self.game, 10))
+        self.game.ChangeScreen(GachaplayScreen (self.game, 10, True))
 
     def back (self):
         self.game.ChangeScreen(Screens.MainMenuScreen.MainMenuScreen(self.game))

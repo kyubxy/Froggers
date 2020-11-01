@@ -11,16 +11,6 @@ class GachaplayScreen (Screen, MouseListener):
 
         game.ResourceCache.LoadDirectory ("textures")
 
-        # roll button
-        self.RollButton = FroggerButton (game, self, "roll", clickEventName="roll")
-        self.RollButton.set_Rect (pygame.Rect (10, 200, 200, 50))
-        #self.Add (self.RollButton)
-
-        # back button
-        self.BackButton = FroggerButton (game, self, "back", clickEventName="back")
-        self.BackButton.set_Rect (pygame.Rect (10, 300, 200, 50))
-        #self.Add (self.BackButton)
-
         # play bgm
         pygame.mixer.music.load ("res/bgm/bgm_gachaplay.mp3")
         pygame.mixer.music.play()
@@ -39,9 +29,6 @@ class GachaplayScreen (Screen, MouseListener):
         self.cards = self.game.cardCollection.roll_gacha(rolls, guarantee4)
         self.rolls = rolls
 
-    def back (self):
-        self.game.ChangeScreen(Screens.GachaScreen.GachaScreen (self.game))
-
     def Update (self):
         super().Update()
 
@@ -52,7 +39,7 @@ class GachaplayScreen (Screen, MouseListener):
             self.fish_animation.play()   
 
     def Roll (self):
-        if self.rolls > 0:
+        if self.rolls >= 0:
             # get random card
             self.remove (self.intro_animation)
             self.remove (self.fish_animation)
@@ -60,8 +47,16 @@ class GachaplayScreen (Screen, MouseListener):
             self.add (self.fish_animation)
             self.move_to_front(self.frameratecounter)
             self.rolls -= 1
+        else:
+            self.remove (self.fish_animation)
+            self.Add (SpriteText ("Results", font = self.game.ResourceCache.Resources["fnt_VanillaExtract_48"]))
+            self.game.cardCollection.write_frogs()
 
-        # TODO results
+            for cardno in range (len(self.cards)):
+                card = self.cards[cardno]
+                card.Scale (64,64)
+                card.rect.x += 64 * cardno
+                self.Add (card)
 
     def Add (self, sprite):
         super().Add(sprite)

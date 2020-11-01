@@ -91,7 +91,8 @@ class FishingAnimation (pygame.sprite.LayeredUpdates, MouseListener):
         super().__init__()
 
         self.game = game
-        self.res = self.game.ResourceCache.Resources
+        self.res = self.game.ResourceCache.Resources        
+        self.parent = parent
 
         # constants
         self.CIRCLE_RADIUS = 500
@@ -103,8 +104,6 @@ class FishingAnimation (pygame.sprite.LayeredUpdates, MouseListener):
         # window dimensions
         self.w, self.h = pygame.display.get_surface().get_size()
         self.center = (self.w - self.w // 2, self.h - self.h // 2)
-        
-        self.parent = parent
 
     def Start (self, card):
         self.empty ()
@@ -125,7 +124,7 @@ class FishingAnimation (pygame.sprite.LayeredUpdates, MouseListener):
         self.add (self.aux_circle_piece)
 
         # squares
-        self.coloured_square = Box (pygame.Rect (self.center[0] - self.COL_SQUARE_SIZE  // 2, self.center[1] - self.COL_SQUARE_SIZE  // 2, self.COL_SQUARE_SIZE , self.COL_SQUARE_SIZE ))
+        self.coloured_square = Box (pygame.Rect (self.center[0] - self.COL_SQUARE_SIZE  // 2, self.center[1] - self.COL_SQUARE_SIZE  // 2, self.COL_SQUARE_SIZE , self.COL_SQUARE_SIZE))
 
         self.square1 = Box (pygame.Rect (self.center[0] - self.SQUARE_SIZE // 2, self.center[1] - self.SQUARE_SIZE // 2, self.SQUARE_SIZE, self.SQUARE_SIZE), 25)
         self.square2 = Box (pygame.Rect (self.center[0] - self.SQUARE_SIZE // 2, self.center[1] - self.SQUARE_SIZE // 2, self.SQUARE_SIZE, self.SQUARE_SIZE), 25)
@@ -186,15 +185,16 @@ class FishingAnimation (pygame.sprite.LayeredUpdates, MouseListener):
         self.square2.Rotate (0)
         self.square3.Rotate (0)
         
+        self.wow = self.res["se_wow"]
 
     def play(self):
         # time elpased since start of animation
-        self.time = (pygame.time.get_ticks () - self.startTime) / 1000
+        self.time = (pygame.time.get_ticks () - self.startTime) / 500
 
         if self.animating:
-            self.square1.Rotate (10 * self.time ** 2)
-            self.square2.Rotate (15 * self.time ** 2)
-            self.square3.Rotate (20 * self.time ** 2) 
+            self.square1.Rotate (20 * self.time ** 2)
+            self.square2.Rotate (25 * self.time ** 2)
+            self.square3.Rotate (30 * self.time ** 2) 
             self.circle_piece.Scale (self.CIRCLE_RADIUS + 10 * self.time ** 2, self.CIRCLE_RADIUS + 10 * self.time ** 2)
             self.circle_piece.rect.center = self.center
 
@@ -221,6 +221,8 @@ class FishingAnimation (pygame.sprite.LayeredUpdates, MouseListener):
                 self.card.rect.center = self.center
                 self.card_name_text.Show()
                 self.coloured_square.Hide()
+                if self.rarity > 3:
+                    self.wow.play()
                 self.move_to_front (self.card_name_text)    
             elif (self.raritycounter == self.rarity + 1):
                 self.stars.change_pos_y (-(self.h + 800))

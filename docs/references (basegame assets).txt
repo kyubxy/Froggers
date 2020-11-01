@@ -43,6 +43,9 @@ https://opengameart.org/content/oldschool-win-and-die-jump-and-run-sounds
 se_roundend se_death
 https://opengameart.org/content/oldschool-win-and-die-jump-and-run-sounds
 
+se_wow
+https://www.youtube.com/watch?v=8URukvnUYTw
+
 MUSIC
 
 bgm_gachaplay
