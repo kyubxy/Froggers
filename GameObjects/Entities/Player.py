@@ -37,10 +37,6 @@ class Player (Sprite):
         self.oldkeystate = pygame.key.get_pressed()
         self.newkeystate = pygame.key.get_pressed() 
 
-        # mouse strokes also require two keyboard states
-        self.oldmousestate = pygame.mouse.get_pressed()
-        self.newmousestate = pygame.mouse.get_pressed()
-
         # whether or not player is touching log
         self.logging = False
 

@@ -3,9 +3,9 @@ from Sprite import *
 
 # all text is drawn as a sprite
 class SpriteText (Sprite):
-    def __init__(self, text, size = 48, fontPath = None, font = None, colour = [255,255,255]):
+    def __init__(self, text, size = 48, fontPath = None, font = None, colour = [255,255,255], Background = None):
 
-        self.Background = None          # text background
+        self.Background = Background          # text background
         self._colour = colour           # colour of text
         self._text = text
 

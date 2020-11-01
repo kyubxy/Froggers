@@ -16,13 +16,13 @@ class FroggersGame (Game):
     def __init__(self, w=1366,h=768):
         super().__init__(title = "Froggers", width=w, height=h)
 
-        cardCollection = CardCollection (self) 
+        self.cardCollection = CardCollection (self) 
 
         # initialise tkinter
         root = tk.Tk()
         root.withdraw()
 
-        self.ChangeScreen (GachaplayScreen(self, 8))  
+        self.ChangeScreen (GachaplayScreen(self, 8, True))  
         #self.ChangeScreen (MainMenuScreen(self))    
 
     def Update (self):

@@ -29,11 +29,7 @@ class Sprite (pygame.sprite.Sprite):
         # rotate the image
         self.image = pygame.transform.rotate (self._originalimage, modangle)
 
-        # update the center of the rectangle. 
-        # the size of the surface changes and so too does the center so the current rectangle needs its center updated accordingly
-        old_x, old_y = self.rect.center
-        self.rect = self.image.get_rect()
-        self.rect.center = (old_x, old_y)
+        self._updateCenter ()
 
         self.angle = modangle
 
@@ -48,7 +44,20 @@ class Sprite (pygame.sprite.Sprite):
         self.rect.width = width
         self.rect.height = height
         # perform the scaling move
-        self.image = pygame.transform.scale(self.image, (int(width), int(height)))  
+        self.image = pygame.transform.scale(self._originalimage, (int(width), int(height)))  
+
+    def _updateCenter (self):
+        # update the center of the rectangle. 
+        # the size of the surface changes and so too does the center so the current rectangle needs its center updated accordingly
+        old_x, old_y = self.rect.center
+        self.rect = self.image.get_rect()
+        self.rect.center = (old_x, old_y)
+
+    def Show (self):
+        self.image = self._originalimage
+
+    def Hide (self):
+        self.image = pygame.Surface ((1,1))
 
     # used by pygame group, called once per frame
     def update (self):

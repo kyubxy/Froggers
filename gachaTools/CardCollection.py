@@ -1,3 +1,4 @@
+import random
 from gachaTools.card import *
 from Framework.ResourceManagement.ResourceCache import *
 import os
@@ -13,7 +14,7 @@ class CardCollection:
 		self.game = game
 
 		# all playable characters earned by the player
-		self.CharaCache = ResourceCache ("res/gacha")
+		self.CharaCache = ResourceCache (r"res\gacha")
 		#self.CharaCache.Resources["img_original"] = game.ResourceCache.Resources["img_player"]	# add the original player
 
 		# earned frogs and their data
@@ -21,7 +22,7 @@ class CardCollection:
 		self.FrogCollection = dict()
 		self.read_frogs()
 
-		self.add_frog ("tippy1", 5)
+		self.add_frog (5,"tippy1")
 		self.write_frogs()
 
 	# update frog list, add the METADATA
@@ -42,8 +43,14 @@ class CardCollection:
 			pickle.dump (self.FrogCollection, handle, pickle.HIGHEST_PROTOCOL)
 
 	# add a NEW frog's metadata to the list 
-	def add_frog (self, id, rarity):
-		RelativeDirectory = "{0}_{1}".format (rarity, id)	# directory path of card
+	def add_frog (self, rarity, id = None):
+		if id is None:	# random card of rarity
+			cardDirs = [x for x in os.listdir (r"res\gacha") if x[0] == str(rarity)]
+			RelativeDirectory = cardDirs[random.randint (0, len(cardDirs) - 1)]
+			id = RelativeDirectory[2:]
+
+		else:			# specific card
+			RelativeDirectory = "{0}_{1}".format (rarity, id)	# directory path of card
 
 		# load the ini
 		self.config = configparser.ConfigParser ()
@@ -53,9 +60,12 @@ class CardCollection:
 		# add to the dictionary
 		self.FrogCollection[id] = meta
 
-	def get_jacket (self, id, rarity):
-		# load the image. This step also doubles up as means of checking the card's existence
+		return (rarity,id)
+
+	def get_card (self, rarity, id):
 		RelativeDirectory = "{0}_{1}".format (rarity, id)	# directory path of card
+			
+		# load the image. This step also doubles up as means of checking the card's existence
 		self.CharaCache.LoadAsset (os.path.join (RelativeDirectory, "img_player.png"), resname=id)
 
 		# get metadata
@@ -65,3 +75,23 @@ class CardCollection:
 		card = Card (self.CharaCache.Resources[id], meta)
 
 		return card
+
+	# highcardMin = generate at least 1 card above 3 star. Make true for larger number of rolls
+	def roll_gacha (self, rolls, highcardMin = False):
+		cards = []
+		if highcardMin:
+			goodcards = random.randint (1, rolls // 2)
+			for _ in range (goodcards):
+				frog = self.add_frog (random.randint (4, 5))
+				cards.append (self.get_card (frog[0], frog[1]))
+
+		for _ in range (rolls - highcardMin):
+			frog = self.add_frog (3)
+			cards.append (self.get_card (frog[0], frog[1]))		
+
+		# shuffle cards
+		random.shuffle (cards)
+
+		return cards
+
+

@@ -48,13 +48,16 @@ class ResourceCache:
     # the resource folder does not need to be added to the path if addResDir is true
     def LoadAsset (self, path, resname = None, addResDir = True):
         asset = os.path.join (self.resDirectory, path) if addResDir else path
-
-        print ("loading {0}...".format (asset))
         assetname = os.path.splitext(ntpath.split (asset)[1])[0]
         assetType = assetname.partition("_")[0] # get the asset type (se_,img_ etc)
 
+        # don't load something that's already been loaded
+        if asset in self.Resources or resname in self.Resources:
+            return
+
         # check if the resource is supported by loaders
         if assetType in self.Loaders:
+            print ("loading {0}...".format (asset))
             # add the resource to the cache
 
             # find the appropriate loader
