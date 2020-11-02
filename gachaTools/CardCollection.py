@@ -43,7 +43,7 @@ class CardCollection:
 	# add a NEW frog's metadata to the list 
 	def add_frog (self, rarity, id = None):
 		if id is None:	# random card of rarity
-			cardDirs = [x for x in os.listdir (r"res\gacha") if x[0] == str(rarity)]
+			cardDirs = [x for x in os.listdir ("res/gacha") if x[0] == str(rarity)]
 			RelativeDirectory = cardDirs[random.randint (0, len(cardDirs) - 1)]
 			id = RelativeDirectory[2:]
 

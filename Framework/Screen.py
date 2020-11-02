@@ -3,7 +3,9 @@ from SpriteText import *
 
 # Drawables are sorted into screens that can be drawn at different times
 class Screen (pygame.sprite.LayeredUpdates):
-    def __init__(self, game):
+    nowplaying = ""
+
+    def __init__(self, game, bgm = None):
         super(Screen, self).__init__(self)
         self.game = game
 
@@ -13,6 +15,16 @@ class Screen (pygame.sprite.LayeredUpdates):
 
         # TODO remove if unnecessary
         self.Add (self.frameratecounter)
+
+        self.bgm = bgm
+        if not bgm is None:
+            if Screen.nowplaying != bgm:
+                self.Play (bgm)
+
+    def Play (self, bgm):
+        Screen.nowplaying = bgm
+        pygame.mixer.music.load (bgm)
+        pygame.mixer.music.play (-1)
 
     def Update (self):
         super(Screen, self).update()

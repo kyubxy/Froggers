@@ -6,7 +6,7 @@ from UI.FroggerButton import FroggerButton
 
 class CustomizeScreen (Screen):
     def __init__ (self, game):
-        super().__init__(game)
+        super().__init__(game, "res/bgm/bgm_menuloop.mp3")
 
         self.Add (SpriteText("customize"))
 

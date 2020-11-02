@@ -60,7 +60,6 @@ class ClickablePane (Sprite, MouseListener):
                     self._click = getattr (self._obs, "OnClick")
                     self._click()
 
-# 
 class Button (pygame.sprite.OrderedUpdates):
     def __init__(self, resources, parent, label = "button", w = 200, h=50, theme = ButtonTheme(), labelsize = 32, clickEventName = "OnClick"):
         super().__init__()

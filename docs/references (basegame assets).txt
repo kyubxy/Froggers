@@ -54,6 +54,9 @@ kirara fantasia
 bgm_gameplay
 me
 
+bgm_menuloop
+https://dova-s.jp/bgm/play2558.html cat life - GT-K
+
 FONT
 
 fnt_Berlin

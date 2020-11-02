@@ -7,13 +7,9 @@ import Screens.GachaScreen
 
 class GachaplayScreen (Screen, MouseListener):
     def __init__ (self, game, rolls, guarantee4):
-        super().__init__(game)
+        super().__init__(game, "res/bgm/bgm_gachaplay.mp3")
 
         game.ResourceCache.LoadDirectory ("textures")
-
-        # play bgm
-        pygame.mixer.music.load ("res/bgm/bgm_gachaplay.mp3")
-        pygame.mixer.music.play()
 
         # gacha animations
         # introduction

@@ -26,8 +26,11 @@ class Level (GeometricGroup):
         # list of all available turfs
         self.turfs = [RailTurf, RoadTurf, LakeTurf]
 
+        self.length = 0
+
     # randomly generates the level
     def generate (self, seed = None):
+        self.empty()
         print ("Starting level", self.difficulty)
 
         # if no seed is available, generate a random one
@@ -47,6 +50,7 @@ class Level (GeometricGroup):
 
         # first strip
         self.levelturfs.append (GrassTurf(self.game))
+        self.length += 3 * 64
 
         # generate turfs
         for _ in range(self.turfno):
@@ -56,8 +60,8 @@ class Level (GeometricGroup):
             self.workingturf = self.turfs[self.turfid](self.difficulty, self.directions[random.randint (0,1)], self.game)
 
             # place the turf (should be directly adjacent to all other turfs)
-            for t in self.levelturfs:
-                self.workingturf.change_pos_y (t.background.rect.height)
+            self.workingturf.change_pos_y (self.length)
+            self.length += self.workingturf.background.rect.height
 
             self.levelturfs.append (self.workingturf)
 

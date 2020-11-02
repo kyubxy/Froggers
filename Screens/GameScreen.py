@@ -10,17 +10,13 @@ from Stats import GameStats
 
 class GameScreen (Screen):
     def __init__ (self, game, seeds = None):
-        super().__init__(game)
+        super().__init__(game, "res/bgm/bgm_gameplay.mp3")
 
         # check if the textures have been loaded
         if not "textures" in self.game.ResourceCache.LoadedDirectories:
             self.game.ResourceCache.LoadDirectory ("textures") 
     
         self.res = self.game.ResourceCache.Resources
-
-        # play bgm
-        pygame.mixer.music.load ("res/bgm/bgm_gameplay.mp3")
-        pygame.mixer.music.play()
 
         # set starting difficulty
         self.difficulty = 1
@@ -153,7 +149,7 @@ class GameScreen (Screen):
                     self.Remove (self.level)    # remove level from group temporarily
 
                     # generate new level
-                    self.level = Level (self.difficulty, self.game, self.stats)
+                    self.level = Level (difficulty = self.difficulty, game = self.game, stats = self.stats)
                     self.player.level = self.level
                     # use seeds
                     if self.seeded:
@@ -168,7 +164,7 @@ class GameScreen (Screen):
                     else:
                         self.level.generate()
 
-                    # readd the level
+                    # re-add the level
                     self.Add (self.level)
                     
                     # move all UI to the front again
@@ -188,7 +184,6 @@ class GameScreen (Screen):
                 self.frogsdisplay.UpdateFrogs()
                 self.Add (self.livesdisplay)
                 self.Add (self.frogsdisplay)
-
 
             if event.type == DEATH:
                 # show msg text
