@@ -8,18 +8,20 @@ from GameObjects.turfs.RoadTurf import *
 from GameObjects.turfs.GrassTurf import *
 from GameObjects.turfs.LakeTurf import *
 from Framework.KeyboardListener import *
+from Stats import GameStats
 
 # the physical composition of the level itself.
 class Level (GeometricGroup): 
-    def __init__(self, difficulty, game, stats):
+    def __init__(self, game, stats = GameStats(), difficulty=1, properties = None):
         super().__init__()
         
+        self.properties = properties
         self.game = game
         self.stats = stats
 
         # arbitrary value defining relatively difficulty of current level
         # influences variables like level length, entity speeds, general complexity etc
-        self.difficulty = difficulty
+        self.difficulty = difficulty if properties is None else properties["difficulty"]
 
         # list of all available turfs
         self.turfs = [RailTurf, RoadTurf, LakeTurf]
@@ -38,7 +40,7 @@ class Level (GeometricGroup):
         self.stats.Seeds.append (str(seed)) # add seed to the seeds list
 
         # number of turfs to be generated
-        self.turfno = random.randint (math.ceil (self.difficulty / 2), math.ceil(self.difficulty * 1.5))
+        self.turfno = random.randint (math.ceil (self.difficulty / 2), math.ceil(self.difficulty * 1.5)) if self.properties is None else self.properties["length"]
         
         # list of all turfs in the level
         self.levelturfs = list()

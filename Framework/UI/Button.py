@@ -78,7 +78,8 @@ class Button (pygame.sprite.OrderedUpdates):
         self.add (self._pane)
 
         # label
-        self._label = SpriteText (label, self.labelsize, font = resources[self.Theme.font])
+        font = pygame.font.SysFont (None, 28) if self.Theme.font is None else resources[self.Theme.font]
+        self._label = SpriteText (label, self.labelsize, font = font)
         self._label.SetColour (self.Theme.labelColour)
         self.add (self._label)
 

@@ -43,7 +43,7 @@ class GameScreen (Screen):
                 print ("this level is not seeded")
 
         # level
-        self.level = Level (self.difficulty, self.game, self.stats)
+        self.level = Level (difficulty = self.difficulty, game = self.game, stats = self.stats)
 
         # generate level
         if self.seeded:
