@@ -7,6 +7,7 @@ class InvisibleButtonTheme (ButtonTheme):
         self.unclickedColour = [0,0,0]
         self.hoverColour = [0,0,0]
         self.clickColour = [0,0,0]
+        self.disabledColour = [0,0,0]
 
 class InvisibleButton (Button):
     def __init__(self, game, parent, w = 200, h=50, clickEventName = "OnClick"):

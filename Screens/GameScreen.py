@@ -8,7 +8,7 @@ from Screens.GameOverScreen import *
 from constants import *
 from Stats import GameStats
 
-class GameScreen (Screen):
+class GameScreen (Screen):        
     def __init__ (self, game, seeds = None):
         super().__init__(game, "res/bgm/bgm_gameplay.mp3")
 

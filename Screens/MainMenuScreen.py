@@ -1,3 +1,4 @@
+from UI.DifficultyPane import DifficultyPane
 from Framework.Screen import *
 from Framework.SpriteText import *
 from Screens.GameScreen import *
@@ -9,6 +10,7 @@ from tkinter import filedialog
 from tkinter import *
 from Stats import *
 import os
+import tkinter as tk
 
 class MainMenuScreen (Screen):
     def __init__ (self, game):
@@ -65,11 +67,11 @@ class MainMenuScreen (Screen):
         
         # play button
         self.PlayButton = InvisibleButton (game, self, clickEventName="StartGame")
-        self.PlayButton.set_Rect (pygame.Rect (0, 60, pygame.display.get_surface().get_size()[0], pygame.display.get_surface().get_size()[1] - 170))
+        self.PlayButton.set_Rect (pygame.Rect (0, 60, pygame.display.get_surface().get_size()[0], pygame.display.get_surface().get_size()[1] - 60 - self.TOOLBAR_BOTTOM))
         self.Add (self.PlayButton)
 
         # difficulty button
-        self.CustomizeButton = FroggerButton (game, self, "difficulty", clickEventName="customize")
+        self.CustomizeButton = FroggerButton (game, self, "difficulty", clickEventName="difficulty")
         self.toolbar.append (self.CustomizeButton)
 
         # scores button
@@ -105,6 +107,10 @@ class MainMenuScreen (Screen):
             button.set_Rect (pygame.Rect(width * button_no,  pygame.display.get_surface().get_size()[1] - self.TOOLBAR_BOTTOM, width, 60))
             self.foreground.add (button) 
         self.Add (self.foreground)
+
+        # difficulty options
+        self.difficultyPane = DifficultyPane (self.game, self, pygame.Rect (10, pygame.display.get_surface().get_size()[1] - self.TOOLBAR_BOTTOM - 300, 300, 300))
+        self.add (self.difficultyPane)
 
         self.seeds = []
 
@@ -147,8 +153,18 @@ class MainMenuScreen (Screen):
     def Exit(self):
         self.game.Exit()
 
+    def difficulty (self):
+        if self.difficultyPane.Enabled:
+            self.PlayButton.Enable ()
+            self.difficultyPane.Disable()
+        else:
+            self.PlayButton.Disable ()
+            self.difficultyPane.Enable()
+
     def Update (self):
         super().Update()
+
+        self.difficultyPane.Update()
 
         self.level.change_pos_y (-1)
         self.moved += 1

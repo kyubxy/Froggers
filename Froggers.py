@@ -19,8 +19,8 @@ class FroggersGame (Game):
         self.cardCollection = CardCollection (self) 
 
         # initialise tkinter
-        root = tk.Tk()
-        root.withdraw()
+        self.root = tk.Tk()
+        self.root.withdraw()
 
         #self.ChangeScreen (GachaplayScreen(self, 8, True))  
         self.ChangeScreen (MainMenuScreen(self))    

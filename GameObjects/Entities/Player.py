@@ -12,6 +12,8 @@ from GameObjects.turfs.LakeTurf import *
 
 # main frog
 class Player (Sprite):
+    lives = 5   # Starting number of lives
+    frogs = 5   # Starting number of frogs
     def __init__(self, level, game):
         self.game = game
 
@@ -30,8 +32,8 @@ class Player (Sprite):
         # properties
         self.Alive = True   # determines if player is alive or is just a sludge of mangled frog parts
         self.Winning = False
-        self.Lives = LIVES      # 0 lives means a game over
-        self.Frogs = FROGS      # total number of players
+        self.Lives = Player.lives      # 0 lives means a game over
+        self.Frogs = Player.frogs      # total number of players
 
         # key strokes require two keyboard states
         self.oldkeystate = pygame.key.get_pressed()

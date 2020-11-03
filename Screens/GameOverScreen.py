@@ -49,7 +49,7 @@ class GameOverScreen (Screen):
             os.mkdir ("SEEDPACKS")
 
         # write the file
-        filename = "{0}.txt".format(datetime.datetime.now())
+        #filename = "{0}.txt".format(datetime.datetime.now())
         filename = simpledialog.askstring("filename", "Name the seedpack file")
         f = open(os.path.join ("SEEDPACKS", filename + ".txt"), "w")
         for seed in range (len(self.stats.Seeds)):

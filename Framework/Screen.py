@@ -24,7 +24,7 @@ class Screen (pygame.sprite.LayeredUpdates):
     def Play (self, bgm):
         Screen.nowplaying = bgm
         pygame.mixer.music.load (bgm)
-        pygame.mixer.music.play (-1)
+        #pygame.mixer.music.play (-1)
 
     def Update (self):
         super(Screen, self).update()
