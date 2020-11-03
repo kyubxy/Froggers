@@ -30,7 +30,7 @@ class GachaScreen (Screen):
         self.game.ChangeScreen(GachaplayScreen (self.game, 1, False))
 
     def Gacha10 (self):
-        self.game.ChangeScreen(GachaplayScreen (self.game, 10, True))
+        self.game.ChangeScreen(GachaplayScreen (self.game, 3, True))
 
     def back (self):
         self.game.ChangeScreen(Screens.MainMenuScreen.MainMenuScreen(self.game))
