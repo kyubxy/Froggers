@@ -11,10 +11,6 @@ from Stats import GameStats
 class GameScreen (Screen):        
     def __init__ (self, game, seeds = None):
         super().__init__(game, "res/bgm/bgm_gameplay.mp3")
-
-        # check if the textures have been loaded
-        if not "textures" in self.game.ResourceCache.LoadedDirectories:
-            self.game.ResourceCache.LoadDirectory ("textures") 
     
         self.res = self.game.ResourceCache.Resources
 
@@ -45,7 +41,7 @@ class GameScreen (Screen):
         if self.seeded:
             self.level.generate (self.seeds[0])
         else:
-            self.level.generate ()
+            self.level.generate ()  
 
         # add level
         self.Add (self.level)
@@ -69,10 +65,12 @@ class GameScreen (Screen):
 
         # points counter
         self.pointscounter = SpriteText ("0", font = self.res["fnt_Berlin_48"])
+        self.pointscounter.rect.centerx = pygame.display.get_surface().get_size()[0] // 2
         self.Add (self.pointscounter)
 
         # time display
         self.timeText = SpriteText ("0", font = self.res["fnt_Berlin_24"])
+        self.timeText.rect.centerx = pygame.display.get_surface().get_size()[0] // 2
         self.timeText.rect.y = 40
         self.startTime = pygame.time.get_ticks()
         self.totalTime = 0
@@ -81,6 +79,7 @@ class GameScreen (Screen):
         # level display
         self.levelText = SpriteText ("Level 1", font = self.res["fnt_Berlin_24"])
         self.levelText.Background = [0,0,0]
+        self.levelText.rect.y = pygame.display.get_surface().get_size()[1] - self.levelText.image.get_size()[1]
         self.Add (self.levelText)
 
         # empty surface
@@ -104,16 +103,8 @@ class GameScreen (Screen):
         # total time (displayed on the screen)
         self.totalTime = pygame.time.get_ticks() - self.startTime
         self.timeText.SetText (str(round (self.totalTime / 1000)) + "/sec")
-        self.timeText.rect.x = pygame.display.get_surface().get_size()[0] - self.timeText.image.get_size()[0]
+        self.timeText.rect.centerx = pygame.display.get_surface().get_size()[0] // 2
         self.stats.Time = self.totalTime
-
-        # update level text
-        self.levelText.SetText ("Level " + str(self.difficulty))
-        self.levelText.rect.y = pygame.display.get_surface().get_size()[1] - self.levelText.image.get_size()[1]
-        
-        # update points text
-        self.pointscounter.SetText (str(self.stats.Points))
-        self.pointscounter.rect.x = pygame.display.get_surface().get_size()[0] - self.pointscounter.image.get_size()[0]
         
         # update level
         self.level.Update()
@@ -127,11 +118,15 @@ class GameScreen (Screen):
 
                 # next stage
                 if self.player.Frogs == 0:
+                    
                     # increase difficulty
                     self.difficulty += 1
 
+                    # update level text
+                    self.levelText.SetText ("Level " + str(self.difficulty))
+
                     # reset frogs
-                    self.player.Frogs = FROGS
+                    self.player.Frogs = Player.frogs
 
                     # give points
                     self.stats.Points += round (1000000000 / self.levelTime + self.difficulty * 40000)
@@ -200,6 +195,10 @@ class GameScreen (Screen):
                 # award points
                 self.stats.Points += round (10000000 / self.runTime + self.difficulty * 100)
                 self.stats.runtimes.append (self.runTime)
+        
+                # update points text
+                self.pointscounter.SetText (str(self.stats.Points))
+                self.pointscounter.rect.centerx = pygame.display.get_surface().get_size()[0] // 2
 
                 self.runTime = 0
                 self.runStart = pygame.time.get_ticks()

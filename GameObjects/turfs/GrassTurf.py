@@ -1,5 +1,6 @@
 from GameObjects.turfs.Turf import Turf
 from Framework.Sprite import *
+import GameObjects.Entities.Player 
 
 # initial grass turf
 class GrassTurf (Turf):
@@ -20,12 +21,22 @@ class GrassEndTurf (Turf):
     def __init__(self, game):
         Turf.__init__ (self, 9, "img_grass", game)
 
-        # place 5 caves
-        for i in range (5):
+        # place n caves
+        x = 80
+        y = 0
+        for _ in range (GameObjects.Entities.Player.Player.frogs):
             self.c = Cave (game)
-            self.c.rect.x = 80 + i * pygame.display.get_surface().get_size()[0] / 5 
-            self.c.rect.y = 64
+
+            if x > pygame.display.get_surface().get_size()[0]:
+                x = 80
+                y += 1
+
+            self.c.rect.x = x
+            self.c.rect.y = 64 + 128 * y
+
             self.Add (self.c)
+
+            x += pygame.display.get_surface().get_size()[0] / 5 
     
     def Update(self):
         pass
@@ -46,6 +57,6 @@ class Cave (Sprite):
 
     # change cave state to occupied
     def Occupy (self):
-        self.image = self.game.ResourceCache.Resources["img_caveoccupied"]
+        self.ChangeImage(self.game.ResourceCache.Resources["img_caveoccupied"])
         self.Scale (64,64)
         self.Occupied = True

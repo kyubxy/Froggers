@@ -5,6 +5,7 @@ import os
 import os.path
 import configparser
 import pickle
+import datetime
 
 # in regards to gacha frogs, only two operations can take place on them
 # 1, gaining new frogs through gacha (summoning). 2, viewing existing frog data (getting).
@@ -44,52 +45,51 @@ class CardCollection:
 	def add_frog (self, rarity, id = None):
 		if id is None:	# random card of rarity
 			cardDirs = [x for x in os.listdir ("res/gacha") if x[0] == str(rarity)]
-			RelativeDirectory = cardDirs[random.randint (0, len(cardDirs) - 1)]
-			id = RelativeDirectory[2:]
+			CardID = cardDirs[random.randint (0, len(cardDirs) - 1)]
+			id = CardID[2:]
 
 		else:			# specific card
-			RelativeDirectory = "{0}_{1}".format (rarity, id)	# directory path of card
+			CardID = "{0}_{1}".format (rarity, id)	# directory path of card
 
 		# load the ini
 		self.config = configparser.ConfigParser ()
-		self.config.read (os.path.join (os.path.join ("res", "gacha", RelativeDirectory), "info.ini"))
+		self.config.read (os.path.join (os.path.join ("res", "gacha", CardID), "info.ini"))
 		meta = dict (self.config.items ("meta"))
 
 		# add to the dictionary
-		self.FrogCollection[id] = meta
+		self.FrogCollection[CardID] = meta
 
-		return (rarity,id)
+		return CardID
 
-	def get_card (self, rarity, id):
-		RelativeDirectory = "{0}_{1}".format (rarity, id)	# directory path of card
+	def get_card (self, CardID):
+		#CardID = "{0}_{1}".format (rarity, id)	# directory path of card
 			
 		# load the image. This step also doubles up as means of checking the card's existence
-		self.CharaCache.LoadAsset (os.path.join (RelativeDirectory, "img_player.png"), resname=id)
+		self.CharaCache.LoadAsset (os.path.join (CardID, "img_player.png"), resname=CardID)
 
 		# get metadata
-		meta = self.FrogCollection[id]
+		meta = self.FrogCollection[CardID]
 		
 		# create a card from the file
-		card = Card (self.CharaCache.Resources[id], meta)
+		card = Card (self.CharaCache.Resources[CardID], meta, CardID)
 
 		return card
 
 	# highcardMin = generate at least 1 card above 3 star. Make true for larger number of rolls
 	def roll_gacha (self, rolls, highcardMin = False):
+		random.seed (datetime.datetime.now())
 		cards = []
 		if highcardMin:
 			goodcards = random.randint (1, rolls // 2)
 			for _ in range (goodcards):
 				frog = self.add_frog (random.randint (4, 5))
-				cards.append (self.get_card (frog[0], frog[1]))
+				cards.append (self.get_card (frog))
 
 		for _ in range (rolls - highcardMin):
 			frog = self.add_frog (3)
-			cards.append (self.get_card (frog[0], frog[1]))		
+			cards.append (self.get_card (frog))		
 
 		# shuffle cards
 		random.shuffle (cards)
 
 		return cards
-
-

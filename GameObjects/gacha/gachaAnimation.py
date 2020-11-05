@@ -16,7 +16,7 @@ class IntroductionAnimation (pygame.sprite.Group):
         self.w, self.h = pygame.display.get_surface().get_size()
 
         # background
-        self.background = Sprite ("img_gachabg", resources=game.ResourceCache.Resources)
+        self.background = Sprite ("img_bg", resources=game.ResourceCache.Resources)
         self.background.Scale (self.w, self.h)
         self.add (self.background)
 
@@ -26,15 +26,15 @@ class IntroductionAnimation (pygame.sprite.Group):
         self.dock.Scale (self.w, self.h)
         self.add (self.dock)
 
-        # water
-        self.water = Sprite ("img_fgwater", resources=game.ResourceCache.Resources)
-        self.water.Scale (self.w, self.h)
-        self.add (self.water)
-
         # stickman
         self.stickman = Stickman (game)
         self.stickman.change_pos ((700,285))
         self.add (self.stickman)
+
+        # water
+        self.water = Sprite ("img_fgwater", resources=game.ResourceCache.Resources)
+        self.water.Scale (self.w, self.h)
+        self.add (self.water)
 
         # time gacha animation was started since beginning of runtime
         self.startTime = pygame.time.get_ticks ()

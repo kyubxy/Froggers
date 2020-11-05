@@ -25,6 +25,8 @@ class Game ():
 
         self.ResourceCache = ResourceCache (resourceDir)                # resource cache
 
+        print ("\nFrogger engine is ready! If there are any issues, check the console for backtracking\n")
+
     # called once per frame, use exclusively for update logic
     def Update (self):
         self.CurrentScreen.Update()
@@ -36,6 +38,7 @@ class Game ():
     # used to change current screen
     def ChangeScreen (self, screen):
         self.CurrentScreen = screen
+        print ("Entered screen {0}".format (type(screen).__name__))
 
     # use this to safely close the program
     def Exit (self):

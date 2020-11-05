@@ -36,7 +36,8 @@ class Sprite (pygame.sprite.Sprite):
     # you can also modify self.image directly however problems arise when the sprite is rotated and is generally not recommended
     def ChangeImage (self, surface):
         self.image = surface
-        self.rect = surface.get_rect()
+        self.rect.width = surface.get_rect().width
+        self.rect.height = surface.get_rect().height
         self._originalimage = surface
 
     # changes width and height

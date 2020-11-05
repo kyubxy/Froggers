@@ -141,7 +141,7 @@ class Player (Sprite):
     def win (self):
         self.game.ResourceCache.Resources["se_roundend"].play()
         self.Winning = True
-        self.image = self.hideimg
+        self.Hide()
         pygame.event.post (pygame.event.Event (WIN))
 
     # called when the level restarts
@@ -167,7 +167,8 @@ class Player (Sprite):
         # reset player attributes
         self.Alive = True
         self.Winning = False
-        self.image = self.aliveimg
+        self.Show()
+        self.ChangeImage (self.aliveimg)
         self.Scale (64,64)
 
         # broadcast event to the rest of the game
@@ -180,7 +181,7 @@ class Player (Sprite):
 
         # handle variables
         self.Alive = False
-        self.image = self.deadimg
+        self.ChangeImage (self.deadimg)
         self.Scale (64,64)
 
         # broadcast event to the rest of the game

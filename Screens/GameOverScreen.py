@@ -7,16 +7,21 @@ import pygame
 import datetime
 import os
 from tkinter import messagebox, simpledialog
+from GameObjects.Entities.Player import *
 
 class GameOverScreen (Screen):
     def __init__ (self, game, stats):
         super().__init__(game)
-        self.stats = stats
+        self.stats = stats 
 
         # game over text
         self.deathtext = SpriteText("GAME OVER", font = game.ResourceCache.Resources["fnt_VanillaExtract_48"])
         self.deathtext.SetColour ([255,0,0])
         self.Add (self.deathtext)
+
+        # give coins
+        self.game.preferenceManager.Preferences["coins"] += round ((stats.Points * Player.frogs) / (10000 * Player.lives))
+        self.game.preferenceManager.write()
 
         # display game statistics
         self.results = [
@@ -24,6 +29,7 @@ class GameOverScreen (Screen):
             "",
             "Points: " + str(stats.Points), 
             "Time: " + str (stats.Time/1000) + " seconds",
+            "Coins " + str (self.game.preferenceManager.Preferences["coins"])
             ]
         self.DisplayMessages (self.results, (30, 100))
 

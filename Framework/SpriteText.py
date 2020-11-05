@@ -37,6 +37,8 @@ class SpriteText (Sprite):
     # call this to rerender the text
     def UpdateText (self):
         self.image = self.Font.render (self._text, True, self._colour, self.Background)
+        self.rect.width = self.image.get_rect().width
+        self.rect.height = self.image.get_rect().height
 
     # removes all instances from all groups
     def kill (self):

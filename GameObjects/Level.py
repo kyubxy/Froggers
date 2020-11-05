@@ -43,7 +43,7 @@ class Level (GeometricGroup):
         self.stats.Seeds.append (str(seed)) # add seed to the seeds list
 
         # number of turfs to be generated
-        self.turfno = random.randint (math.ceil (self.difficulty / 2), math.ceil(self.difficulty * 1.5)) if self.properties is None else self.properties["length"]
+        self.turfno = random.randint (math.ceil (self.difficulty / 2) + 1, math.ceil(self.difficulty * 1.5) + 2) if self.properties is None else self.properties["length"]
         
         # list of all turfs in the level
         self.levelturfs = list()
@@ -74,7 +74,8 @@ class Level (GeometricGroup):
 
         for t in self.levelturfs:
             self.Add (t)
-
+        
+        
     # this update method is NOT included in the group call
     # and is instead called MANUALLY
     def Update (self):

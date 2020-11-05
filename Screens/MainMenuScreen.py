@@ -1,3 +1,4 @@
+from Screens.OptionScreen import OptionScreen
 from UI.DifficultyPane import DifficultyPane
 from Framework.Screen import *
 from Framework.SpriteText import *
@@ -11,6 +12,7 @@ from tkinter import *
 from Stats import *
 import os
 import tkinter as tk
+from Screens.BuyCoinScreen import *
 
 class MainMenuScreen (Screen):
     def __init__ (self, game):
@@ -22,6 +24,10 @@ class MainMenuScreen (Screen):
         game.ResourceCache.LoadDirectory ("font")
         game.ResourceCache.LoadDirectory ("se")
         game.ResourceCache.LoadDirectory ("textures")
+        
+        self.game.preferenceManager.read()
+        self.playercard = self.game.cardCollection.get_card(self.game.preferenceManager.Preferences["player_sprite"])
+        self.game.ResourceCache.Resources["img_player"] = self.playercard.Jacket
 
         self.toolbar = list()
 
@@ -100,6 +106,14 @@ class MainMenuScreen (Screen):
         self.OptionButton.set_Rect (pygame.Rect (70, 10, 50, 50))
         self.foreground.add (self.OptionButton)
 
+        # coin button
+        self.CoinButton = FroggerButton (game, self, "{0}".format (self.game.preferenceManager.get("coins", 0)), clickEventName="CoinButton")
+        self.CoinButton.set_Rect (pygame.Rect (130, 10, 200, 50))
+        self.foreground.add (self.CoinButton)
+        self.coin = Sprite ("img_coin", resources = self.game.ResourceCache.Resources)
+        self.coin.rect = pygame.Rect (135, 15, 30, 30)
+        self.foreground.add (self.coin)
+
         # add buttons to toolbar
         for button_no in range (len(self.toolbar)):
             button = self.toolbar[button_no]
@@ -142,7 +156,7 @@ class MainMenuScreen (Screen):
         self.Refresh()
 
     def StartOption (self):
-        pass
+        self.game.ChangeScreen (OptionScreen (self.game))
 
     def StartGacha (self):
         self.game.ChangeScreen (GachaScreen (self.game))
@@ -152,6 +166,9 @@ class MainMenuScreen (Screen):
 
     def Exit(self):
         self.game.Exit()
+
+    def CoinButton (self):
+        self.game.ChangeScreen (BuyCoinScreen (self.game))
 
     def difficulty (self):
         if self.difficultyPane.Enabled:
