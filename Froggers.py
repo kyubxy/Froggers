@@ -16,19 +16,24 @@ from IO.PreferenceManager import PreferenceManager
 # Froggers game instance
 class FroggersGame (Game):
     def __init__(self, w=1366,h=768):
+        # initialise tkinter
+        root = tk.Tk()
+        root.withdraw()
+
+        # initialise managers
         self.cardCollection = CardCollection (self) 
         self.preferenceManager = PreferenceManager ()
 
+        # load save data
         if os.path.exists ("pref.pickle"):
             self.preferenceManager.read()
         else:
             self.preferenceManager.write()
+        print (self.preferenceManager.Preferences)
 
         super().__init__(title = "Froggers", width=w, height=h)
 
-        print (self.preferenceManager.Preferences)
-
-        #self.ChangeScreen (GachaplayScreen(self, 8, True))  
+        # load main screen
         self.ChangeScreen (MainMenuScreen(self))    
 
     def Update (self):

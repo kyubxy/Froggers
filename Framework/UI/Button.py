@@ -123,6 +123,15 @@ class Button (pygame.sprite.OrderedUpdates):
         self._label.rect.x = self._pane.rect.x + self._pane.rect.width / 2 - self._label.image.get_rect ().width / 2
         self._label.rect.y = self._pane.rect.y + self._pane.rect.height / 2 - self._label.image.get_rect ().height / 2
 
+    def set_Pos (self, pos):
+        # set pane position
+        self._pane.rect.x = pos[0]
+        self._pane.rect.y = pos[1]
+        
+        # set label position
+        self._label.rect.x = self._pane.rect.x + self._pane.rect.width / 2 - self._label.image.get_rect ().width / 2
+        self._label.rect.y = self._pane.rect.y + self._pane.rect.height / 2 - self._label.image.get_rect ().height / 2
+
     def kill (self):
         super().kill()
         

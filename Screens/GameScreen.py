@@ -7,6 +7,7 @@ from UI.FrogDisplay import *
 from Screens.GameOverScreen import *
 from constants import *
 from Stats import GameStats
+from Framework.KeyboardListener import get_keydown
 
 class GameScreen (Screen):        
     def __init__ (self, game, seeds = None):
@@ -93,115 +94,132 @@ class GameScreen (Screen):
         self.levelTime = 0
         self.levelStart = self.startTime
 
+        self.Paused = False
+
+        self.oldstate = pygame.key.get_pressed()
+        self.newstate = pygame.key.get_pressed()
+
     def Update (self):
-        super().Update()
+        self.newstate = pygame.key.get_pressed()
+        if not self.Paused:
+            super().Update()
 
-        # update time
-        self.runTime = pygame.time.get_ticks() - self.runStart
-        self.levelTime = pygame.time.get_ticks() - self.levelStart
+            # update time
+            self.runTime = pygame.time.get_ticks() - self.runStart
+            self.levelTime = pygame.time.get_ticks() - self.levelStart
 
-        # total time (displayed on the screen)
-        self.totalTime = pygame.time.get_ticks() - self.startTime
-        self.timeText.SetText (str(round (self.totalTime / 1000)) + "/sec")
-        self.timeText.rect.centerx = pygame.display.get_surface().get_size()[0] // 2
-        self.stats.Time = self.totalTime
-        
-        # update level
-        self.level.Update()
+            # total time (displayed on the screen)
+            self.totalTime = pygame.time.get_ticks() - self.startTime
+            self.timeText.SetText (str(round (self.totalTime / 1000)) + "/sec")
+            self.timeText.rect.centerx = pygame.display.get_surface().get_size()[0] // 2
+            self.stats.Time = self.totalTime
+            
+            # update level
+            self.level.Update()
 
-        # handle game events
-        for event in pygame.event.get():
-            if (event.type == RESTART):
-                # game over
-                if self.player.Lives == -1:
-                    self.game.ChangeScreen (GameOverScreen (self.game, self.stats))
+            # handle game events
+            for event in pygame.event.get():
+                if (event.type == RESTART):
+                    # game over
+                    if self.player.Lives == -1:
+                        self.game.ChangeScreen (GameOverScreen (self.game, self.stats))
 
-                # next stage
-                if self.player.Frogs == 0:
+                    # next stage
+                    if self.player.Frogs == 0:
+                        
+                        # increase difficulty
+                        self.difficulty += 1
+
+                        # update level text
+                        self.levelText.SetText ("Level " + str(self.difficulty))
+
+                        # reset frogs
+                        self.player.Frogs = Player.frogs
+
+                        # give points
+                        self.stats.Points += round (1000000000 / self.levelTime + self.difficulty * 40000)
+                        self.stats.leveltimes.append (self.levelTime)
+
+                        # reset time
+                        self.levelTime = 0
+                        self.levelStart = pygame.time.get_ticks()
+
+                        # award lives, max 7
+                        if self.difficulty % 2 == 0 and self.player.Lives < 7 and self.difficulty > 2:
+                            self.player.Lives += 1
+
+                        # regenerate level
+                        self.Remove (self.level)    # remove level from group temporarily
+
+                        # generate new level
+                        self.level = Level (difficulty = self.difficulty, game = self.game, stats = self.stats)
+                        self.player.level = self.level
+                        # use seeds
+                        if self.seeded:
+                            # check if there are still seeds
+                            if self.difficulty <= (len (self.seeds)):
+                                self.level.generate (self.seeds[self.difficulty - 1])
+                                print ("this level is still seeded")
+                            else:   # otherwise, stop seeding the levels
+                                self.seeded = False
+                                self.level.generate ()
+                                print ("this level is no longer seeded")
+                        else:
+                            self.level.generate()
+
+                        # re-add the level
+                        self.Add (self.level)
+                        
+                        # move all UI to the front again
+                        self.move_to_front  (self.player)
+                        self.move_to_front (self.msgtext)
+                        self.move_to_front (self.pointscounter)
+                        self.move_to_front (self.levelText)
+                        self.move_to_front (self.timeText)
+
+                    # clear msg text
+                    self.msgtext.image = self.emptysurf
+
+                    # update displays
+                    self.Remove (self.livesdisplay)
+                    self.Remove (self.frogsdisplay)
+                    self.livesdisplay.UpdateLives()
+                    self.frogsdisplay.UpdateFrogs()
+                    self.Add (self.livesdisplay)
+                    self.Add (self.frogsdisplay)
+
+                if event.type == DEATH:
+                    # show msg text
+                    self.msgtext.SetText ("You died, press the space key to continue")
+                    self.msgtext.rect.x = pygame.display.get_surface().get_size()[0] / 2 - self.msgtext.image.get_size()[0] / 2
+                    self.msgtext.rect.y = pygame.display.get_surface().get_size()[1] / 2 - self.msgtext.image.get_size()[1] / 2
+
+                if event.type == WIN:
+                    # show msg text
+                    self.msgtext.SetText ("Nice work! press the space key to continue")
+                    self.msgtext.rect.x = pygame.display.get_surface().get_size()[0] / 2 - self.msgtext.image.get_size()[0] / 2
+                    self.msgtext.rect.y = pygame.display.get_surface().get_size()[1] / 2 - self.msgtext.image.get_size()[1] / 2
                     
-                    # increase difficulty
-                    self.difficulty += 1
+                    # award points
+                    self.stats.Points += round (10000000 / self.runTime + self.difficulty * 100)
+                    self.stats.runtimes.append (self.runTime)
+            
+                    # update points text
+                    self.pointscounter.SetText (str(self.stats.Points))
+                    self.pointscounter.rect.centerx = pygame.display.get_surface().get_size()[0] // 2
 
-                    # update level text
-                    self.levelText.SetText ("Level " + str(self.difficulty))
-
-                    # reset frogs
-                    self.player.Frogs = Player.frogs
-
-                    # give points
-                    self.stats.Points += round (1000000000 / self.levelTime + self.difficulty * 40000)
-                    self.stats.leveltimes.append (self.levelTime)
-
-                    # reset time
-                    self.levelTime = 0
-                    self.levelStart = pygame.time.get_ticks()
-
-                    # award lives, max 7
-                    if self.difficulty % 2 == 0 and self.player.Lives < 7 and self.difficulty > 2:
-                        self.player.Lives += 1
-
-                    # regenerate level
-                    self.Remove (self.level)    # remove level from group temporarily
-
-                    # generate new level
-                    self.level = Level (difficulty = self.difficulty, game = self.game, stats = self.stats)
-                    self.player.level = self.level
-                    # use seeds
-                    if self.seeded:
-                        # check if there are still seeds
-                        if self.difficulty <= (len (self.seeds)):
-                            self.level.generate (self.seeds[self.difficulty - 1])
-                            print ("this level is still seeded")
-                        else:   # otherwise, stop seeding the levels
-                            self.seeded = False
-                            self.level.generate ()
-                            print ("this level is no longer seeded")
-                    else:
-                        self.level.generate()
-
-                    # re-add the level
-                    self.Add (self.level)
-                    
-                    # move all UI to the front again
-                    self.move_to_front  (self.player)
-                    self.move_to_front (self.msgtext)
-                    self.move_to_front (self.pointscounter)
-                    self.move_to_front (self.levelText)
-                    self.move_to_front (self.timeText)
-
-                # clear msg text
-                self.msgtext.image = self.emptysurf
-
-                # update displays
-                self.Remove (self.livesdisplay)
-                self.Remove (self.frogsdisplay)
-                self.livesdisplay.UpdateLives()
-                self.frogsdisplay.UpdateFrogs()
-                self.Add (self.livesdisplay)
-                self.Add (self.frogsdisplay)
-
-            if event.type == DEATH:
-                # show msg text
-                self.msgtext.SetText ("You died, press the space key to continue")
-                self.msgtext.rect.x = pygame.display.get_surface().get_size()[0] / 2 - self.msgtext.image.get_size()[0] / 2
-                self.msgtext.rect.y = pygame.display.get_surface().get_size()[1] / 2 - self.msgtext.image.get_size()[1] / 2
-
-            if event.type == WIN:
-                # show msg text
-                self.msgtext.SetText ("Nice work! press the space key to continue")
-                self.msgtext.rect.x = pygame.display.get_surface().get_size()[0] / 2 - self.msgtext.image.get_size()[0] / 2
-                self.msgtext.rect.y = pygame.display.get_surface().get_size()[1] / 2 - self.msgtext.image.get_size()[1] / 2
-                
-                # award points
-                self.stats.Points += round (10000000 / self.runTime + self.difficulty * 100)
-                self.stats.runtimes.append (self.runTime)
+                    self.runTime = 0
+                    self.runStart = pygame.time.get_ticks()
+        else:
+            pass
         
-                # update points text
-                self.pointscounter.SetText (str(self.stats.Points))
-                self.pointscounter.rect.centerx = pygame.display.get_surface().get_size()[0] // 2
+        # TODO make pause gui
+        # TODO pause time
 
-                self.runTime = 0
-                self.runStart = pygame.time.get_ticks()
+        if get_keydown (self.oldstate, self.newstate, [pygame.K_ESCAPE]):
+            self.Paused = not self.Paused
+
+        self.oldstate = self.newstate
 
     def Add (self, sprite):
         super().Add(sprite)

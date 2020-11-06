@@ -14,7 +14,7 @@ class Screen (pygame.sprite.LayeredUpdates):
         self.frameratecounter = SpriteText ("fps", 24)
         self.frameratecounter.Background = [0,0,0]
 
-        # TODO remove if unnecessary
+        # remove if unnecessary
         self.Add (self.frameratecounter)
 
         self.game.preferenceManager.read()
@@ -31,7 +31,7 @@ class Screen (pygame.sprite.LayeredUpdates):
         pygame.mixer.music.play (-1)
 
     def Update (self):
-        super(Screen, self).update()
+        super().update()
 
         # update fps counter
         fpstext = "fps: {0}".format (round(self.game.Clock.get_fps(), 2))

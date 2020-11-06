@@ -20,7 +20,7 @@ class GameOverScreen (Screen):
         self.Add (self.deathtext)
 
         # give coins
-        self.game.preferenceManager.Preferences["coins"] += round ((stats.Points * Player.frogs) / (10000 * Player.lives))
+        self.game.preferenceManager.Preferences["coins"] += round ((stats.Points * Player.frogs) / (10000 * (Player.lives+1)))
         self.game.preferenceManager.write()
 
         # display game statistics

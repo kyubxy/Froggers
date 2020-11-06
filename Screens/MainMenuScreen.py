@@ -25,9 +25,10 @@ class MainMenuScreen (Screen):
         game.ResourceCache.LoadDirectory ("se")
         game.ResourceCache.LoadDirectory ("textures")
         
-        self.game.preferenceManager.read()
-        self.playercard = self.game.cardCollection.get_card(self.game.preferenceManager.Preferences["player_sprite"])
-        self.game.ResourceCache.Resources["img_player"] = self.playercard.Jacket
+        if "player_sprite" in self.game.preferenceManager.Preferences:
+            self.game.preferenceManager.read()
+            self.playercard = self.game.cardCollection.get_card(self.game.preferenceManager.Preferences["player_sprite"])
+            self.game.ResourceCache.Resources["img_player"] = self.playercard.Jacket
 
         self.toolbar = list()
 
@@ -172,10 +173,12 @@ class MainMenuScreen (Screen):
 
     def difficulty (self):
         if self.difficultyPane.Enabled:
-            self.PlayButton.Enable ()
+            # disable panel
             self.difficultyPane.Disable()
+            self.PlayButton.set_Pos ((0, self.PlayButton.get_Rect().y))
         else:
-            self.PlayButton.Disable ()
+            # enable panel
+            self.PlayButton.set_Pos ((310, self.PlayButton.get_Rect().y))      
             self.difficultyPane.Enable()
 
     def Update (self):

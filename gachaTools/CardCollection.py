@@ -15,7 +15,7 @@ class CardCollection:
 		self.game = game
 
 		# all playable characters earned by the player
-		self.CharaCache = ResourceCache (r"res\gacha")
+		self.CharaCache = ResourceCache ("res/gacha")
 		#self.CharaCache.Resources["img_original"] = game.ResourceCache.Resources["img_player"]	# add the original player
 
 		# earned frogs and their data
