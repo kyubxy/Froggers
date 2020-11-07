@@ -5,38 +5,7 @@ import pygame
 from Framework.Sprite import *
 from GameObjects.Entities.Player import Player
 from constants import *
-
-
-class ModifierButtonTheme (FroggerButtonTheme):
-    def __init__(self) -> None:         
-        super().__init__()
-        
-        self.disabledColour = [0,0,0]
-
-# frogger implementation of the framework button
-class ModifierButton (Button):
-    def __init__(self, game, parent, label = "button", w = 200, h=50, labelsize = 20, clickEventName = "OnClick"):
-        # check if all relevant assets are loaded before proceeding
-        if not "font" in game.ResourceCache.LoadedDirectories:
-            game.ResourceCache.LoadDirectory ("font")
-        if not "se" in game.ResourceCache.LoadedDirectories:
-            game.ResourceCache.LoadDirectory ("se")
-
-        resources = game.ResourceCache.Resources
-        super().__init__(resources, parent, label = label, w = w, h=h, theme = ModifierButtonTheme(), labelsize = labelsize , clickEventName = clickEventName)
-
-        self._originalLabel = label
-
-        #  make the whole thing fully transparent
-        pygame.Surface.set_colorkey (self._pane.image, [0,0,0]) 
-
-    def Disable(self): 
-        super().Disable ()
-        self._label.SetText ("")
-
-    def Enable (self):
-        super().Enable()
-        self._label.SetText (self._originalLabel)
+from UI.HideableButton import *
 
 class DifficultyPane  (pygame.sprite.OrderedUpdates):
     def __init__(self, game, parent, rect):
@@ -79,13 +48,13 @@ class DifficultyPane  (pygame.sprite.OrderedUpdates):
         self.add (self.livesText)
 
         # lives down
-        self.lifeDown = ModifierButton (self.game, self, "-", 40,40,24, "LivesDown")
+        self.lifeDown = HideableButton (self.game, self, "-", 40,40,24, "LivesDown")
         self.lifeDown.set_Rect (pygame.Rect (self.rect.x + self.PADDING + 100, self.rect.y + self.LIVES_LINE, 40,40))
         self.add (self.lifeDown)
         self.lifeDown.Disable()
 
         # lives up
-        self.lifeUp = ModifierButton (self.game, self, "+", 40,40,24, "LivesUp")
+        self.lifeUp = HideableButton (self.game, self, "+", 40,40,24, "LivesUp")
         self.lifeUp.set_Rect (pygame.Rect (self.rect.x + self.PADDING + 180, self.rect.y + self.LIVES_LINE, 40,40))
         self.add (self.lifeUp)
         self.lifeUp.Disable()
@@ -98,13 +67,13 @@ class DifficultyPane  (pygame.sprite.OrderedUpdates):
         self.frogIcon.Hide()
 
         # frog down
-        self.frogDown = ModifierButton (self.game, self, "-", 40,40,24, "FrogDown")
+        self.frogDown = HideableButton (self.game, self, "-", 40,40,24, "FrogDown")
         self.frogDown.set_Rect (pygame.Rect (self.rect.x + self.PADDING + 100, self.rect.y + self.FROGS_LINE, 40,40))
         self.add (self.frogDown)
         self.frogDown.Disable()
 
         # frog up
-        self.frogUp = ModifierButton (self.game, self, "+", 40,40,24, "FrogUp")
+        self.frogUp = HideableButton (self.game, self, "+", 40,40,24, "FrogUp")
         self.frogUp.set_Rect (pygame.Rect (self.rect.x + self.PADDING + 180, self.rect.y + self.FROGS_LINE, 40,40))
         self.add (self.frogUp)
         self.frogUp.Disable()
@@ -116,7 +85,7 @@ class DifficultyPane  (pygame.sprite.OrderedUpdates):
         self.add (self.frogText)
 
         # done button
-        self.doneButton = ModifierButton (self.game, self, "Done", 40,40,24, "Done")
+        self.doneButton = HideableButton (self.game, self, "Done", 40,40,24, "Done")
         self.doneButton.set_Rect (pygame.Rect (self.rect.x + self.PADDING , self.rect.y + 250, self.rect.width /2,40))
         self.add (self.doneButton)
         self.doneButton.Disable()

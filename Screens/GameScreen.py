@@ -7,7 +7,9 @@ from UI.FrogDisplay import *
 from Screens.GameOverScreen import *
 from constants import *
 from Stats import GameStats
+from UI.PauseMenu import *
 from Framework.KeyboardListener import get_keydown
+import pygame
 
 class GameScreen (Screen):        
     def __init__ (self, game, seeds = None):
@@ -94,15 +96,22 @@ class GameScreen (Screen):
         self.levelTime = 0
         self.levelStart = self.startTime
 
+        # pause menu
         self.Paused = False
+        self.pauseMenu = PauseMenu (self.game, self, pygame.Rect (30,30,pygame.display.get_surface().get_size()[0] - 60,pygame.display.get_surface().get_size()[1] - 60))
+        self.pauseMenu.Disable()
+        self.Add (self.pauseMenu)
 
         self.oldstate = pygame.key.get_pressed()
         self.newstate = pygame.key.get_pressed()
 
     def Update (self):
         self.newstate = pygame.key.get_pressed()
+        self.pauseMenu.Update()
         if not self.Paused:
             super().Update()
+            if self.pauseMenu.Enabled:
+                self.pauseMenu.Disable()
 
             # update time
             self.runTime = pygame.time.get_ticks() - self.runStart
@@ -176,6 +185,7 @@ class GameScreen (Screen):
                         self.move_to_front (self.pointscounter)
                         self.move_to_front (self.levelText)
                         self.move_to_front (self.timeText)
+                        self.move_to_front (self.pauseMenu)     # FIXME
 
                     # clear msg text
                     self.msgtext.image = self.emptysurf
@@ -211,9 +221,9 @@ class GameScreen (Screen):
                     self.runTime = 0
                     self.runStart = pygame.time.get_ticks()
         else:
-            pass
+            if not self.pauseMenu.Enabled:
+                self.pauseMenu.Enable()
         
-        # TODO make pause gui
         # TODO pause time
 
         if get_keydown (self.oldstate, self.newstate, [pygame.K_ESCAPE]):

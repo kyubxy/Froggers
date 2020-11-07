@@ -34,7 +34,11 @@ class FroggersGame (Game):
         super().__init__(title = "Froggers", width=w, height=h)
 
         # load main screen
-        self.ChangeScreen (MainMenuScreen(self))    
+        self.ChangeScreen (MainMenuScreen(self))  
+        #self.ResourceCache.LoadDirectory ("textures")  
+        #self.ResourceCache.LoadDirectory ("se")  
+        #self.ResourceCache.LoadDirectory ("font")  
+        #self.ChangeScreen (GameScreen(self))    
 
     def Update (self):
         super().Update()

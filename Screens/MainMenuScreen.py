@@ -127,11 +127,15 @@ class MainMenuScreen (Screen):
         self.difficultyPane = DifficultyPane (self.game, self, pygame.Rect (10, pygame.display.get_surface().get_size()[1] - self.TOOLBAR_BOTTOM - 300, 300, 300))
         self.add (self.difficultyPane)
 
+        # seeds to use in the GAME
         self.seeds = []
+
+        # seeds to use in the BACKRGROUND
+        self.bgseeds = []
 
     def StartGame (self):
         self.game.ResourceCache.LoadDirectory ("textures") 
-        self.game.ChangeScreen (GameScreen (self.game))
+        self.game.ChangeScreen (GameScreen (self.game, seeds = self.seeds))
 
     def LoadGame (self):
         seedpack = filedialog.askopenfilename(initialdir = os.path.join (os.getcwd(), "SEEDPACKS"), title = "Select seedpack",filetypes = (("text files","*.txt"),("all files","*.*")))
@@ -150,6 +154,9 @@ class MainMenuScreen (Screen):
         self.level = Level (game=self.game, properties=self.BGLEVEL_PROPERTIES)
         self.level.generate (seed=self.seeds[0])
         self.moved = 0
+
+        # copy the seeds
+        self.bgseeds = self.seeds.copy()
         
         # set button name
         self.SeedpackButton._label.SetText (os.path.basename (seedpack))
@@ -204,8 +211,8 @@ class MainMenuScreen (Screen):
             self.Remove (self.level)
             if len (self.seeds) > 0:
                 self.level = Level (game=self.game)
-                self.level.generate (self.seeds[0])
-                self.seeds.pop(0)
+                self.level.generate (self.bgseeds[0])
+                self.bgseeds.pop(0)
             else:
                 self.level = Level (game=self.game, properties=self.BGLEVEL_PROPERTIES)
                 self.level.generate()

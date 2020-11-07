@@ -88,6 +88,14 @@ class Player (Sprite):
         self.newkeystate = pygame.key.get_pressed()
 
         if self.Alive and not self.Winning:
+            '''
+            # new movement
+            if pygame.key.get_pressed() [pygame.K_LEFT, pygame.K_a]:
+                print ("K")
+            '''
+
+            # old movement
+            
             # left
             if get_keydown (self.oldkeystate, self.newkeystate, [pygame.K_LEFT, pygame.K_a]): 
                 if self.rect.x > 0:
@@ -120,6 +128,7 @@ class Player (Sprite):
 
                     self.absolute_y -= 64
                     self.playJumpSound()
+            
 
             # exit the win screen
             if self.Winning:
