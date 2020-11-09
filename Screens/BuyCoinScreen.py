@@ -2,6 +2,7 @@ from Framework.Sprite import Sprite
 from UI.FroggerButton import FroggerButton
 from Framework.Screen import *
 import Screens.MainMenuScreen
+import logging
 
 class BuyCoinScreen (Screen):
     def __init__ (self, game):
@@ -15,7 +16,7 @@ class BuyCoinScreen (Screen):
         self.coins4000Button.set_Rect (pygame.Rect (10, 10, 300, 50))
         self.add (self.coins4000Button)
 
-        self.coins10000Button = FroggerButton (game, self, "8000 coins => $1 AUD (+$99999AUD and your first born child) WHAT A BARGAIN!", clickEventName="coins10000")
+        self.coins10000Button = FroggerButton (game, self, "10000 coins => $1 AUD (+$99999AUD and your first born child) WHAT A BARGAIN!", clickEventName="coins10000")
         self.coins10000Button.set_Rect (pygame.Rect (10, 70, 800, 50))
         self.add (self.coins10000Button)
 
@@ -23,15 +24,17 @@ class BuyCoinScreen (Screen):
         self.backButton.set_Rect (pygame.Rect (10, 150, 300, 50))
         self.add (self.backButton)
 
+         
+
     def coins4000 (self):
         self.game.preferenceManager.Preferences ["coins"] += 4000
         self.game.preferenceManager.write()
-        print ("bought 4000 coins")
+        logging.info ("bought 4000 coins")
 
     def coins10000 (self):
         self.game.preferenceManager.Preferences ["coins"] += 10000
         self.game.preferenceManager.write()
-        print ("bought 10000 coins")
+        logging.info ("bought 10000 coins")
 
     def back (self):
         self.game.ChangeScreen (Screens.MainMenuScreen.MainMenuScreen (self.game))

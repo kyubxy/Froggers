@@ -13,7 +13,10 @@ import pygame
 
 class GameScreen (Screen):        
     def __init__ (self, game, seeds = None):
+        pygame.mouse.set_visible (False)
         super().__init__(game, "res/bgm/bgm_gameplay.mp3")
+
+         
     
         self.res = self.game.ResourceCache.Resources
 
@@ -26,16 +29,16 @@ class GameScreen (Screen):
         # assign seeds (if available)
         if seeds is None:
             self.seeded = False
-            print ("this level is not seeded")
+            logging.info ("this level is not seeded")
         else:
             if (len(seeds) > 0):
                 self.seeds = seeds
                 self.seeded = True
             
-                print ("this level is seeded, it's seeds consist of", self.seeds)
+                logging.info ("this level is seeded, it's seeds consist of", self.seeds)
             else:
                 self.seeded = False
-                print ("this level is not seeded")
+                logging.info ("this level is not seeded")
 
         # level
         self.level = Level (difficulty = self.difficulty, game = self.game, stats = self.stats)
@@ -109,9 +112,11 @@ class GameScreen (Screen):
         self.newstate = pygame.key.get_pressed()
         self.pauseMenu.Update()
         if not self.Paused:
+            # UNPAUSED
             super().Update()
             if self.pauseMenu.Enabled:
                 self.pauseMenu.Disable()
+            pygame.mouse.set_visible (False)
 
             # update time
             self.runTime = pygame.time.get_ticks() - self.runStart
@@ -168,11 +173,11 @@ class GameScreen (Screen):
                             # check if there are still seeds
                             if self.difficulty <= (len (self.seeds)):
                                 self.level.generate (self.seeds[self.difficulty - 1])
-                                print ("this level is still seeded")
+                                logging.info ("this level is still seeded")
                             else:   # otherwise, stop seeding the levels
                                 self.seeded = False
                                 self.level.generate ()
-                                print ("this level is no longer seeded")
+                                logging.info ("this level is no longer seeded")
                         else:
                             self.level.generate()
 
@@ -185,7 +190,7 @@ class GameScreen (Screen):
                         self.move_to_front (self.pointscounter)
                         self.move_to_front (self.levelText)
                         self.move_to_front (self.timeText)
-                        self.move_to_front (self.pauseMenu)     # FIXME
+                        #self.move_to_front (self.pauseMenu)     # FIXME
 
                     # clear msg text
                     self.msgtext.image = self.emptysurf
@@ -221,8 +226,10 @@ class GameScreen (Screen):
                     self.runTime = 0
                     self.runStart = pygame.time.get_ticks()
         else:
+            # PAUSED
             if not self.pauseMenu.Enabled:
-                self.pauseMenu.Enable()
+                self.pauseMenu.Enable()        
+                pygame.mouse.set_visible (True)
         
         # TODO pause time
 

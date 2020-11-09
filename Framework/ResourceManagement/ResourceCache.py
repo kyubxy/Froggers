@@ -1,7 +1,7 @@
-import pygame
 import os
 import os.path
 import ntpath
+import logging
 
 from pygame import Surface
 from ResourceManagement.ImageLoader import *
@@ -28,13 +28,15 @@ class ResourceCache:
             "fnt" : FontLoader()
         }
 
+         
+
     # load all assets from a specified directory
     def LoadDirectory (self, directory):
         # ensure we are not loading the same thing twice
         # most implementations of this method will make this check but we are checking twice anyway
         # to prevent any unwanted memory leaks etc
         if directory in self.LoadedDirectories:
-            print ("directory {0} has already been loaded".format (directory))
+            logging.warning ("directory {0} has already been loaded".format (directory))
             return
 
         for dirpath,_,assetnames in os.walk (os.path.join (self.resDirectory, directory)):
@@ -57,7 +59,7 @@ class ResourceCache:
 
         # check if the resource is supported by loaders
         if assetType in self.Loaders:
-            print ("loading {0}...".format (asset))
+            logging.debug ("loading {0}...".format (asset))
             # add the resource to the cache
 
             # find the appropriate loader
@@ -75,6 +77,6 @@ class ResourceCache:
         else:
             # note that text files may still contain valuable information
             if os.path.splitext(asset)[1] == ".txt":
-                print ("{0} is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache".format (asset))
+                logging.warning ("{0} is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache".format (asset))
             else:
-                print ("{0} of type {1} is not a supported asset and was not loaded by the cache".format (asset, assetType))
+                logging.warning ("{0} of type {1} is not a supported asset and was not loaded by the cache".format (asset, assetType))

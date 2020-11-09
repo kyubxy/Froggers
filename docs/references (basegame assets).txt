@@ -9,6 +9,9 @@ https://opengameart.org/content/railroad-tracks
 frog player
 http://pixelartmaker.com/art/7efb637cfe0d5f5
 
+img_playerdead
+https://opengameart.org/content/comic-explosion-kaboom
+
 img_grass
 https://opengameart.org/content/seamless-grass-texture-ii
 
@@ -29,6 +32,9 @@ https://www.gran-turismo.com/gb/gtsport/user/profile/3646314/gallery/all/decal/3
 
 img_water
 https://opengameart.org/content/texture-water
+
+img_firehydrant
+http://pixelartmaker.com/art/9cc3b2be4b8fc22 
 
 SOUND EFFECTS
 

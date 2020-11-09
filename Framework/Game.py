@@ -2,12 +2,18 @@ from Screen import *
 from ResourceManagement.ResourceCache import *
 from SpriteText import *
 import pygame
+import sys
+import logging
+logging.basicConfig (filename = "Logs/runtime.txt", format="%(asctime)s [%(levelname)s] - %(message)s", filemode="w", level=logging.DEBUG)
 
 # generic game definition 
 
 class Game ():
     # initialises modules and fields
     def __init__(self, title = "Game", width = 1366, height = 768, resourceDir = "res"):
+        # redirect console output to file
+        #sys.stdout = open ("Logs/runtime.log".format (datetime.now().strftime("%d %m %y %H %M %S")), "w")
+
         # initialise relevant pygame modules
         pygame.mixer.pre_init(44100, -16, 1, 512)   # preload audio settings to minimise delays in audio
         pygame.init()
@@ -25,7 +31,7 @@ class Game ():
 
         self.ResourceCache = ResourceCache (resourceDir)                # resource cache
 
-        print ("\nFrogger engine is ready! If there are any issues, check the console for backtracking\n")
+        logging.info ("Frogger engine is ready! If there are any issues, check the console for backtracking\n")
 
     # called once per frame, use exclusively for update logic
     def Update (self):
@@ -38,11 +44,11 @@ class Game ():
     # used to change current screen
     def ChangeScreen (self, screen):
         self.CurrentScreen = screen
-        print ("Entered screen {0}".format (type(screen).__name__))
+        logging.info ("Entered screen {0}".format (type(screen).__name__))
 
     # use this to safely close the program
     def Exit (self):
-        print ("Successfully exited the program")
+        logging.info ("Successfully exited the program")
         self._running = False
 
     # handles pygame events
@@ -84,3 +90,4 @@ class Game ():
         # quit all modules
         pygame.font.quit()
         pygame.quit()
+        sys.stdout.close()

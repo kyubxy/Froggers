@@ -1,4 +1,5 @@
 import pygame
+import logging
 from Framework.Shapes.Box import Box
 from Framework.Shapes.Circle import Circle
 from Framework.Sprite import *
@@ -89,6 +90,7 @@ class IntroductionAnimation (pygame.sprite.Group):
 class FishingAnimation (pygame.sprite.LayeredUpdates, MouseListener):
     def __init__(self, game, parent):
         super().__init__()
+         
 
         self.game = game
         self.res = self.game.ResourceCache.Resources        
@@ -226,7 +228,7 @@ class FishingAnimation (pygame.sprite.LayeredUpdates, MouseListener):
                 self.move_to_front (self.card_name_text)    
             elif (self.raritycounter == self.rarity + 1):
                 self.stars.change_pos_y (-(self.h + 800))
-                print ("rolled {0}".format (self.card.meta))
+                logging.info ("rolled {0}".format (self.card.meta))
             
         if pygame.mouse.get_pressed()[0] and self.raritycounter >= self.rarity + 1:
                 self.parent.Roll()

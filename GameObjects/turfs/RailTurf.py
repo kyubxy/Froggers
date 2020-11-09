@@ -1,5 +1,5 @@
 from GameObjects.turfs.Turf import Turf
-from GameObjects.Entities.Train import *
+from GameObjects.Entities.Obstacles.Train import *
 import math
 
 # rail turf

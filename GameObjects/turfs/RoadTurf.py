@@ -1,5 +1,5 @@
 from GameObjects.turfs.Turf import Turf
-from GameObjects.Entities.Car import *
+from GameObjects.Entities.Obstacles.Car import *
 import math
 import random
 
@@ -18,7 +18,7 @@ class RoadTurf (Turf):
             for i in range(math.floor (self.difficulty / 10) + 1):
                 self.laneyoffset = 150 if lane == 1 else 269     # aligning the car into the correct lane
                 self.Add (Car(direc, (i * 300 + random.randint(30,100),self.laneyoffset), self.lanesp, game))
-
+                
     def Update (self):
         pass
 

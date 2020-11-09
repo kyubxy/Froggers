@@ -1,5 +1,6 @@
 import pygame
 import os
+import logging
 
 # loads fonts of varying sizes
 class FontLoader:
@@ -21,7 +22,7 @@ class FontLoader:
         else:
             # if there isn't a file, load the font anyway with size 48pt
             # in general, there should always be a size file for each font
-            print ("no sizes were provided for the font {0}, a 48pt version has been added anyway".format (path))
+            logging.warning ("no sizes were provided for the font {0}, a 48pt version has been added anyway".format (path))
             sizes.append (48)
 
         fonts = dict()  # dictionary to be returned

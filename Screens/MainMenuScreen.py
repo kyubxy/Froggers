@@ -18,6 +18,10 @@ class MainMenuScreen (Screen):
     def __init__ (self, game):
         super().__init__(game, "res/bgm/bgm_menuloop.mp3")
 
+         
+
+        pygame.mouse.set_visible (True)
+
         self.TOOLBAR_BOTTOM = 60
         self.BGLEVEL_PROPERTIES = {"difficulty": 10, "length": 10}
 
@@ -151,32 +155,14 @@ class MainMenuScreen (Screen):
 
         # generate new level with seeds
         self.Remove (self.level)
-        self.level = Level (game=self.game, properties=self.BGLEVEL_PROPERTIES)
-        self.level.generate (seed=self.seeds[0])
-        self.moved = 0
 
         # copy the seeds
         self.bgseeds = self.seeds.copy()
         
         # set button name
         self.SeedpackButton._label.SetText (os.path.basename (seedpack))
-
-        self.Refresh()
-
-    def StartOption (self):
-        self.game.ChangeScreen (OptionScreen (self.game))
-
-    def StartGacha (self):
-        self.game.ChangeScreen (GachaScreen (self.game))
-
-    def customize (self):
-        self.game.ChangeScreen (CustomizeScreen (self.game))
-
-    def Exit(self):
-        self.game.Exit()
-
-    def CoinButton (self):
-        self.game.ChangeScreen (BuyCoinScreen (self.game))
+        
+        self.genNewLevel()
 
     def difficulty (self):
         if self.difficultyPane.Enabled:
@@ -208,23 +194,23 @@ class MainMenuScreen (Screen):
 
         if (self.moved + 100 > self.level.length):
             # generate new level when moved down entire level
-            self.Remove (self.level)
-            if len (self.seeds) > 0:
-                self.level = Level (game=self.game)
-                self.level.generate (self.bgseeds[0])
-                self.bgseeds.pop(0)
-            else:
-                self.level = Level (game=self.game, properties=self.BGLEVEL_PROPERTIES)
-                self.level.generate()
-            self.moved = 0
+            self.genNewLevel()
+            
+    # generate a new level
+    def genNewLevel (self):
+        self.Remove (self.level)
+        if len (self.bgseeds) > 0:
+            self.level = Level (game=self.game)
+            self.level.generate (self.bgseeds[0])
+            self.bgseeds.pop(0)
+            logging.info("generated menu level from seed")
+        else:
+            self.level = Level (game=self.game, properties=self.BGLEVEL_PROPERTIES)
+            self.level.generate()
+            logging.info("generated menu level randomly")
+        self.moved = 0
 
-            self.Refresh()
-
-    def Add (self, sprite):
-        super().Add(sprite)
-
-    def Draw (self, win):
-        super().Draw(win)
+        self.Refresh()
 
     def Refresh (self):        
         self.Add (self.level)
@@ -237,3 +223,20 @@ class MainMenuScreen (Screen):
         # move all foreground elements to the front
         self.Remove (self.foreground)
         self.Add (self.foreground)
+
+    def StartOption (self):
+        self.game.ChangeScreen (OptionScreen (self.game))
+
+    def StartGacha (self):
+        self.game.ChangeScreen (GachaScreen (self.game))
+
+    def customize (self):
+        self.game.ChangeScreen (CustomizeScreen (self.game))
+
+    def Exit(self):
+        msg = tk.messagebox.askquestion ("Exit game","Are you sure you want to leave", icon = "warning")
+        if msg == "yes":
+            self.game.Exit()
+
+    def CoinButton (self):
+        self.game.ChangeScreen (BuyCoinScreen (self.game))

@@ -12,6 +12,10 @@ from GameObjects.Entities.Player import *
 class GameOverScreen (Screen):
     def __init__ (self, game, stats):
         super().__init__(game)
+        pygame.mouse.set_visible (True)
+
+         
+        
         self.stats = stats 
 
         # game over text
@@ -20,7 +24,8 @@ class GameOverScreen (Screen):
         self.Add (self.deathtext)
 
         # give coins
-        self.game.preferenceManager.Preferences["coins"] += round ((stats.Points * Player.frogs) / (10000 * (Player.lives+1)))
+        self.coinamount = round ((stats.Points * Player.frogs) / (10000 * (Player.lives+1)))
+        self.game.preferenceManager.Preferences["coins"] += self.coinamount
         self.game.preferenceManager.write()
 
         # display game statistics
@@ -29,7 +34,7 @@ class GameOverScreen (Screen):
             "",
             "Points: " + str(stats.Points), 
             "Time: " + str (stats.Time/1000) + " seconds",
-            "Coins " + str (self.game.preferenceManager.Preferences["coins"])
+            "Coins +" + str (self.coinamount)
             ]
         self.DisplayMessages (self.results, (30, 100))
 
@@ -58,10 +63,14 @@ class GameOverScreen (Screen):
         #filename = "{0}.txt".format(datetime.datetime.now())
         filename = simpledialog.askstring("filename", "Name the seedpack file")
         f = open(os.path.join ("SEEDPACKS", filename + ".txt"), "w")
+
+        if f == "":
+            return
+
         for seed in range (len(self.stats.Seeds)):
             f.write ("{0}\n".format (self.stats.Seeds[seed]))
         f.close()
-        print ("wrote file {0}".format (filename))
+        logging.info ("wrote file {0}".format (filename))
 
         # create a tkinter popup to notify the user
         messagebox.showinfo ("Successfully wrote the seedpacks", "Go to the SEEDPACKS folder in the game's folder")

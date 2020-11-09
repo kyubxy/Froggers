@@ -5,8 +5,8 @@ from constants import *
 from Sprite import *
 from Framework.MouseListener import *
 from Framework.KeyboardListener import get_keydown
-from GameObjects.Entities.Obstacle import *
-from GameObjects.Entities.Log import *
+from GameObjects.Entities.Obstacles.Obstacle import *
+from GameObjects.Entities.Obstacles.Log import *
 from GameObjects.turfs.GrassTurf import Cave
 from GameObjects.turfs.LakeTurf import *
 
@@ -40,7 +40,7 @@ class Player (Sprite):
         self.newkeystate = pygame.key.get_pressed() 
 
         # whether or not player is touching log
-        self.logging = False
+        self.touchLog = False
 
     def update (self):
         super().update()
@@ -53,7 +53,7 @@ class Player (Sprite):
             self.collision()
 
         # true if the player is touching a log
-        self.logging = False
+        self.touchLog = False
 
         # handle offscreen deaths
         if self.rect.x > pygame.display.get_surface().get_size()[0] or self.rect.x + self.rect.width < 0:
@@ -77,9 +77,9 @@ class Player (Sprite):
                 if type (other) == Log:
                     # work using a rate of change rather than position
                     self.rect.x += other.speed * other.direc 
-                    self.logging = True
+                    self.touchLog = True
 
-                if type (other) == Water and not self.logging:
+                if type (other) == Water and not self.touchLog:
                     self.die()
 
     # input
@@ -88,14 +88,15 @@ class Player (Sprite):
         self.newkeystate = pygame.key.get_pressed()
 
         if self.Alive and not self.Winning:
-            '''
+            
+            keys = pygame.key.get_pressed()
+
             # new movement
-            if pygame.key.get_pressed() [pygame.K_LEFT, pygame.K_a]:
-                print ("K")
-            '''
+            if keys[pygame.K_LEFT]:
+                self.rect.x -= 
 
             # old movement
-            
+            '''
             # left
             if get_keydown (self.oldkeystate, self.newkeystate, [pygame.K_LEFT, pygame.K_a]): 
                 if self.rect.x > 0:
@@ -128,6 +129,7 @@ class Player (Sprite):
 
                     self.absolute_y -= 64
                     self.playJumpSound()
+                '''
             
 
             # exit the win screen
@@ -191,7 +193,9 @@ class Player (Sprite):
         # handle variables
         self.Alive = False
         self.ChangeImage (self.deadimg)
-        self.Scale (64,64)
+        self.Scale (128,128)
+        self.rect.x -= 32
+        self.rect.y -= 32
 
         # broadcast event to the rest of the game
         pygame.event.post (pygame.event.Event (DEATH))

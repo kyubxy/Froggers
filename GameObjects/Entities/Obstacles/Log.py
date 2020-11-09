@@ -1,4 +1,4 @@
-from GameObjects.Entities.Obstacle import *
+from GameObjects.Entities.Obstacles.Obstacle import *
 import random
 
 # log obstacle

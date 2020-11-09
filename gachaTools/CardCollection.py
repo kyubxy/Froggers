@@ -6,12 +6,15 @@ import os.path
 import configparser
 import pickle
 import datetime
+import logging
+from Framework.Game import *
 
 # in regards to gacha frogs, only two operations can take place on them
 # 1, gaining new frogs through gacha (summoning). 2, viewing existing frog data (getting).
 # This class handles both operations
 class CardCollection: 
 	def __init__(self, game):
+		 
 		self.game = game
 
 		# all playable characters earned by the player
@@ -22,12 +25,12 @@ class CardCollection:
 		# key: frog id - value: frog meta 
 		self.FrogCollection = dict()
 		self.read_frogs()
-		print (self.FrogCollection)
+		logging.debug (self.FrogCollection)
 
 	# update frog list, add the METADATA
 	def read_frogs (self) -> list():
 		if (not os.path.exists ("data.pickle")):
-			print ("no gacha file was found")
+			logging.warning ("no gacha file was found")
 			return
 		
 		with open ("data.pickle", "rb") as handle:

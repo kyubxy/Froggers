@@ -1,5 +1,5 @@
 from GameObjects.turfs.Turf import Turf
-from GameObjects.Entities.Log import *
+from GameObjects.Entities.Obstacles.Log import *
 from Framework.TileSurface import *
 import math
 import random

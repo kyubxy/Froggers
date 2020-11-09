@@ -9,6 +9,7 @@ from GameObjects.turfs.GrassTurf import *
 from GameObjects.turfs.LakeTurf import *
 from Framework.KeyboardListener import *
 from Stats import GameStats
+import logging
 
 # the physical composition of the level itself.
 class Level (GeometricGroup): 
@@ -28,17 +29,19 @@ class Level (GeometricGroup):
 
         self.length = 0
 
+         
+
     # randomly generates the level
     def generate (self, seed = None):
         self.empty()
-        print ("Starting level", self.difficulty)
+        logging.info ("Starting level", self.difficulty)
 
         # if no seed is available, generate a random one
         if seed is None:
             seed = random.randint (0,2147483647)    # maximum int size for maximum number of seeds :)
             
         random.seed (seed)      # set the seed   
-        print (seed)
+        logging.info (seed)
 
         self.stats.Seeds.append (str(seed)) # add seed to the seeds list
 
@@ -74,7 +77,6 @@ class Level (GeometricGroup):
 
         for t in self.levelturfs:
             self.Add (t)
-        
         
     # this update method is NOT included in the group call
     # and is instead called MANUALLY
