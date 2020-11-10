@@ -17,6 +17,8 @@ class Player (Sprite):
     def __init__(self, level, game):
         self.game = game
 
+        self.MOVE_SPEED = 10
+
         # graphics
         self.deadimg = game.ResourceCache.Resources["img_playerdead"]
         self.aliveimg = game.ResourceCache.Resources["img_player"]
@@ -42,11 +44,20 @@ class Player (Sprite):
         # whether or not player is touching log
         self.touchLog = False
 
+        self.moveleft = 0
+        self.moveright = 0
+        self.moveup = 0 
+        self.movedown = 0
+
     def update (self):
         super().update()
    
         # move player according to controls
         self.handleInput()
+
+        # TODO: MOVE
+
+        # ------MOVE
 
         if self.Alive:
             # handle all player collisions
@@ -88,49 +99,66 @@ class Player (Sprite):
         self.newkeystate = pygame.key.get_pressed()
 
         if self.Alive and not self.Winning:
-            
-            keys = pygame.key.get_pressed()
-
-            # new movement
-            if keys[pygame.K_LEFT]:
-                self.rect.x -= 
-
-            # old movement
-            '''
             # left
-            if get_keydown (self.oldkeystate, self.newkeystate, [pygame.K_LEFT, pygame.K_a]): 
-                if self.rect.x > 0:
-                    self.rect.x -= 64
+            if self.newkeystate[pygame.K_LEFT] or self.newkeystate[pygame.K_a]:
+                if self.oldkeystate != self.newkeystate:
+                    self.moveleft = 0
+
+                if self.moveleft % self.MOVE_SPEED == 0:
                     self.playJumpSound()
+                    if self.rect.x > 0:
+                        self.rect.x -= 64
+                        self.moveleft = 0        
 
-            # right
-            elif get_keydown (self.oldkeystate, self.newkeystate,[pygame.K_RIGHT, pygame.K_d]):
-                if self.rect.x + 128 < pygame.display.get_surface().get_size()[0]:
-                    self.rect.x += 64
-                    self.playJumpSound()
-
-            # down
-            # TODO make downwards limit 
-            if get_keydown (self.oldkeystate, self.newkeystate, [pygame.K_DOWN, pygame.K_s]):
-                if (self.absolute_y >= pygame.display.get_surface().get_size()[1] / 2 - 64):    
-                    self.level.change_pos_y(-64)
-                else:
-                    self.rect.y += 64
-
-                self.absolute_y += 64
-                self.playJumpSound()
-            # up
-            elif get_keydown (self.oldkeystate, self.newkeystate, [pygame.K_UP, pygame.K_w]):
-                if (self.absolute_y > 0):          # prevent the player from moving off screen
-                    if (self.absolute_y < pygame.display.get_surface().get_size()[1] / 2):     # prevent camera from panning off screen
-                        self.rect.y -= 64
-                    else:
-                        self.level.change_pos_y(64)
-
-                    self.absolute_y -= 64
-                    self.playJumpSound()
-                '''
+                self.moveleft += 1
             
+            # right
+            if self.newkeystate[pygame.K_RIGHT] or self.newkeystate [pygame.K_d]:
+                if self.oldkeystate != self.newkeystate:
+                    self.moveright = 0
+
+                if self.moveright % self.MOVE_SPEED == 0:
+                    self.playJumpSound()
+                    if self.rect.x + 128 < pygame.display.get_surface().get_size()[0]:
+                        self.rect.x += 64
+                        self.moveright = 0        
+
+                self.moveright += 1
+            
+            # up
+            if self.newkeystate[pygame.K_UP] or self.newkeystate[pygame.K_w]:
+                if self.oldkeystate != self.newkeystate:
+                    self.moveup = 0
+
+                if self.moveup % self.MOVE_SPEED == 0:
+                    self.playJumpSound()
+                    if (self.absolute_y > 0):          # prevent the player from moving off screen
+                        if (self.absolute_y < pygame.display.get_surface().get_size()[1] / 2):     # prevent camera from panning off screen
+                            self.rect.y -= 64
+                        else:
+                            self.level.change_pos_y(64)
+
+                        self.absolute_y -= 64
+                        self.moveup = 0        
+
+                self.moveup += 1
+            
+            # down
+            if self.newkeystate[pygame.K_DOWN] or self.newkeystate [pygame.K_s]:
+                if self.oldkeystate != self.newkeystate:
+                    self.movedown = 0
+
+                if self.movedown % self.MOVE_SPEED == 0:
+                    self.playJumpSound()
+                    if (self.absolute_y >= pygame.display.get_surface().get_size()[1] / 2 - 64):    
+                        self.level.change_pos_y(-64)
+                    else:
+                        self.rect.y += 64
+
+                    self.absolute_y += 64
+                    self.movedown = 0        
+
+                self.movedown += 1
 
             # exit the win screen
             if self.Winning:
