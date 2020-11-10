@@ -9,7 +9,7 @@
             "type": "python",
             "request": "launch",
             "program": "Froggers.py",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
         },
         {
             "name": "current file",

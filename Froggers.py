@@ -9,12 +9,12 @@ import logging
 sys.path.insert (0, "Framework")
 
 from Framework.Game import *
+from Framework.ResourceManagement.ResourceCache import *
 from Screens.MainMenuScreen import *
 from Screens.GameOverScreen import *
-from Framework.ResourceManagement.ResourceCache import *
-from gachaTools.CardCollection import *
 from IO.PreferenceManager import PreferenceManager
 from IO.ScoreManager import ScoreManager
+from gachaTools.CardCollection import *
 
 # Froggers game instance
 class FroggersGame (Game):

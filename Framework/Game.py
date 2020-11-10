@@ -4,7 +4,9 @@ from SpriteText import *
 import pygame
 import sys
 import logging
-logging.basicConfig (filename = "Logs/runtime.txt", format="%(asctime)s [%(levelname)s] - %(message)s", filemode="w", level=logging.INFO)
+#logging.basicConfig (filename = "Logs/runtime.txt", format="%(asctime)s [%(levelname)s] - %(message)s", filemode="w", level=logging.INFO)
+# TODO
+logging.basicConfig (format="%(asctime)s [%(levelname)s] - %(message)s", filemode="w", level=logging.INFO)
 
 # generic game definition 
 
