@@ -21,3 +21,4 @@ class PreferenceManager:
                 self.Preferences[key] = defaultValue
                 self.write()
             return defaultValue
+            

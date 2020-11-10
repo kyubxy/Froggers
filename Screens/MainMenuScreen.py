@@ -5,6 +5,7 @@ from Framework.SpriteText import *
 from Screens.GameScreen import *
 from Screens.GachaScreen import *
 from Screens.CustomizeScreen import *
+from Screens.ScoresScreen import *
 from UI.InvisibleButton import InvisibleButton
 from UI.FroggerButton import FroggerButton
 from tkinter import filedialog
@@ -17,8 +18,6 @@ from Screens.BuyCoinScreen import *
 class MainMenuScreen (Screen):
     def __init__ (self, game):
         super().__init__(game, "res/bgm/bgm_menuloop.mp3")
-
-         
 
         pygame.mouse.set_visible (True)
 
@@ -86,7 +85,7 @@ class MainMenuScreen (Screen):
         self.toolbar.append (self.CustomizeButton)
 
         # scores button
-        self.ScoresButton = FroggerButton (game, self, "scores", clickEventName="StartGacha")
+        self.ScoresButton = FroggerButton (game, self, "scores", clickEventName="StartScores")
         self.toolbar.append (self.ScoresButton)
 
         # customize button
@@ -232,6 +231,9 @@ class MainMenuScreen (Screen):
 
     def customize (self):
         self.game.ChangeScreen (CustomizeScreen (self.game))
+
+    def StartScores (self):
+        self.game.ChangeScreen (ScoresScreen (self.game))        
 
     def Exit(self):
         msg = tk.messagebox.askquestion ("Exit game","Are you sure you want to leave", icon = "warning")

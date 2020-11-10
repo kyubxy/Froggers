@@ -15,9 +15,7 @@ class GameScreen (Screen):
     def __init__ (self, game, seeds = None):
         pygame.mouse.set_visible (False)
         super().__init__(game, "res/bgm/bgm_gameplay.mp3")
-
-         
-    
+        
         self.res = self.game.ResourceCache.Resources
 
         # set starting difficulty
@@ -108,6 +106,8 @@ class GameScreen (Screen):
         self.oldstate = pygame.key.get_pressed()
         self.newstate = pygame.key.get_pressed()
 
+        self.pausetime = 0
+
     def Update (self):
         self.newstate = pygame.key.get_pressed()
         self.pauseMenu.Update()
@@ -116,6 +116,7 @@ class GameScreen (Screen):
             super().Update()
             if self.pauseMenu.Enabled:
                 self.pauseMenu.Disable()
+
             pygame.mouse.set_visible (False)
 
             # update time
@@ -123,7 +124,7 @@ class GameScreen (Screen):
             self.levelTime = pygame.time.get_ticks() - self.levelStart
 
             # total time (displayed on the screen)
-            self.totalTime = pygame.time.get_ticks() - self.startTime
+            self.totalTime = pygame.time.get_ticks() - self.startTime - self.pausetime
             self.timeText.SetText (str(round (self.totalTime / 1000)) + "/sec")
             self.timeText.rect.centerx = pygame.display.get_surface().get_size()[0] // 2
             self.stats.Time = self.totalTime
@@ -230,8 +231,7 @@ class GameScreen (Screen):
             if not self.pauseMenu.Enabled:
                 self.pauseMenu.Enable()        
                 pygame.mouse.set_visible (True)
-        
-        # TODO pause time
+                #TODO self.pausetime = pygame.time.get_ticks() - self.startTime
 
         if get_keydown (self.oldstate, self.newstate, [pygame.K_ESCAPE]):
             self.Paused = not self.Paused

@@ -34,7 +34,7 @@ class Level (GeometricGroup):
     # randomly generates the level
     def generate (self, seed = None):
         self.empty()
-        logging.info ("Starting level", self.difficulty)
+        logging.info ("Starting level {0}".format(self.difficulty))
 
         # if no seed is available, generate a random one
         if seed is None:

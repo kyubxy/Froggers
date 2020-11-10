@@ -25,7 +25,7 @@ class CardCollection:
 		# key: frog id - value: frog meta 
 		self.FrogCollection = dict()
 		self.read_frogs()
-		logging.debug (self.FrogCollection)
+		logging.debug (f"{self.FrogCollection}")
 
 	# update frog list, add the METADATA
 	def read_frogs (self) -> list():

@@ -13,6 +13,7 @@ from Screens.GameOverScreen import *
 from Framework.ResourceManagement.ResourceCache import *
 from gachaTools.CardCollection import *
 from IO.PreferenceManager import PreferenceManager
+from IO.ScoreManager import ScoreManager
 
 # Froggers game instance
 class FroggersGame (Game):
@@ -24,13 +25,20 @@ class FroggersGame (Game):
         # initialise managers
         self.cardCollection = CardCollection (self) 
         self.preferenceManager = PreferenceManager ()
+        self.scoreManager = ScoreManager ()
 
         # load save data
         if os.path.exists ("pref.pickle"):
             self.preferenceManager.read()
         else:
             self.preferenceManager.write()
-        logging.debug (self.preferenceManager.Preferences)
+            logging.debug (f"self.preferenceManager.Preferences")
+
+        # load scores
+        if os.path.exists ("scores.pickle"):
+            self.scoreManager.read()
+        else:
+            self.scoreManager.write()
 
         super().__init__(title = "Froggers", width=w, height=h)
 
@@ -38,5 +46,6 @@ class FroggersGame (Game):
         self.ChangeScreen (MainMenuScreen(self))
 
 # entry point
-game = FroggersGame(1366, 768)
-game.Run()  
+if __name__ == "__main__":
+    game = FroggersGame(1366, 768)
+    game.Run()  

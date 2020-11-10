@@ -31,7 +31,7 @@ class Game ():
 
         self.ResourceCache = ResourceCache (resourceDir)                # resource cache
 
-        logging.info ("Frogger engine is ready! If there are any issues, check the console for backtracking\n")
+        logging.info (f"Frogger engine is ready! If there are any issues, check the console for backtracking\n")
 
     # called once per frame, use exclusively for update logic
     def Update (self):
@@ -44,11 +44,11 @@ class Game ():
     # used to change current screen
     def ChangeScreen (self, screen):
         self.CurrentScreen = screen
-        logging.info ("Entered screen {0}".format (type(screen).__name__))
+        logging.info (f"Entered screen {0}".format (type(screen).__name__))
 
     # use this to safely close the program
     def Exit (self):
-        logging.info ("Successfully exited the program")
+        logging.info (f"Successfully exited the program")
         self._running = False
 
     # handles pygame events

@@ -3,8 +3,9 @@ from Framework.SpriteText import SpriteText
 from Framework.Sprite import Sprite
 from Framework.Screen import *
 import Screens.MainMenuScreen
+import datetime
 
-class OptionScreen (Screen):
+class ScoresScreen (Screen):
     def __init__ (self, game):
         super().__init__(game, bgm = "res/bgm/bgm_menuloop.mp3")     
 
@@ -13,33 +14,23 @@ class OptionScreen (Screen):
         self.add (self.bg)
         
         # title text
-        self.titletext = SpriteText("Options", font = game.ResourceCache.Resources["fnt_VanillaExtract_48"])
+        self.titletext = SpriteText("Scores", font = game.ResourceCache.Resources["fnt_VanillaExtract_48"])
         self.Add (self.titletext)
 
-        # music
-        self.musicButton = FroggerButton (self.game, self, "Toggle music", clickEventName="toggleMusic")
-        self.musicButton.set_Rect (pygame.Rect (10, 100, 200,50))
-        self.Add (self.musicButton)
-        
         # back
         self.backButton = FroggerButton (self.game, self, "back", clickEventName="back")
         self.backButton.set_Rect (pygame.Rect (10, pygame.display.get_surface().get_size()[1] - 60, 200,50))
         self.Add (self.backButton)
-        
-    def toggleMusic (self):
-        self.game.preferenceManager.read()
-        if self.game.preferenceManager.Preferences.get ("bgm") is None:
-            self.game.preferenceManager.Preferences["bgm"] = False
-            pygame.mixer.music.stop()
-        else:            
-            if self.game.preferenceManager.Preferences["bgm"]:
-                self.game.preferenceManager.Preferences["bgm"] = False
-                pygame.mixer.music.stop()                
-            else:
-                self.game.preferenceManager.Preferences["bgm"] = True
-                self.Play()             
 
-        self.game.preferenceManager.write()
+        game.scoreManager.Scores.sort (key=lambda x: x.Points, reverse=True)
+
+        # TODO replace with list generator
+        messages = []
+        for score in game.scoreManager.Scores:
+            messages.append (f"{score.Name} : {score.Points}pts - {datetime.timedelta(seconds=score.Time)}")
+
+        self.DisplayMessages (messages, (80,80))
+
 
     def back (self):
         self.game.ChangeScreen (Screens.MainMenuScreen.MainMenuScreen (self.game))
@@ -52,3 +43,10 @@ class OptionScreen (Screen):
 
     def Draw (self, win):
         super().Draw(win)
+    
+    def DisplayMessages (self, messages, pos, spacing = 30):
+        for msg in range(len(messages)):
+            self.msgtxt = SpriteText (messages[msg], font = self.game.ResourceCache.Resources["fnt_Berlin_30"], colour=[0,0,0])
+            self.msgtxt.rect.x = pos[0]
+            self.msgtxt.rect.y = pos[1] + spacing * msg
+            self.add (self.msgtxt)

@@ -54,11 +54,7 @@ class Player (Sprite):
    
         # move player according to controls
         self.handleInput()
-
-        # TODO: MOVE
-
-        # ------MOVE
-
+        
         if self.Alive:
             # handle all player collisions
             self.collision()

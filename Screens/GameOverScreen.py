@@ -13,10 +13,10 @@ class GameOverScreen (Screen):
     def __init__ (self, game, stats):
         super().__init__(game)
         pygame.mouse.set_visible (True)
-
-         
         
         self.stats = stats 
+
+        self.stats.Name = simpledialog.askstring ("Name", "what is your name?")
 
         # game over text
         self.deathtext = SpriteText("GAME OVER", font = game.ResourceCache.Resources["fnt_VanillaExtract_48"])
@@ -32,10 +32,13 @@ class GameOverScreen (Screen):
         self.results = [
             "RESULTS",
             "",
-            "Points: " + str(stats.Points), 
-            "Time: " + str (stats.Time/1000) + " seconds",
-            "Coins +" + str (self.coinamount)
+            f"Points:  {stats.Points}", 
+            f"Time: {stats.Time/1000} seconds",
+            f"Coins: +{self.coinamount}",
+            "",
+            f"Played as {self.stats.Name}"
             ]
+
         self.DisplayMessages (self.results, (30, 100))
 
         # display seeds
@@ -52,6 +55,9 @@ class GameOverScreen (Screen):
         self.ExportButton = FroggerButton (self.game, self, "Export seeds", clickEventName= "Export")
         self.ExportButton.set_Rect (pygame.Rect (30, 580, 200, 50))
         self.Add (self.ExportButton)
+
+        self.game.scoreManager.Scores.append (self.stats)
+        self.game.scoreManager.write()
         
     # export the seed list to a file
     def Export (self):
