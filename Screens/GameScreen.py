@@ -33,7 +33,7 @@ class GameScreen (Screen):
                 self.seeds = seeds
                 self.seeded = True
             
-                logging.info ("this level is seeded, it's seeds consist of", self.seeds)
+                logging.info ("this level is seeded, it's seeds consist of {0}".format(self.seeds))
             else:
                 self.seeded = False
                 logging.info ("this level is not seeded")

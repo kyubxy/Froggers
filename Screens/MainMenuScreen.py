@@ -128,7 +128,7 @@ class MainMenuScreen (Screen):
 
         # difficulty options
         self.difficultyPane = DifficultyPane (self.game, self, pygame.Rect (10, pygame.display.get_surface().get_size()[1] - self.TOOLBAR_BOTTOM - 300, 300, 300))
-        self.add (self.difficultyPane)
+        self.foreground.add (self.difficultyPane)
 
         # seeds to use in the GAME
         self.seeds = []
@@ -140,8 +140,8 @@ class MainMenuScreen (Screen):
         self.game.ResourceCache.LoadDirectory ("textures") 
         self.game.ChangeScreen (GameScreen (self.game, seeds = self.seeds))
 
-    def LoadGame (self):
-        seedpack = filedialog.askopenfilename(initialdir = os.path.join (os.getcwd(), "SEEDPACKS"), title = "Select seedpack",filetypes = (("text files","*.txt"),("all files","*.*")))
+    def LoadGame (self):  
+        seedpack = filedialog.askopenfilename(initialdir = os.path.join (os.getcwd(), "SEEDPACKS"), title = "Select seedpack",filetypes = (("text files","*.txt"),("all files","*.*"))) 
         
         self.seeds = []
 
@@ -172,6 +172,8 @@ class MainMenuScreen (Screen):
             # enable panel
             self.PlayButton.set_Pos ((310, self.PlayButton.get_Rect().y))      
             self.difficultyPane.Enable()
+
+        self.Refresh(False)
 
     def Update (self):
         super().Update()
@@ -211,13 +213,14 @@ class MainMenuScreen (Screen):
 
         self.Refresh()
 
-    def Refresh (self):        
+    def Refresh (self, WithFader = True):        
         self.Add (self.level)
 
         # fader
-        self.Remove (self.fader)
-        self.fade_amount = 255
-        self.Add (self.fader)
+        if WithFader:
+            self.Remove (self.fader)
+            self.fade_amount = 255
+            self.Add (self.fader)
         
         # move all foreground elements to the front
         self.Remove (self.foreground)

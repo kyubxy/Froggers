@@ -8,7 +8,7 @@ class RailTurf (Turf):
         Turf.__init__ (self, 2, "img_railstrip", game)
         
         # add the train
-        self.Add (Train(direc, (0,0), random.randint (10,15 + math.floor(difficulty/4)), game))
+        self.Add (Train(game, direc, (0,0), random.randint (10,15 + math.floor(difficulty/4)), random.randint (2,5), random.randint (0,2)))
     
     def Update(self):
         pass

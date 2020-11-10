@@ -3,6 +3,7 @@ import tkinter as tk
 import os.path
 import logging
 
+
 # add framework to sys path 
 # (dont want a repeat of *last time*)
 sys.path.insert (0, "Framework")
@@ -19,8 +20,9 @@ from IO.ScoreManager import ScoreManager
 class FroggersGame (Game):
     def __init__(self, w=1366,h=768):
         # initialise tkinter
-        root = tk.Tk()
-        root.withdraw()       
+        self.root = tk.Tk()
+        self.root.withdraw()
+        self.root.attributes ("-topmost", True)     
 
         # initialise managers
         self.cardCollection = CardCollection (self) 
@@ -40,7 +42,7 @@ class FroggersGame (Game):
         else:
             self.scoreManager.write()
 
-        super().__init__(title = "Froggers", width=w, height=h)
+        super().__init__(title = "Froggers", width=w, height=h, fullscreen=self.preferenceManager.get ("fullscreen", False))
 
         # load main screen
         self.ChangeScreen (MainMenuScreen(self))

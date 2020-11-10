@@ -8,6 +8,7 @@ import datetime
 import os
 from tkinter import messagebox, simpledialog
 from GameObjects.Entities.Player import *
+import logging
 
 class GameOverScreen (Screen):
     def __init__ (self, game, stats):
@@ -33,7 +34,7 @@ class GameOverScreen (Screen):
             "RESULTS",
             "",
             f"Points:  {stats.Points}", 
-            f"Time: {stats.Time/1000} seconds",
+            f"Time: {datetime.timedelta (seconds = round (stats.Time/1000))}",
             f"Coins: +{self.coinamount}",
             "",
             f"Played as {self.stats.Name}"
@@ -68,6 +69,9 @@ class GameOverScreen (Screen):
         # write the file
         #filename = "{0}.txt".format(datetime.datetime.now())
         filename = simpledialog.askstring("filename", "Name the seedpack file")
+        if not filename:
+            return
+             
         f = open(os.path.join ("SEEDPACKS", filename + ".txt"), "w")
 
         if f == "":

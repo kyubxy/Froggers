@@ -4,16 +4,13 @@ from SpriteText import *
 import pygame
 import sys
 import logging
-logging.basicConfig (filename = "Logs/runtime.txt", format="%(asctime)s [%(levelname)s] - %(message)s", filemode="w", level=logging.DEBUG)
+logging.basicConfig (filename = "Logs/runtime.txt", format="%(asctime)s [%(levelname)s] - %(message)s", filemode="w", level=logging.INFO)
 
 # generic game definition 
 
 class Game ():
     # initialises modules and fields
-    def __init__(self, title = "Game", width = 1366, height = 768, resourceDir = "res"):
-        # redirect console output to file
-        #sys.stdout = open ("Logs/runtime.log".format (datetime.now().strftime("%d %m %y %H %M %S")), "w")
-
+    def __init__(self, title = "Game", width = 1366, height = 768, fullscreen = True, resourceDir = "res"):
         # initialise relevant pygame modules
         pygame.mixer.pre_init(44100, -16, 1, 512)   # preload audio settings to minimise delays in audio
         pygame.init()
@@ -23,7 +20,11 @@ class Game ():
         self._title = title                                             # title of window
         self._windowSize = [width, height]                              # size of window
         self._running = True                                            # program state
-        self.Window = pygame.display.set_mode (self._windowSize)        # instantiate pygame window
+        # instantiate pygame window
+        if fullscreen:
+            self.Window = pygame.display.set_mode ((0,0), pygame.FULLSCREEN)   
+        else:
+            self.Window = pygame.display.set_mode (self._windowSize)                    
         pygame.display.set_caption (self._title)                        # set title
         self.Clock = pygame.time.Clock ()                               # pygame clock
         
@@ -69,6 +70,7 @@ class Game ():
                 # check if it has the KeyDown attribute
                 if hasattr (child, "MouseDown"):
                     child.MouseDown (event)
+
 
     # initiates game loop, starts the game
     def Run (self):

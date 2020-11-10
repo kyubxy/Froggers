@@ -109,7 +109,7 @@ class Player (Sprite):
                 self.moveleft += 1
             
             # right
-            if self.newkeystate[pygame.K_RIGHT] or self.newkeystate [pygame.K_d]:
+            elif self.newkeystate[pygame.K_RIGHT] or self.newkeystate [pygame.K_d]:
                 if self.oldkeystate != self.newkeystate:
                     self.moveright = 0
 
@@ -122,7 +122,7 @@ class Player (Sprite):
                 self.moveright += 1
             
             # up
-            if self.newkeystate[pygame.K_UP] or self.newkeystate[pygame.K_w]:
+            elif self.newkeystate[pygame.K_UP] or self.newkeystate[pygame.K_w]:
                 if self.oldkeystate != self.newkeystate:
                     self.moveup = 0
 
@@ -140,7 +140,7 @@ class Player (Sprite):
                 self.moveup += 1
             
             # down
-            if self.newkeystate[pygame.K_DOWN] or self.newkeystate [pygame.K_s]:
+            elif self.newkeystate[pygame.K_DOWN] or self.newkeystate [pygame.K_s]:
                 if self.oldkeystate != self.newkeystate:
                     self.movedown = 0
 

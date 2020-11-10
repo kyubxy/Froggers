@@ -2,9 +2,12 @@ from Framework.Sprite import *
 
 # anything that moves along a turf, not necessarily harmful
 class Obstacle (Sprite):
-    def __init__(self, path, direc, pos, speed, game):
+    def __init__(self, path, direc, pos, speed, game, img = None):
         self.dir = direc        # direction of the obstacle {-1,1}
-        super().__init__(img = game.ResourceCache.Resources[path])  # load the texture
+        if path is None:
+            super().__init__ (img = img)
+        else:
+            super().__init__(img = game.ResourceCache.Resources[path])  # load the texture
         # set initial position
 
         # ensure the initial position is always on screen
