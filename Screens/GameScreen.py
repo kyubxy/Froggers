@@ -11,6 +11,8 @@ from UI.PauseMenu import *
 from Framework.KeyboardListener import get_keydown
 import pygame
 
+# TODO: add UI to foreground group
+
 class GameScreen (Screen):        
     def __init__ (self, game, seeds = None):
         pygame.mouse.set_visible (False)
@@ -101,7 +103,9 @@ class GameScreen (Screen):
         self.Paused = False
         self.pauseMenu = PauseMenu (self.game, self, pygame.Rect (30,30,pygame.display.get_surface().get_size()[0] - 60,pygame.display.get_surface().get_size()[1] - 60))
         self.pauseMenu.Disable()
-        self.Add (self.pauseMenu)
+        self.foreground = pygame.sprite.Group()
+        self.foreground.add (self.pauseMenu)
+        self.Add (self.foreground)
 
         self.oldstate = pygame.key.get_pressed()
         self.newstate = pygame.key.get_pressed()
@@ -191,7 +195,8 @@ class GameScreen (Screen):
                         self.move_to_front (self.pointscounter)
                         self.move_to_front (self.levelText)
                         self.move_to_front (self.timeText)
-                        #self.move_to_front (self.pauseMenu)     # FIXME
+                        self.Remove (self.foreground)
+                        self.Add (self.foreground)
 
                     # clear msg text
                     self.msgtext.image = self.emptysurf
