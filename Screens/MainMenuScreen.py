@@ -178,8 +178,6 @@ class MainMenuScreen (Screen):
     def Update (self):
         super().Update()
 
-        self.difficultyPane.Update()
-
         # keep moving the level
         self.level.change_pos_y (-1)
         self.moved += 1

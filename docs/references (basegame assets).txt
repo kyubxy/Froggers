@@ -24,7 +24,7 @@ https://www.irasutoya.com/2016/03/blog-post_781.html
 img_lives
 https://opengameart.org/content/heart-pixel-art
 
-img_cave, img_caveoccupied, img_playercurrent img_playerdead
+img_cave, img_caveoccupied, img_playercurrent img_playerdead, img_gachainstructions, img_fgwater
 me
 
 img_log
@@ -33,8 +33,6 @@ https://www.gran-turismo.com/gb/gtsport/user/profile/3646314/gallery/all/decal/3
 img_water
 https://opengameart.org/content/texture-water
 
-img_firehydrant
-http://pixelartmaker.com/art/9cc3b2be4b8fc22 
 
 SOUND EFFECTS
 
@@ -43,8 +41,6 @@ https://www.kshootmania.com/download.html (KSHOOT MANIA: time_sel.wav)
 
 jump 1-4
 https://opengameart.org/content/platformer-jumping-sounds
-
-https://opengameart.org/content/oldschool-win-and-die-jump-and-run-sounds
 
 se_roundend se_death
 https://opengameart.org/content/oldschool-win-and-die-jump-and-run-sounds

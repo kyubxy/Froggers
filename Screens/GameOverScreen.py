@@ -18,6 +18,8 @@ class GameOverScreen (Screen):
         self.stats = stats 
 
         self.stats.Name = simpledialog.askstring ("Name", "what is your name?")
+        if not self.stats.Name:
+            self.stats.Name = "anon"
 
         # game over text
         self.deathtext = SpriteText("GAME OVER", font = game.ResourceCache.Resources["fnt_VanillaExtract_48"])

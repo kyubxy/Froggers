@@ -66,15 +66,15 @@ class CustomizeScreen (Screen):
 			
 		self.game.preferenceManager.read()
 
-	def back (self):
+	def back (self):		
 		self.game.ChangeScreen(Screens.MainMenuScreen.MainMenuScreen(self.game))
 
 	def Update (self):
 		super().Update()
 
 		for card in self.cards:
-			# handle the default card directly (as this card isn't part of the update stack)
-			if card.ID == self.game.preferenceManager.get("player_sprite", "default"):
+			# set position of selectedbox
+			if card.ID == self.game.preferenceManager.get("player_sprite", "0_default"):
 				self.selectedBox.rect.x = card.rect.x
 				self.selectedBox.rect.y = card.rect.y
 

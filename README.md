@@ -1,11 +1,12 @@
 To run the game, open and run Froggers.py, located at the root of this folder. All other files are intended for internal use.
 
-# Description of important files
+# Description of important files and folders 
 
-## Stats
+# Stats
 contains important gameplay related statistics reported from each round
 
 # UI
+All UI elements used in the game
 
 # Screens
 this game uses screens to partition different parts of the game from each other. Each file contains information regarding what is in each screen
@@ -29,7 +30,7 @@ Loads all the assets in a specified folder depending on the file's prefix (img, 
 Pygame loads different assets in different ways. These classes specify how a given file should be loaded into pygame. FontLoader uses a text file to load fonts of specified sizes. If one isn't given, it loads a font of 48pt by default.
 
 ## UI/button
-Premade button class, can be customized
+Premade button class, can be customized using ButtonTheme
 
 ## Game
 base class for any game's entry point. Contains initilization code and game loop
@@ -42,3 +43,15 @@ A room containing its own children
 
 ## Sprite
 Base class for anything to be drawn to the screen
+
+# IO
+Contains central data persistence objects
+
+## Preference manager
+Despite the misleading name, preference manager is used to store any data that needs to persist between runs. The name is to deter tampering
+
+## Score manager
+Handles scores attained by player
+
+# Logs
+contains runtime.txt. used for backtracking errors
