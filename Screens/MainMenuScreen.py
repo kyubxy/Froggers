@@ -93,7 +93,7 @@ class MainMenuScreen (Screen):
         self.toolbar.append (self.CustomizeButton)
 
         # gacha button
-        self.GachaButton = FroggerButton (game, self, "gacha", clickEventName="StartGacha")
+        self.GachaButton = FroggerButton (game, self, "fishing", clickEventName="StartGacha")
         self.toolbar.append (self.GachaButton)
 
         # seedpack button

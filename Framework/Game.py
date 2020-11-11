@@ -4,12 +4,11 @@ from SpriteText import *
 import pygame
 import sys
 import logging
-#logging.basicConfig (filename = "Logs/runtime.txt", format="%(asctime)s [%(levelname)s] - %(message)s", filemode="w", level=logging.INFO)
-# TODO
-logging.basicConfig (format="%(asctime)s [%(levelname)s] - %(message)s", filemode="w", level=logging.INFO)
+# logging config
+logging.basicConfig (filename = "Logs/runtime.txt", format="%(asctime)s [%(levelname)s] - %(message)s", filemode="w", level=logging.INFO)
+logging.getLogger().addHandler(logging.StreamHandler())
 
 # generic game definition 
-
 class Game ():
     # initialises modules and fields
     def __init__(self, title = "Game", width = 1366, height = 768, fullscreen = True, resourceDir = "res"):

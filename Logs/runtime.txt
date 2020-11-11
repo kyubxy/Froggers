@@ -1,17 +1,38 @@
-2020-11-10 23:55:54,455 [INFO] - Frogger engine is ready! If there are any issues, check the console for backtracking
+2020-11-11 22:50:26,567 [INFO] - Frogger engine is ready! If there are any issues, check the console for backtracking
 
-2020-11-10 23:55:54,460 [WARNING] - res\font\Berlin.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
-2020-11-10 23:55:54,472 [WARNING] - res\font\fontello.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
-2020-11-10 23:55:54,473 [WARNING] - res\font\VanillaExtract.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
-2020-11-10 23:55:55,104 [WARNING] - res\textures\train.png of type train is not a supported asset and was not loaded by the cache
-2020-11-10 23:55:55,131 [INFO] - Starting level 10
-2020-11-10 23:55:55,131 [INFO] - 1678926167
-2020-11-10 23:55:55,266 [INFO] - Entered screen 0
-2020-11-10 23:55:56,311 [INFO] - Entered screen 0
-2020-11-10 23:55:59,746 [WARNING] - directory font has already been loaded
-2020-11-10 23:55:59,746 [WARNING] - directory se has already been loaded
-2020-11-10 23:55:59,747 [WARNING] - directory textures has already been loaded
-2020-11-10 23:55:59,747 [INFO] - Starting level 10
-2020-11-10 23:55:59,747 [INFO] - 609240550
-2020-11-10 23:55:59,833 [INFO] - Entered screen 0
-2020-11-10 23:56:01,802 [INFO] - Successfully exited the program
+2020-11-11 22:50:26,571 [WARNING] - res/font/Berlin.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
+2020-11-11 22:50:26,589 [WARNING] - res/font/fontello.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
+2020-11-11 22:50:26,590 [WARNING] - res/font/VanillaExtract.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
+2020-11-11 22:50:26,974 [WARNING] - res/textures/train.png of type train is not a supported asset and was not loaded by the cache
+2020-11-11 22:50:26,992 [INFO] - Starting level 10
+2020-11-11 22:50:26,992 [INFO] - 1690354011
+2020-11-11 22:50:27,070 [INFO] - Entered screen 0
+2020-11-11 22:50:30,050 [WARNING] - directory textures has already been loaded
+2020-11-11 22:50:30,071 [INFO] - this level is not seeded
+2020-11-11 22:50:30,072 [INFO] - Starting level 1
+2020-11-11 22:50:30,073 [INFO] - 1787224701
+2020-11-11 22:50:30,103 [INFO] - Entered screen 0
+2020-11-11 22:50:32,596 [WARNING] - directory font has already been loaded
+2020-11-11 22:50:32,596 [WARNING] - directory se has already been loaded
+2020-11-11 22:50:32,597 [WARNING] - directory textures has already been loaded
+2020-11-11 22:50:32,598 [INFO] - Starting level 10
+2020-11-11 22:50:32,598 [INFO] - 398332564
+2020-11-11 22:50:32,665 [INFO] - Entered screen 0
+2020-11-11 22:50:33,367 [WARNING] - directory textures has already been loaded
+2020-11-11 22:50:33,388 [INFO] - this level is not seeded
+2020-11-11 22:50:33,388 [INFO] - Starting level 1
+2020-11-11 22:50:33,389 [INFO] - 1304705945
+2020-11-11 22:50:33,413 [INFO] - Entered screen 0
+2020-11-11 22:50:35,044 [WARNING] - directory font has already been loaded
+2020-11-11 22:50:35,045 [WARNING] - directory se has already been loaded
+2020-11-11 22:50:35,046 [WARNING] - directory textures has already been loaded
+2020-11-11 22:50:35,047 [INFO] - Starting level 10
+2020-11-11 22:50:35,047 [INFO] - 1449380546
+2020-11-11 22:50:35,117 [INFO] - Entered screen 0
+2020-11-11 22:50:38,691 [WARNING] - directory textures has already been loaded
+2020-11-11 22:50:38,721 [INFO] - this level is not seeded
+2020-11-11 22:50:38,722 [INFO] - Starting level 1
+2020-11-11 22:50:38,723 [INFO] - 1988869961
+2020-11-11 22:50:38,755 [INFO] - Entered screen 0
+2020-11-11 22:50:45,770 [INFO] - Starting level 2
+2020-11-11 22:50:45,771 [INFO] - 897607734

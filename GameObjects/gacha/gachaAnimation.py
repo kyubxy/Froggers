@@ -84,8 +84,6 @@ class IntroductionAnimation (pygame.sprite.Group):
 
         return self.playing
 
-# TODO FLASHES
-
 # container instance for the gacha rolling animation
 class FishingAnimation (pygame.sprite.LayeredUpdates, MouseListener):
     def __init__(self, game, parent):

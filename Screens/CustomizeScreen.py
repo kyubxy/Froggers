@@ -16,7 +16,7 @@ class CustomizeScreen (Screen):
 		self.bg.Scale (pygame.display.get_surface().get_size()[0], pygame.display.get_surface().get_size()[1])
 		self.add (self.bg)
 
-		self.Add (SpriteText("customize"))
+		self.Add (SpriteText("customize", font=game.ResourceCache.Resources["fnt_VanillaExtract_48"]))
 
 		self.w, self.h = pygame.display.get_surface().get_size()
 
