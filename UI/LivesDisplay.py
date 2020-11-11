@@ -11,6 +11,7 @@ class LivesDisplay (pygame.sprite.Group):
 
     def UpdateLives (self):
         self.empty()
+        # draw all lives
         for life in range(self.player.Lives):
             self.lifesprite = Sprite (img = self.lifetex)
             self.lifesprite.rect.x += life * self.lifesprite.rect.width

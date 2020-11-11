@@ -1,14 +1,17 @@
-2020-11-11 22:36:49,834 [INFO] - Frogger engine is ready! If there are any issues, check the console for backtracking
+2020-11-11 22:44:10,414 [INFO] - Frogger engine is ready! If there are any issues, check the console for backtracking
 
-2020-11-11 22:36:49,842 [WARNING] - res\font\Berlin.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
-2020-11-11 22:36:49,851 [WARNING] - res\font\fontello.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
-2020-11-11 22:36:49,851 [WARNING] - res\font\VanillaExtract.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
-2020-11-11 22:36:50,517 [WARNING] - res\textures\train.png of type train is not a supported asset and was not loaded by the cache
-2020-11-11 22:36:50,533 [INFO] - Starting level 10
-2020-11-11 22:36:50,533 [INFO] - 597342944
-2020-11-11 22:36:50,620 [INFO] - Entered screen 0
-2020-11-11 22:36:50,963 [WARNING] - directory textures has already been loaded
-2020-11-11 22:36:50,965 [INFO] - this level is not seeded
-2020-11-11 22:36:50,965 [INFO] - Starting level 1
-2020-11-11 22:36:50,965 [INFO] - 1100511747
-2020-11-11 22:36:50,995 [INFO] - Entered screen 0
+2020-11-11 22:44:10,421 [WARNING] - res\font\Berlin.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
+2020-11-11 22:44:10,436 [WARNING] - res\font\fontello.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
+2020-11-11 22:44:10,436 [WARNING] - res\font\VanillaExtract.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
+2020-11-11 22:44:11,105 [WARNING] - res\textures\train.png of type train is not a supported asset and was not loaded by the cache
+2020-11-11 22:44:11,122 [INFO] - Starting level 10
+2020-11-11 22:44:11,122 [INFO] - 2067977426
+2020-11-11 22:44:11,213 [INFO] - Entered screen 0
+2020-11-11 22:44:12,345 [INFO] - Entered screen 0
+2020-11-11 22:44:15,072 [WARNING] - directory font has already been loaded
+2020-11-11 22:44:15,072 [WARNING] - directory se has already been loaded
+2020-11-11 22:44:15,072 [WARNING] - directory textures has already been loaded
+2020-11-11 22:44:15,073 [INFO] - Starting level 10
+2020-11-11 22:44:15,073 [INFO] - 1926515471
+2020-11-11 22:44:15,144 [INFO] - Entered screen 0
+2020-11-11 22:44:16,530 [INFO] - Successfully exited the program

@@ -180,6 +180,7 @@ class MainMenuScreen (Screen):
 
         self.difficultyPane.Update()
 
+        # keep moving the level
         self.level.change_pos_y (-1)
         self.moved += 1
         
@@ -226,6 +227,8 @@ class MainMenuScreen (Screen):
         self.Remove (self.foreground)
         self.Add (self.foreground)
 
+    # screen changes
+
     def StartOption (self):
         self.game.ChangeScreen (OptionScreen (self.game))
 
@@ -236,12 +239,12 @@ class MainMenuScreen (Screen):
         self.game.ChangeScreen (CustomizeScreen (self.game))
 
     def StartScores (self):
-        self.game.ChangeScreen (ScoresScreen (self.game))        
+        self.game.ChangeScreen (ScoresScreen (self.game))     
+
+    def CoinButton (self):
+        self.game.ChangeScreen (BuyCoinScreen (self.game))   
 
     def Exit(self):
         msg = tk.messagebox.askquestion ("Exit game","Are you sure you want to leave", icon = "warning")
         if msg == "yes":
             self.game.Exit()
-
-    def CoinButton (self):
-        self.game.ChangeScreen (BuyCoinScreen (self.game))

@@ -9,6 +9,7 @@ class InvisibleButtonTheme (ButtonTheme):
         self.clickColour = [0,0,0]
         self.disabledColour = [0,0,0]
 
+# a completely invisible button. You can never see it!
 class InvisibleButton (Button):
     def __init__(self, game, parent, w = 200, h=50, clickEventName = "OnClick"):
         # check if all relevant assets are loaded before proceeding

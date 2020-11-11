@@ -15,10 +15,10 @@ class DifficultyPane  (pygame.sprite.OrderedUpdates):
         self.LIVES_LINE = 50
         self.FROGS_LINE = 150
 
-        self.rect = rect
+        self.rect = rect    # occupied area
         self.game = game
-        self.Enabled = False
-        self.parent = parent
+        self.Enabled = False    # whether or not to draw and update
+        self.parent = parent    # should be mainmenu
 
         # back pane
         self._bgpane_surf = pygame.Surface ((rect.w,rect.h))
@@ -91,6 +91,8 @@ class DifficultyPane  (pygame.sprite.OrderedUpdates):
         self.doneButton.Disable()
 
     def Enable (self):
+        # show everything
+
         self.Enabled = True
         self._bgpane.Show()
 
@@ -110,6 +112,8 @@ class DifficultyPane  (pygame.sprite.OrderedUpdates):
         self.UpdateLabels()
 
     def Disable (self):
+        # hide everything
+
         self.Enabled = False
         self._bgpane.Hide()
 
@@ -152,6 +156,3 @@ class DifficultyPane  (pygame.sprite.OrderedUpdates):
         if Player.frogs > 1:
             Player.frogs -= 1
             self.UpdateLabels()
-
-    def Update (self):
-        pass

@@ -65,6 +65,8 @@ class PauseMenu  (pygame.sprite.Group):
         self.game.ChangeScreen (Screens.MainMenuScreen.MainMenuScreen (self.game))
 
     def Enable (self):
+        # show and enable everything
+
         self._bgpane.Show()
         self.title.SetText ("Paused")
 
@@ -77,6 +79,8 @@ class PauseMenu  (pygame.sprite.Group):
         self.Enabled = True
 
     def Disable (self):
+        # disable and hide everything
+
         self._bgpane.Hide()
         self.title.SetText ("")
 
@@ -89,5 +93,6 @@ class PauseMenu  (pygame.sprite.Group):
         self.Enabled = False
 
     def Update (self):
+        # these items are not included in the update stack
         self.ResumeButton.update()
         self.ExitButton.update()

@@ -34,40 +34,28 @@ class OptionScreen (Screen):
         self.Add (self.backButton)
         
     def toggleMusic (self):
-        self.game.preferenceManager.read()
-        if self.game.preferenceManager.Preferences.get ("bgm") is None:
-            self.game.preferenceManager.Preferences["bgm"] = False
-            pygame.mixer.music.stop()
-        else:            
-            if self.game.preferenceManager.Preferences["bgm"]:
-                self.game.preferenceManager.Preferences["bgm"] = False
-                pygame.mixer.music.stop()                
-            else:
-                self.game.preferenceManager.Preferences["bgm"] = True
-                self.Play()     
+        self._toggleField ("bgm")
+
+        if self.game.preferenceManager.Preferences["bgm"]:
+            self.Play()
+        else:
+            pygame.mixer.music.stop()                           
 
     def toggleFullscreen (self):
-        self.game.preferenceManager.read()
-        if self.game.preferenceManager.Preferences.get ("fullscreen") is None:
-            self.game.preferenceManager.Preferences["fullscreen"] = False
-        else:            
-            if self.game.preferenceManager.Preferences["fullscreen"]:
-                self.game.preferenceManager.Preferences["fullscreen"] = False
-            else:
-                self.game.preferenceManager.Preferences["fullscreen"] = True
+        self._toggleField ("fullscreen")
         
         res = self.game.preferenceManager.Preferences["fullscreen"]
-        self.game.preferenceManager.write()
         messagebox.showinfo (f"fullscreen {res}", "restart the game for changes to take effect")
+
+    # safely toggles a field
+    def _toggleField (self, field, default = False):
+        self.game.preferenceManager.read()
+        if self.game.preferenceManager.Preferences.get (field) is None:     # check if the field exists
+            self.game.preferenceManager.Preferences[field] = default    # use default value
+        else:            
+            # if existing
+            self.game.preferenceManager.Preferences[field] = not self.game.preferenceManager.Preferences[field]  
+        self.game.preferenceManager.write()
 
     def back (self):
         self.game.ChangeScreen (Screens.MainMenuScreen.MainMenuScreen (self.game))
-
-    def Update (self):
-        super().Update()
-
-    def Add (self, sprite):
-        super().Add(sprite)
-
-    def Draw (self, win):
-        super().Draw(win)

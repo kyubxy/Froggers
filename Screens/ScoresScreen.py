@@ -9,6 +9,7 @@ class ScoresScreen (Screen):
     def __init__ (self, game):
         super().__init__(game, bgm = "res/bgm/bgm_menuloop.mp3")     
 
+        # background
         self.bg = Sprite ("img_bg", resources=self.game.ResourceCache.Resources)
         self.bg.Scale (pygame.display.get_surface().get_size()[0], pygame.display.get_surface().get_size()[1])
         self.add (self.bg)
@@ -34,15 +35,7 @@ class ScoresScreen (Screen):
     def back (self):
         self.game.ChangeScreen (Screens.MainMenuScreen.MainMenuScreen (self.game))
 
-    def Update (self):
-        super().Update()
-
-    def Add (self, sprite):
-        super().Add(sprite)
-
-    def Draw (self, win):
-        super().Draw(win)
-    
+    # display a list of messages to the screen
     def DisplayMessages (self, messages, pos, spacing = 30):
         for msg in range(len(messages)):
             self.msgtxt = SpriteText (messages[msg], font = self.game.ResourceCache.Resources["fnt_Berlin_30"], colour=[0,0,0])

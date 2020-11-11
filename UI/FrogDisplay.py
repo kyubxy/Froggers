@@ -12,14 +12,8 @@ class FrogDisplay (pygame.sprite.Group):
     # update the frog display according to how many frogs are contained within the player
     def UpdateFrogs (self):
         self.empty()
-        for frog in range(self.player.Frogs):
-            '''
-            if frog == self.player.Frogs - 1:
-                self.frogsprite = Sprite (img = self.colouredfrog)
-            else:
-                self.frogsprite = Sprite (img = self.frogtex)
-            '''
-            
+        # draw each of the remaining frogs
+        for frog in range(self.player.Frogs):            
             self.frogsprite = Sprite (img = self.frogtex)
             self.frogsprite.Scale (32,32)
             self.frogsprite.rect.x += pygame.display.get_surface().get_size()[0]- frog * self.frogsprite.rect.width
