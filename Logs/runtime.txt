@@ -1,57 +1,26 @@
-2020-11-11 23:10:57,332 [INFO] - Frogger engine is ready! If there are any issues, check the console for backtracking
+2020-11-11 23:43:27,590 [INFO] - Frogger engine is ready! If there are any issues, check the console for backtracking
 
-2020-11-11 23:10:57,342 [WARNING] - res\font\Berlin.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
-2020-11-11 23:10:57,359 [WARNING] - res\font\fontello.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
-2020-11-11 23:10:57,360 [WARNING] - res\font\VanillaExtract.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
-2020-11-11 23:10:58,038 [WARNING] - res\textures\train.png of type train is not a supported asset and was not loaded by the cache
-2020-11-11 23:10:58,053 [INFO] - Starting level 10
-2020-11-11 23:10:58,054 [INFO] - 2038301527
-2020-11-11 23:10:58,141 [INFO] - Entered screen 0
-2020-11-11 23:11:04,784 [WARNING] - directory textures has already been loaded
-2020-11-11 23:11:04,787 [INFO] - this level is not seeded
-2020-11-11 23:11:04,787 [INFO] - Starting level 1
-2020-11-11 23:11:04,788 [INFO] - 1044563769
-2020-11-11 23:11:04,818 [INFO] - Entered screen 0
-2020-11-11 23:11:11,440 [WARNING] - directory font has already been loaded
-2020-11-11 23:11:11,441 [WARNING] - directory se has already been loaded
-2020-11-11 23:11:11,441 [WARNING] - directory textures has already been loaded
-2020-11-11 23:11:11,441 [INFO] - Starting level 10
-2020-11-11 23:11:11,441 [INFO] - 1064153764
-2020-11-11 23:11:11,507 [INFO] - Entered screen 0
-2020-11-11 23:11:12,603 [INFO] - Entered screen 0
-2020-11-11 23:11:13,776 [INFO] - Entered screen 0
-2020-11-11 23:11:14,417 [INFO] - bought 10000 coins
-2020-11-11 23:11:14,670 [WARNING] - directory font has already been loaded
-2020-11-11 23:11:14,670 [WARNING] - directory se has already been loaded
-2020-11-11 23:11:14,670 [WARNING] - directory textures has already been loaded
-2020-11-11 23:11:14,670 [INFO] - Starting level 10
-2020-11-11 23:11:14,671 [INFO] - 699123808
-2020-11-11 23:11:14,749 [INFO] - Entered screen 0
-2020-11-11 23:11:16,003 [INFO] - Entered screen 0
-2020-11-11 23:11:17,430 [WARNING] - directory textures has already been loaded
-2020-11-11 23:11:17,466 [INFO] - Entered screen 0
-2020-11-11 23:11:27,432 [INFO] - rolled {'name': 'Python', 'rarity': '3'}
-2020-11-11 23:11:30,784 [INFO] - rolled {'name': 'Thomas', 'rarity': '4'}
-2020-11-11 23:11:33,087 [INFO] - rolled {'name': 'Ravioli', 'rarity': '3'}
-2020-11-11 23:11:35,715 [INFO] - rolled {'name': 'bat frog', 'rarity': '4'}
-2020-11-11 23:11:38,340 [INFO] - rolled {'name': 'sitting frog', 'rarity': '4'}
-2020-11-11 23:11:40,592 [INFO] - rolled {'name': 'Ravioli', 'rarity': '3'}
-2020-11-11 23:11:43,180 [INFO] - rolled {'name': 'Packet Tracer', 'rarity': '3'}
-2020-11-11 23:11:45,856 [INFO] - rolled {'name': 'quenched frog', 'rarity': '4'}
-2020-11-11 23:11:47,953 [INFO] - rolled {'name': 'Ravioli', 'rarity': '3'}
-2020-11-11 23:11:50,921 [INFO] - rolled {'name': 'smooth angora rabbit', 'rarity': '5'}
-2020-11-11 23:11:51,226 [INFO] - Entered screen 0
-2020-11-11 23:11:52,898 [WARNING] - directory font has already been loaded
-2020-11-11 23:11:52,898 [WARNING] - directory se has already been loaded
-2020-11-11 23:11:52,898 [WARNING] - directory textures has already been loaded
-2020-11-11 23:11:52,898 [INFO] - Starting level 10
-2020-11-11 23:11:52,899 [INFO] - 1293139462
-2020-11-11 23:11:53,017 [INFO] - Entered screen 0
-2020-11-11 23:11:53,952 [INFO] - Entered screen 0
-2020-11-11 23:11:55,896 [WARNING] - directory font has already been loaded
-2020-11-11 23:11:55,896 [WARNING] - directory se has already been loaded
-2020-11-11 23:11:55,896 [WARNING] - directory textures has already been loaded
-2020-11-11 23:11:55,897 [INFO] - Starting level 10
-2020-11-11 23:11:55,897 [INFO] - 799487930
-2020-11-11 23:11:55,966 [INFO] - Entered screen 0
-2020-11-11 23:11:58,352 [INFO] - Successfully exited the program
+2020-11-11 23:43:27,593 [WARNING] - res\font\Berlin.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
+2020-11-11 23:43:27,606 [WARNING] - res\font\fontello.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
+2020-11-11 23:43:27,607 [WARNING] - res\font\VanillaExtract.txt is a text file, if it is not a font size file, consider removing from resources as it is not loaded by the cache
+2020-11-11 23:43:28,090 [INFO] - Starting level 10
+2020-11-11 23:43:28,091 [INFO] - 1030448920
+2020-11-11 23:43:28,174 [INFO] - Entered screen 0
+2020-11-11 23:43:29,080 [WARNING] - directory textures has already been loaded
+2020-11-11 23:43:29,085 [INFO] - this level is not seeded
+2020-11-11 23:43:29,085 [INFO] - Starting level 1
+2020-11-11 23:43:29,085 [INFO] - 375851257
+2020-11-11 23:43:29,125 [INFO] - Entered screen 0
+2020-11-11 23:43:30,690 [WARNING] - directory font has already been loaded
+2020-11-11 23:43:30,691 [WARNING] - directory se has already been loaded
+2020-11-11 23:43:30,691 [WARNING] - directory textures has already been loaded
+2020-11-11 23:43:30,692 [INFO] - Starting level 10
+2020-11-11 23:43:30,692 [INFO] - 737957861
+2020-11-11 23:43:30,793 [INFO] - Entered screen 0
+2020-11-11 23:43:32,775 [WARNING] - directory textures has already been loaded
+2020-11-11 23:43:32,777 [INFO] - this level is not seeded
+2020-11-11 23:43:32,778 [INFO] - Starting level 1
+2020-11-11 23:43:32,778 [INFO] - 1515163008
+2020-11-11 23:43:32,812 [INFO] - Entered screen 0
+2020-11-11 23:43:41,897 [INFO] - Starting level 2
+2020-11-11 23:43:41,897 [INFO] - 1723192428

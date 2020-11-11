@@ -193,6 +193,9 @@ class GameScreen (Screen):
                         self.Remove (self.foreground)
                         self.Add (self.foreground)
 
+                        # move the player as well
+                        self.move_to_front (self.player)
+
                     # clear msg text
                     self.msgtext.image = self.emptysurf
 
