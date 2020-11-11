@@ -3,6 +3,7 @@ from Framework.GeometricGroup import *
 import pygame
 import math
 
+# the man walking on the dock
 class Stickman (GeometricGroup):
     def __init__(self, game):
         super().__init__ ()
@@ -101,6 +102,7 @@ class Stickman (GeometricGroup):
     def change_pos_y (self, speed):
         super().change_pos_y (speed)
 
+# the fishing rod the stickman casts into the water
 class Rod (GeometricGroup):
     def __init__(self, game, stickman):
         super().__init__ ()

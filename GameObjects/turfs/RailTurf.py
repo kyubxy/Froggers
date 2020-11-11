@@ -1,6 +1,7 @@
 from GameObjects.turfs.Turf import Turf
 from GameObjects.Entities.Obstacles.Train import *
 import math
+import random
 
 # rail turf
 class RailTurf (Turf):

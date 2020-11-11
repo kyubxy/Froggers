@@ -91,6 +91,3 @@ class Level (GeometricGroup):
                 t.Update()
             else:
                 t.NonActive()
-
-    def change_pos_y (self, pos):
-        super().change_pos_y (pos)

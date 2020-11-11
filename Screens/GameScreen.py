@@ -11,8 +11,6 @@ from UI.PauseMenu import *
 from Framework.KeyboardListener import get_keydown
 import pygame
 
-# TODO: add UI to foreground group
-
 class GameScreen (Screen):        
     def __init__ (self, game, seeds = None):
         pygame.mouse.set_visible (False)
@@ -52,6 +50,8 @@ class GameScreen (Screen):
         # add level
         self.Add (self.level)
 
+        self.foreground = pygame.sprite.Group()
+
         # player
         self.player = Player(self.level, self.game)
         self.Add (self.player)
@@ -59,20 +59,20 @@ class GameScreen (Screen):
         # message text
         self.msgtext = SpriteText("", font = self.res["fnt_VanillaExtract_40"])
         self.msgtext.Background = [0,0,0]
-        self.Add (self.msgtext)
+        self.foreground.add (self.msgtext)
 
         # lives display
         self.livesdisplay = LivesDisplay (self.player, self.game)
-        self.Add (self.livesdisplay)
+        self.foreground.add (self.livesdisplay)
 
         # frogs display
         self.frogsdisplay = FrogDisplay (self.player, self.game)
-        self.Add (self.frogsdisplay)
+        self.foreground.add (self.frogsdisplay)
 
         # points counter
         self.pointscounter = SpriteText ("0", font = self.res["fnt_Berlin_48"])
         self.pointscounter.rect.centerx = pygame.display.get_surface().get_size()[0] // 2
-        self.Add (self.pointscounter)
+        self.foreground.add (self.pointscounter)
 
         # time display
         self.timeText = SpriteText ("0", font = self.res["fnt_Berlin_24"])
@@ -80,13 +80,13 @@ class GameScreen (Screen):
         self.timeText.rect.y = 40
         self.startTime = pygame.time.get_ticks()
         self.totalTime = 0
-        self.Add (self.timeText)
+        self.foreground.add (self.timeText)
 
         # level display
         self.levelText = SpriteText ("Level 1", font = self.res["fnt_Berlin_24"])
         self.levelText.Background = [0,0,0]
         self.levelText.rect.y = pygame.display.get_surface().get_size()[1] - self.levelText.image.get_size()[1]
-        self.Add (self.levelText)
+        self.foreground.add (self.levelText)
 
         # empty surface
         self.emptysurf = pygame.Surface ((1,1))
@@ -103,8 +103,8 @@ class GameScreen (Screen):
         self.Paused = False
         self.pauseMenu = PauseMenu (self.game, self, pygame.Rect (30,30,pygame.display.get_surface().get_size()[0] - 60,pygame.display.get_surface().get_size()[1] - 60))
         self.pauseMenu.Disable()
-        self.foreground = pygame.sprite.Group()
         self.foreground.add (self.pauseMenu)
+
         self.Add (self.foreground)
 
         self.oldstate = pygame.key.get_pressed()
@@ -190,11 +190,6 @@ class GameScreen (Screen):
                         self.Add (self.level)
                         
                         # move all UI to the front again
-                        self.move_to_front  (self.player)
-                        self.move_to_front (self.msgtext)
-                        self.move_to_front (self.pointscounter)
-                        self.move_to_front (self.levelText)
-                        self.move_to_front (self.timeText)
                         self.Remove (self.foreground)
                         self.Add (self.foreground)
 
@@ -202,12 +197,12 @@ class GameScreen (Screen):
                     self.msgtext.image = self.emptysurf
 
                     # update displays
-                    self.Remove (self.livesdisplay)
-                    self.Remove (self.frogsdisplay)
+                    self.foreground.remove (self.livesdisplay)
+                    self.foreground.remove (self.frogsdisplay)
                     self.livesdisplay.UpdateLives()
                     self.frogsdisplay.UpdateFrogs()
-                    self.Add (self.livesdisplay)
-                    self.Add (self.frogsdisplay)
+                    self.foreground.add (self.livesdisplay)
+                    self.foreground.add (self.frogsdisplay)
 
                 if event.type == DEATH:
                     # show msg text
@@ -236,15 +231,8 @@ class GameScreen (Screen):
             if not self.pauseMenu.Enabled:
                 self.pauseMenu.Enable()        
                 pygame.mouse.set_visible (True)
-                #TODO self.pausetime = pygame.time.get_ticks() - self.startTime
 
         if get_keydown (self.oldstate, self.newstate, [pygame.K_ESCAPE]):
             self.Paused = not self.Paused
 
         self.oldstate = self.newstate
-
-    def Add (self, sprite):
-        super().Add(sprite)
-
-    def Draw (self, win):
-        super().Draw(win)

@@ -26,6 +26,7 @@ class GachaResultsScreen (Screen):
         
         self.game.cardCollection.write_frogs()
 
+        # display each of the cards
         for cardno in range (len(self.cards)):
             card = self.cards[cardno]
             card.Scale (64,64)
@@ -33,15 +34,5 @@ class GachaResultsScreen (Screen):
             card.rect.y = 128
             self.Add (card)
 
-
     def back (self):
         self.game.ChangeScreen (Screens.MainMenuScreen.MainMenuScreen (self.game))
-
-    def Update (self):
-        super().Update()
-
-    def Add (self, sprite):
-        super().Add(sprite)
-
-    def Draw (self, win):
-        super().Draw(win)

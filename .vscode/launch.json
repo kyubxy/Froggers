@@ -12,6 +12,14 @@
             "console": "integratedTerminal",
         },
         {
+            "name": "Froggers Debug",
+            "type": "python",
+            "request": "launch",
+            "program": "Froggers.py",
+            "console": "integratedTerminal",
+            "args": ["debug"]
+        },
+        {
             "name": "current file",
             "type": "python",
             "request": "launch",

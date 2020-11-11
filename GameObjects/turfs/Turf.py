@@ -26,15 +26,3 @@ class Turf (GeometricGroup):
 
     def NonActive (self):
         self.background.image = self.notex
-
-    # parent methods
-    def change_pos (self, pos):
-        super().change_pos(pos)
-    def change_pos_x (self, pos):
-        super().change_pos_x(pos)
-    def change_pos_y (self, pos):
-        super().change_pos_y(pos)
-    def Add (self, sprite):
-        super().Add (sprite)
-    def move_to_back (self, sprite):
-        super().move_to_back (sprite)

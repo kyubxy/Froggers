@@ -9,6 +9,3 @@ class Car (Obstacle, Harmable):
         self.path = "img_car_" + str(random.randint(1, 7)) + self.dirname
 
         super().__init__(self.path, direc, pos, speed, game)
-
-    def update (self):
-        super().update()

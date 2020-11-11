@@ -6,6 +6,7 @@ class Card (Sprite):
 		# sprite 
 		self.Jacket = jacket
 
+		# what it says on the folder
 		self.ID = ID
 		
 		# contains card metadata (name, rarity etc)

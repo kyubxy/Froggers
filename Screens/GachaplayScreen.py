@@ -44,9 +44,3 @@ class GachaplayScreen (Screen, MouseListener):
             self.move_to_front(self.frameratecounter)
         else:
             self.game.ChangeScreen (GachaResultsScreen(self.game, self.cards))
-
-    def Add (self, sprite):
-        super().Add(sprite)
-
-    def Draw (self, win):
-        super().Draw(win)

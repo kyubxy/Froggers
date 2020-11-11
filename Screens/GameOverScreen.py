@@ -92,15 +92,7 @@ class GameOverScreen (Screen):
     def Home (self):
         self.game.ChangeScreen (Screens.MainMenuScreen.MainMenuScreen (self.game))
 
-    def Update (self):
-        super().Update()
-
-    def Add (self, sprite):
-        super().Add(sprite)
-
-    def Draw (self, win):
-        super().Draw(win)
-
+    # draw a list of messages to the screen
     def DisplayMessages (self, messages, pos, spacing = 30):
         for msg in range(len(messages)):
             self.msgtxt = SpriteText (messages[msg], font = self.game.ResourceCache.Resources["fnt_Berlin_30"])

@@ -17,12 +17,12 @@ class GachaScreen (Screen):
         self.Add (SpriteText("fishing", font=game.ResourceCache.Resources["fnt_VanillaExtract_48"]))
 
         # 1 pull
-        self.pull1 = FroggerButton (self.game, self, "Roll, 250 coins", clickEventName="Gacha1")
+        self.pull1 = FroggerButton (self.game, self, "Fish, 250 coins", clickEventName="Gacha1")
         self.pull1.set_Rect (pygame.Rect (10, 200, 200, 50))
         self.Add (self.pull1)
 
         # 10 pull
-        self.pull10 = FroggerButton (self.game, self, "Roll 10, 2000 coins", clickEventName="Gacha10")
+        self.pull10 = FroggerButton (self.game, self, "Fish 10, 2000 coins", clickEventName="Gacha10")
         self.pull10.set_Rect (pygame.Rect (10, 300, 200, 50))
         self.Add (self.pull10)
 
@@ -48,6 +48,12 @@ class GachaScreen (Screen):
         self.BackButton = FroggerButton (self.game, self, "back", clickEventName="back")
         self.BackButton.set_Rect (pygame.Rect (10, 400, 200, 50))
         self.Add (self.BackButton)
+
+        # instructions
+        self.instructions = Sprite ("img_gachainstructions", resources=game.ResourceCache.Resources)
+        self.instructions.rect.x = 270
+        self.instructions.rect.y = 100
+        self.add (self.instructions)
 
 
     def CoinButton (self):

@@ -1,5 +1,4 @@
 from GameObjects.Entities.Obstacles.Obstacle import *
-import random
 
 # train obstacle
 class Train (Obstacle, Harmable):
@@ -20,17 +19,20 @@ class Train (Obstacle, Harmable):
         tex = pygame.Surface ((self.front.get_rect().w + self.body.get_rect().w * bodylen,self.body.get_rect().h))
         tex.fill (self.KEYCOLOUR)
 
-        
+        # add the front of the train
         tex.blit (self.front, (0 if dir == -1 else length * self.body.get_rect().w,0))
 
+        # add the body
         for x in range (1 if dir == -1 else 0,length):
             offset =  self.front.get_rect().w - self.body.get_rect().w if dir == -1 else 0
             tex.blit (self.body, (x * self.body.get_rect().w + offset,0))
 
+        # remove the background colour
         tex.set_colorkey (self.KEYCOLOUR)
         
         super().__init__(None, dir, pos, speed, game, img = tex)
 
+        # scale the train onto the tracks
         scaling_factor = 128 / self.rect.h
         self.Scale (self.rect.w * scaling_factor ,self.rect.h * scaling_factor)
 

@@ -89,7 +89,6 @@ class FishingAnimation (pygame.sprite.LayeredUpdates, MouseListener):
     def __init__(self, game, parent):
         super().__init__()
          
-
         self.game = game
         self.res = self.game.ResourceCache.Resources        
         self.parent = parent
@@ -171,16 +170,21 @@ class FishingAnimation (pygame.sprite.LayeredUpdates, MouseListener):
         # time gacha animation was started from reset since beginning of runtime
         self.startTime = pygame.time.get_ticks ()
 
+        # SQUARES
+        # single square in the middle which changes colour depending on card rarity
         self.add (self.coloured_square)
+        # rotating squares
         self.add (self.square1)
         self.add (self.square2)
         self.add (self.square3)
 
+        # move everything to back
         self.move_to_back (self.square1)
         self.move_to_back (self.square2)
         self.move_to_back (self.square3)
         self.move_to_back (self.background)
         
+        # initialise rotation
         self.square1.Rotate (0)
         self.square2.Rotate (0)
         self.square3.Rotate (0)
@@ -192,16 +196,23 @@ class FishingAnimation (pygame.sprite.LayeredUpdates, MouseListener):
         self.time = (pygame.time.get_ticks () - self.startTime) / 500
 
         if self.animating:
+            # NOTE: all transformations have an acceleration 
+
+            # rotate squares
             self.square1.Rotate (20 * self.time ** 2)
             self.square2.Rotate (25 * self.time ** 2)
             self.square3.Rotate (30 * self.time ** 2) 
+
+            # make the main circle grow larger
             self.circle_piece.Scale (self.CIRCLE_RADIUS + 10 * self.time ** 2, self.CIRCLE_RADIUS + 10 * self.time ** 2)
             self.circle_piece.rect.center = self.center
 
+        # ensure the auxilary circle snaps back to the size of the main circle after scaling out of the screen
         self.auxrad = self.circle_piece.rect.width + (400 + self.aux_accel_offset) * (self.time - self.aux_offset) ** 2
         self.aux_circle_piece.Scale (self.auxrad, self.auxrad)
         self.aux_circle_piece.rect.center = self.center
 
+        # snap the auxilary circle back
         if self.aux_circle_piece.rect.width - self.CIRCLE_RADIUS > self.w:
             self.aux_offset = self.time
             if self.animating:
@@ -209,11 +220,13 @@ class FishingAnimation (pygame.sprite.LayeredUpdates, MouseListener):
 
             self.raritycounter += 1
 
+            # change rarity square's colour
             if self.raritycounter == 3:
                 self.coloured_square.image.fill (self.RARITY_4_COL)
             elif (self.raritycounter == 4):
                 self.coloured_square.image.fill (self.RARITY_5_COL)
                 
+            # show the card after the rarity has been revelaed
             if self.raritycounter == self.rarity:
                 self.animating = False
                 self.card.Show()
@@ -221,6 +234,8 @@ class FishingAnimation (pygame.sprite.LayeredUpdates, MouseListener):
                 self.card.rect.center = self.center
                 self.card_name_text.Show()
                 self.coloured_square.Hide()
+
+                # play a special sound effect for good cards
                 if self.rarity > 3:
                     self.wow.play()
                 self.move_to_front (self.card_name_text)    
@@ -228,5 +243,6 @@ class FishingAnimation (pygame.sprite.LayeredUpdates, MouseListener):
                 self.stars.change_pos_y (-(self.h + 800))
                 logging.info ("rolled {0}".format (self.card.meta))
             
+        # continue rolling
         if pygame.mouse.get_pressed()[0] and self.raritycounter >= self.rarity + 1:
                 self.parent.Roll()

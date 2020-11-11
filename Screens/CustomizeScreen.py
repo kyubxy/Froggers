@@ -12,10 +12,12 @@ class CustomizeScreen (Screen):
 		self.CARD_PADDING_y = 80
 		self.CARD_SPACING = 70 
 
+		# background
 		self.bg = Sprite ("img_bg", resources=self.game.ResourceCache.Resources)
 		self.bg.Scale (pygame.display.get_surface().get_size()[0], pygame.display.get_surface().get_size()[1])
 		self.add (self.bg)
 
+		# title
 		self.Add (SpriteText("customize", font=game.ResourceCache.Resources["fnt_VanillaExtract_48"]))
 
 		self.w, self.h = pygame.display.get_surface().get_size()
@@ -31,6 +33,8 @@ class CustomizeScreen (Screen):
 		self.selectedBox = Sprite (img =self.selectedBoxTex)
 		self.Add (self.selectedBox)
 
+		# add the default frog so the player can revert back to the original
+		# note that we are using the gacha path of the default frog, NOT the basegame path.
 		self.game.cardCollection.add_frog (0, "default")
 		self.game.cardCollection.write_frogs ()
 
@@ -38,8 +42,10 @@ class CustomizeScreen (Screen):
 
 		self.DisplayAllPlayers ()
 		
+	# draw all collected frogs to the screen
 	def DisplayAllPlayers (self):
 		self.game.cardCollection.read_frogs()
+
 		self.c = 0
 		self.y = 0
 		for card_id in self.game.cardCollection.FrogCollection:
@@ -67,18 +73,14 @@ class CustomizeScreen (Screen):
 		super().Update()
 
 		for card in self.cards:
+			# handle the default card directly (as this card isn't part of the update stack)
 			if card.ID == self.game.preferenceManager.get("player_sprite", "default"):
 				self.selectedBox.rect.x = card.rect.x
 				self.selectedBox.rect.y = card.rect.y
 
+			# handle all other cards
 			if card.clicked:
 				self.game.preferenceManager.Preferences["player_sprite"] = card.ID
 				self.playercard = self.game.cardCollection.get_card(self.game.preferenceManager.Preferences["player_sprite"])
 				self.game.ResourceCache.Resources["img_player"] = self.playercard.Jacket 
 				self.game.preferenceManager.write()
-
-	def Add (self, sprite):
-		super().Add(sprite)
-
-	def Draw (self, win):
-		super().Draw(win)

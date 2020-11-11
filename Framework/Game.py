@@ -6,7 +6,12 @@ import sys
 import logging
 # logging config
 logging.basicConfig (filename = "Logs/runtime.txt", format="%(asctime)s [%(levelname)s] - %(message)s", filemode="w", level=logging.INFO)
-logging.getLogger().addHandler(logging.StreamHandler())
+
+# only write log to console if in debug mode
+# otherwise, the console printing will slow the main thread
+if "debug" in sys.argv:
+    logging.getLogger().addHandler(logging.StreamHandler())
+    logging.info ("entered debug mode")
 
 # generic game definition 
 class Game ():
@@ -21,11 +26,13 @@ class Game ():
         self._title = title                                             # title of window
         self._windowSize = [width, height]                              # size of window
         self._running = True                                            # program state
+
         # instantiate pygame window
         if fullscreen:
             self.Window = pygame.display.set_mode ((0,0), pygame.FULLSCREEN)   
         else:
-            self.Window = pygame.display.set_mode (self._windowSize)                    
+            self.Window = pygame.display.set_mode (self._windowSize)               
+                 
         pygame.display.set_caption (self._title)                        # set title
         self.Clock = pygame.time.Clock ()                               # pygame clock
         

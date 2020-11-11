@@ -80,15 +80,25 @@ class CardCollection:
 
 	# highcardMin = generate at least 1 card above 3 star. Make true for larger number of rolls
 	def roll_gacha (self, rolls, highcardMin = False):
+		# generate a new seed independent from previous seeds entered through level generation
 		random.seed (datetime.datetime.now())
-		cards = []
+
+		cards = [] # return value
+
+		# number of cards whose rarity is greater than 4
+		# attained through the highcardMin system
+		goodcards = 0	
+
+		# give the player some proportion of good cards for larger rolls
 		if highcardMin:
 			goodcards = random.randint (1, rolls // 2)
+			# add exclusively good cards
 			for _ in range (goodcards):
 				frog = self.add_frog (random.randint (4, 5))
 				cards.append (self.get_card (frog))
 
-		for _ in range (rolls - highcardMin):
+		# add the reset of the cards
+		for _ in range (rolls - goodcards):
 			frog = self.add_frog (3)
 			cards.append (self.get_card (frog))		
 

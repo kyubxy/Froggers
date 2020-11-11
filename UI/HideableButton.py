@@ -7,7 +7,6 @@ class HideableButtonTheme (FroggerButtonTheme):
         
         self.disabledColour = [0,0,0]
 
-# TODO inherit from frogger button
 # a button that hides when disabled
 class HideableButton (Button):
     def __init__(self, game, parent, label = "button", w = 200, h=50, labelsize = 20, clickEventName = "OnClick"):

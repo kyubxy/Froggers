@@ -27,6 +27,7 @@ class GrassEndTurf (Turf):
         for _ in range (GameObjects.Entities.Player.Player.frogs):
             self.c = Cave (game)
 
+            # make sure the caves don't spawn off screen
             if x > pygame.display.get_surface().get_size()[0]:
                 x = 80
                 y += 1

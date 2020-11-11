@@ -7,6 +7,3 @@ class Log (Obstacle):
         self.direc = dir
         super().__init__("img_log", dir, pos, speed, game)
         self.Scale (width * 64, 64)
-
-    def update (self):
-        super().update() 
