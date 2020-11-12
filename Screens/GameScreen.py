@@ -1,14 +1,14 @@
 from Framework.Screen import *
 from Framework.SpriteText import *
+from Framework.KeyboardListener import get_keydown
 from GameObjects.Level import *
 from GameObjects.Entities.Player import *
 from UI.LivesDisplay import *
 from UI.FrogDisplay import *
+from UI.PauseMenu import *
 from Screens.GameOverScreen import *
 from constants import *
 from Stats import GameStats
-from UI.PauseMenu import *
-from Framework.KeyboardListener import get_keydown
 import pygame
 
 class GameScreen (Screen):        
@@ -110,7 +110,10 @@ class GameScreen (Screen):
         self.oldstate = pygame.key.get_pressed()
         self.newstate = pygame.key.get_pressed()
 
+        # timestamp of pause
         self.pausetime = 0
+        # total time spent on pause
+        self.pausetimedelta = 0
 
     def Update (self):
         self.newstate = pygame.key.get_pressed()
@@ -120,6 +123,7 @@ class GameScreen (Screen):
             super().Update()
             if self.pauseMenu.Enabled:
                 self.pauseMenu.Disable()
+                self.pausetimedelta = pygame.time.get_ticks() - self.startTime - self.pausetime
 
             pygame.mouse.set_visible (False)
 
@@ -128,7 +132,7 @@ class GameScreen (Screen):
             self.levelTime = pygame.time.get_ticks() - self.levelStart
 
             # total time (displayed on the screen)
-            self.totalTime = pygame.time.get_ticks() - self.startTime - self.pausetime
+            self.totalTime = pygame.time.get_ticks() - self.startTime - self.pausetimedelta
             self.timeText.SetText (str(round (self.totalTime / 1000)) + "/sec")
             self.timeText.rect.centerx = pygame.display.get_surface().get_size()[0] // 2
             self.stats.Time = self.totalTime
@@ -188,18 +192,20 @@ class GameScreen (Screen):
 
                         # re-add the level
                         self.Add (self.level)
+
+                        # move the player as well
+                        self.move_to_front (self.player)
                         
                         # move all UI to the front again
                         self.Remove (self.foreground)
                         self.Add (self.foreground)
 
-                        # move the player as well
-                        self.move_to_front (self.player)
-
                     # clear msg text
                     self.msgtext.image = self.emptysurf
 
                     # update displays
+                    self.Remove (self.foreground)
+
                     self.foreground.remove (self.livesdisplay)
                     self.foreground.remove (self.frogsdisplay)
                     self.livesdisplay.UpdateLives()
@@ -207,18 +213,15 @@ class GameScreen (Screen):
                     self.foreground.add (self.livesdisplay)
                     self.foreground.add (self.frogsdisplay)
 
+                    self.Add (self.foreground)
+
                 if event.type == DEATH:
                     # show msg text
-                    self.msgtext.SetText ("You died, press the space key to continue")
-                    self.msgtext.rect.x = pygame.display.get_surface().get_size()[0] / 2 - self.msgtext.image.get_size()[0] / 2
-                    self.msgtext.rect.y = pygame.display.get_surface().get_size()[1] / 2 - self.msgtext.image.get_size()[1] / 2
+                    self.setMessageText ("You died, press the space key to continue")
 
                 if event.type == WIN:
                     # show msg text
-                    self.msgtext.SetText ("Nice work! press the space key to continue")
-                    self.msgtext.rect.x = pygame.display.get_surface().get_size()[0] / 2 - self.msgtext.image.get_size()[0] / 2
-                    self.msgtext.rect.y = pygame.display.get_surface().get_size()[1] / 2 - self.msgtext.image.get_size()[1] / 2
-                    
+                    self.setMessageText ("Nice work! press the space key to continue")
                     # award points
                     self.stats.Points += round (10000000 / self.runTime + self.difficulty * 100)
                     self.stats.runtimes.append (self.runTime)
@@ -234,8 +237,15 @@ class GameScreen (Screen):
             if not self.pauseMenu.Enabled:
                 self.pauseMenu.Enable()        
                 pygame.mouse.set_visible (True)
+                self.pausetime = self.totalTime
+                #print (self.totalTime)
 
         if get_keydown (self.oldstate, self.newstate, [pygame.K_ESCAPE]):
             self.Paused = not self.Paused
 
         self.oldstate = self.newstate
+
+    def setMessageText (self, message):
+        self.msgtext.SetText (message)
+        self.msgtext.rect.centerx = pygame.display.get_surface().get_size()[0] / 2
+        self.msgtext.rect.centery = pygame.display.get_surface().get_size()[1] / 2        

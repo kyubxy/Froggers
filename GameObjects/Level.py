@@ -44,8 +44,12 @@ class Level (GeometricGroup):
         self.stats.Seeds.append (str(seed)) # add seed to the seeds list
 
         # number of turfs to be generated
-        self.turfno = random.randint (math.ceil (self.difficulty / 2) + 1, math.ceil(self.difficulty * 1.5) + 1) if self.properties is None else self.properties["length"]
-        
+        _upperbound = math.log (self.difficulty + 2)
+        _lowerbound = 2 * math.log (self.difficulty + 2)
+        self.turflen = random.randint (math.ceil (_upperbound), math.ceil (_lowerbound)) 
+
+        #print (self.turflen)
+
         # list of all turfs in the level
         self.levelturfs = list()
 
@@ -54,7 +58,7 @@ class Level (GeometricGroup):
         self.length += 3 * 64
 
         # generate turfs
-        for _ in range(self.turfno):
+        for _ in range(self.turflen):
             # add turf to level turfs
             self.turfid = random.randint (0, len (self.turfs)-1)
             self.directions = [-1, 1]

@@ -5,4 +5,3 @@ class GameStats ():
         self.Time = 0
         self.Seeds = []
         self.runtimes = []
-        self.leveltimes = []

@@ -146,13 +146,14 @@ class Player (Sprite):
 
                 if self.movedown % self.MOVE_SPEED == 0:
                     self.playJumpSound()
-                    if (self.absolute_y >= pygame.display.get_surface().get_size()[1] / 2 - 64):    
-                        self.level.change_pos_y(-64)
-                    else:
-                        self.rect.y += 64
+                    if self.absolute_y < self.level.length + 64 * (math.ceil(Player.frogs / 5) + 4):
+                        if (self.absolute_y >= pygame.display.get_surface().get_size()[1] / 2 - 64):    
+                            self.level.change_pos_y(-64)
+                        else:
+                            self.rect.y += 64
 
-                    self.absolute_y += 64
-                    self.movedown = 0        
+                        self.absolute_y += 64
+                        self.movedown = 0        
 
                 self.movedown += 1
 

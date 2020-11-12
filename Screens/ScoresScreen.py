@@ -27,7 +27,7 @@ class ScoresScreen (Screen):
         #game.scoreManager.Scores = sorted (game.scoreManager.Scores)
         game.scoreManager.Scores.sort (key=lambda x: int(x.Points), reverse=True)
 
-        message_format = lambda score: f"{score.Name} : {score.Points}pts - {datetime.timedelta(seconds= round(score.Time / 1000))}"
+        message_format = lambda score: f"{score.Name} : {score.Points}pts - {datetime.timedelta(seconds= round(score.Time / 1000))} --- LV{len(score.Seeds)}"
         messages = [message_format (score) for score in game.scoreManager.Scores]
        
         self.DisplayMessages (messages, (80,80))
